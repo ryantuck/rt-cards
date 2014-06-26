@@ -9,11 +9,13 @@
                 <outlet property="doneView" destination="KGD-02-xh5" id="8qQ-tV-d4s"/>
                 <outlet property="entryInput" destination="XPI-8A-qRk" id="qdy-Fh-anW"/>
                 <outlet property="entryView" destination="Vf3-44-t9H" id="vmz-Mt-fZ2"/>
+                <outlet property="identifierLabel" destination="ph5-PF-1Bc" id="Pzq-Q3-bFs"/>
                 <outlet property="inboxView" destination="242-r3-fxu" id="2VY-yv-7ys"/>
                 <outlet property="nextView" destination="5Gu-5W-ab1" id="TKm-UL-3qs"/>
                 <outlet property="projectsView" destination="H67-1X-Ii6" id="oBe-eX-Wvi"/>
                 <outlet property="scheduledView" destination="Ehd-qA-RFK" id="xcS-Z1-FhJ"/>
                 <outlet property="somedayView" destination="zye-oD-ok2" id="jW6-t9-n1d"/>
+                <outlet property="titleBox" destination="mzF-RW-Jpl" id="Xn0-kR-dAh"/>
                 <outlet property="trackingView" destination="Hin-kP-AyX" id="AMl-TW-Y08"/>
                 <outlet property="window" destination="WCU-8y-33f" id="pBz-9l-MOC"/>
             </connections>
@@ -88,7 +90,7 @@
                     <toolbarItem reference="Xb5-rU-aeU"/>
                 </defaultToolbarItems>
             </toolbar>
-            <point key="canvasLocation" x="701" y="214"/>
+            <point key="canvasLocation" x="437" y="4"/>
         </window>
         <customView id="Vf3-44-t9H" userLabel="Entry View">
             <rect key="frame" x="0.0" y="0.0" width="406" height="352"/>
@@ -121,7 +123,7 @@
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="452" y="661"/>
+            <point key="canvasLocation" x="289" y="422"/>
         </customView>
         <customView id="242-r3-fxu" userLabel="Inbox View">
             <rect key="frame" x="0.0" y="0.0" width="946" height="419"/>
@@ -166,8 +168,8 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dpN-8t-Oep">
-                    <rect key="frame" x="142" y="278" width="104" height="27"/>
+                <datePicker verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dpN-8t-Oep">
+                    <rect key="frame" x="142" y="267" width="104" height="27"/>
                     <datePickerCell key="cell" enabled="NO" borderStyle="bezel" alignment="left" id="cdt-ux-0a1">
                         <font key="font" metaFont="system"/>
                         <date key="date" timeIntervalSinceReferenceDate="-595929600">
@@ -178,7 +180,7 @@
                     </datePickerCell>
                 </datePicker>
                 <datePicker verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EIw-Pr-WZN">
-                    <rect key="frame" x="142" y="248" width="104" height="27"/>
+                    <rect key="frame" x="142" y="237" width="104" height="27"/>
                     <datePickerCell key="cell" enabled="NO" borderStyle="bezel" alignment="left" id="eE2-q8-aY4">
                         <font key="font" metaFont="system"/>
                         <date key="date" timeIntervalSinceReferenceDate="-595929600">
@@ -189,14 +191,14 @@
                     </datePickerCell>
                 </datePicker>
                 <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BAo-mE-i2G">
-                    <rect key="frame" x="18" y="280" width="53" height="18"/>
+                    <rect key="frame" x="18" y="269" width="53" height="18"/>
                     <buttonCell key="cell" type="check" title="Due?" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Q18-d4-WMQ">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2K3-Q0-vb6">
-                    <rect key="frame" x="18" y="250" width="101" height="18"/>
+                    <rect key="frame" x="18" y="239" width="101" height="18"/>
                     <buttonCell key="cell" type="check" title="Remind Me: " bezelStyle="regularSquare" imagePosition="left" inset="2" id="6tb-tx-QE5">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -314,6 +316,14 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ph5-PF-1Bc">
+                    <rect key="frame" x="19" y="293" width="83" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Identifier" id="HAF-Mv-SwJ">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstItem="K92-6I-foo" firstAttribute="top" secondItem="Bg8-cc-uEE" secondAttribute="top" id="3fc-va-8yP"/>
@@ -333,10 +343,10 @@
                 <constraint firstItem="mzF-RW-Jpl" firstAttribute="top" secondItem="pqC-Hr-4mf" secondAttribute="top" id="pda-Fy-F7q"/>
                 <constraint firstItem="mzF-RW-Jpl" firstAttribute="trailing" secondItem="dpN-8t-Oep" secondAttribute="trailing" id="qES-7q-mF1"/>
             </constraints>
-            <point key="canvasLocation" x="766" y="909.5"/>
+            <point key="canvasLocation" x="559" y="862.5"/>
         </customView>
         <customView id="5Gu-5W-ab1" userLabel="Next View">
-            <rect key="frame" x="0.0" y="0.0" width="394" height="350"/>
+            <rect key="frame" x="0.0" y="0.0" width="752" height="350"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="had-tM-apz">
@@ -348,10 +358,10 @@
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="928" y="662"/>
+            <point key="canvasLocation" x="938" y="423"/>
         </customView>
         <customView id="H67-1X-Ii6" userLabel="Projects View">
-            <rect key="frame" x="0.0" y="0.0" width="394" height="350"/>
+            <rect key="frame" x="0.0" y="0.0" width="752" height="350"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HWh-L6-9e7">
@@ -363,10 +373,10 @@
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="928" y="662"/>
+            <point key="canvasLocation" x="938" y="423"/>
         </customView>
         <customView id="Hin-kP-AyX" userLabel="Tracking View">
-            <rect key="frame" x="0.0" y="0.0" width="394" height="350"/>
+            <rect key="frame" x="0.0" y="0.0" width="752" height="350"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4f-My-8a4">
@@ -378,10 +388,10 @@
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="928" y="662"/>
+            <point key="canvasLocation" x="938" y="421"/>
         </customView>
         <customView id="Ehd-qA-RFK" userLabel="Scheduled View">
-            <rect key="frame" x="0.0" y="0.0" width="394" height="350"/>
+            <rect key="frame" x="0.0" y="0.0" width="752" height="350"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ElT-jo-ThN">
@@ -393,10 +403,10 @@
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="928" y="662"/>
+            <point key="canvasLocation" x="938" y="423"/>
         </customView>
         <customView id="zye-oD-ok2" userLabel="Someday View">
-            <rect key="frame" x="0.0" y="0.0" width="394" height="350"/>
+            <rect key="frame" x="0.0" y="0.0" width="752" height="350"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6sS-WA-3ii">
@@ -408,10 +418,10 @@
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="928" y="662"/>
+            <point key="canvasLocation" x="938" y="423"/>
         </customView>
         <customView id="KGD-02-xh5" userLabel="Done View">
-            <rect key="frame" x="0.0" y="0.0" width="394" height="350"/>
+            <rect key="frame" x="0.0" y="0.0" width="752" height="350"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W24-y2-Mzn">
@@ -423,7 +433,7 @@
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="928" y="662"/>
+            <point key="canvasLocation" x="938" y="423"/>
         </customView>
         <collectionViewItem id="oxu-NE-ARW">
             <connections>

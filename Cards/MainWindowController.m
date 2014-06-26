@@ -206,12 +206,54 @@
 	}
 	
 	[self setCards:tmpCardArray];
+	[self populateInboxProcessingFields];
 }
 
 -(IBAction)buttonPressed:(id)sender
 {
 	[self editCardTitleWithIdentifier:@"99BEDD24" toNewTitle:@"a new title here bro"];
 	[self populateCardsWithStoredData];
+}
+
+-(CardInfo*)firstCard
+{
+	CardInfo* cardPtr;
+	
+	// set up context and fetch bullshit
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"CardInfo"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	// save
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	cardPtr = (CardInfo*)[fetchedObjects objectAtIndex:0];
+	
+	// save
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+
+	
+	return cardPtr;
+}
+
+-(void)populateInboxProcessingFields
+{
+	CardInfo* currentCard = [self firstCard];
+	
+	[self.titleBox setStringValue:currentCard.title];
+	[self.identifierLabel setStringValue:currentCard.identifier];
 }
 
 -(void)deleteCardWithIdentifier:(NSString*)myIdentifier

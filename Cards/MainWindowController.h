@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "CardInfo.h"
 
 @interface MainWindowController : NSWindowController
 
@@ -32,6 +33,7 @@
 @property IBOutlet NSMatrix* actions;
 @property IBOutlet NSDatePicker* duePicker;
 @property IBOutlet NSDatePicker* reminderPicker;
+@property IBOutlet NSTextField* identifierLabel;
 
 
 
@@ -56,6 +58,10 @@
 -(void)createNewCardWithTitle:(NSString*)title;
 -(void)populateCardsWithStoredData;
 -(NSString*)getRandomAlphanumericString;
+
+-(CardInfo*)firstCard;
+
+-(void)populateInboxProcessingFields;
 
 -(void)deleteCardWithIdentifier:(NSString*)myIdentifier;
 -(void)editCardTitleWithIdentifier:(NSString*)myIdentifier toNewTitle:(NSString*)newTitle;
