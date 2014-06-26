@@ -315,6 +315,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="processButtonPressed:" target="-2" id="QhJ-pC-63j"/>
+                    </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ph5-PF-1Bc">
                     <rect key="frame" x="19" y="293" width="83" height="17"/>

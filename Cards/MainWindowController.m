@@ -215,6 +215,15 @@
 	[self populateCardsWithStoredData];
 }
 
+-(IBAction)processButtonPressed:(id)sender
+{
+	// save new title to card
+	[self firstCard].title = [[self titleBox] stringValue];
+	[self populateCardsWithStoredData];
+	[self populateInboxProcessingFields];
+}
+
+
 -(CardInfo*)firstCard
 {
 	CardInfo* cardPtr;
