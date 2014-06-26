@@ -62,6 +62,7 @@
 -(CardInfo*)firstCard;
 
 -(void)populateInboxProcessingFields;
+-(void)updateSubArraysBasedOnType;
 
 -(void)deleteCardWithIdentifier:(NSString*)myIdentifier;
 -(void)editCardTitleWithIdentifier:(NSString*)myIdentifier toNewTitle:(NSString*)newTitle;

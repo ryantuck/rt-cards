@@ -286,7 +286,7 @@
                 </tokenField>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sNc-pi-SFz">
                     <rect key="frame" x="257" y="217" width="72" height="18"/>
-                    <buttonCell key="cell" type="check" title="Just Do!" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="f9Q-f2-u2A">
+                    <buttonCell key="cell" type="check" title="Just Do!" bezelStyle="regularSquare" imagePosition="left" inset="2" id="f9Q-f2-u2A">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -360,6 +360,33 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qek-HR-des">
+                    <rect key="frame" x="310" y="61" width="422" height="275"/>
+                    <clipView key="contentView" ambiguous="YES" misplaced="YES" id="HeM-aO-pH1">
+                        <rect key="frame" x="1" y="1" width="248" height="158"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView ambiguous="YES" selectable="YES" id="pUD-Pv-J7y">
+                                <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="secondaryBackgroundColor" name="controlAlternatingRowColor" catalog="System" colorSpace="catalog"/>
+                                <connections>
+                                    <binding destination="wLh-Tb-dVn" name="content" keyPath="arrangedObjects" id="IqP-Rd-yHD"/>
+                                    <outlet property="itemPrototype" destination="oxu-NE-ARW" id="Spx-B0-KZc"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="6Tp-eS-Mlg">
+                        <rect key="frame" x="1" y="144" width="233" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="ADz-hl-tgp">
+                        <rect key="frame" x="234" y="1" width="15" height="143"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
             </subviews>
             <point key="canvasLocation" x="938" y="423"/>
         </customView>
@@ -494,7 +521,7 @@
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="728" y="1218"/>
+            <point key="canvasLocation" x="1231" y="767"/>
         </view>
         <arrayController objectClassName="CardModel" id="enL-sz-pxP">
             <declaredKeys>
@@ -502,6 +529,11 @@
             </declaredKeys>
             <connections>
                 <binding destination="-2" name="contentArray" keyPath="cards" id="rcQ-Z3-U9P"/>
+            </connections>
+        </arrayController>
+        <arrayController id="wLh-Tb-dVn" userLabel="Next Array Controller">
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="next" id="sOP-mK-XUv"/>
             </connections>
         </arrayController>
         <userDefaultsController representsSharedInstance="YES" id="PZc-Gq-FHU"/>

@@ -196,16 +196,32 @@
 //	NSArray* aArray = [tmpCardArray filteredArrayUsingPredicate:blahPredicate];
 //	NSMutableArray* xArray = [[NSMutableArray alloc] initWithArray:aArray];
 	
-	// create tmpCard array and draw its info out of the fetchRequest shit
-	NSMutableArray* tmpCardArray = [[NSMutableArray alloc] init];
-	for (CardInfo* cInfo in fetchedObjects)
+	NSPredicate* inboxPredicate = [NSPredicate predicateWithFormat:@"title contains[c] 'a'"];
+	NSPredicate* nextPredicate = [NSPredicate predicateWithFormat:@"title contains[c] 'n'"];
+	
+	NSArray* inboxArray = [fetchedObjects filteredArrayUsingPredicate:inboxPredicate];
+	NSArray* nextArray = [fetchedObjects filteredArrayUsingPredicate:nextPredicate];
+	
+	NSMutableArray* mInboxArray = [[NSMutableArray alloc] init];
+	NSMutableArray* mNextArray = [[NSMutableArray alloc] init];
+	
+	
+	for (CardInfo* cInfo in inboxArray)
 	{
-		// create new CardModel object and add to a NSMutableArray
 		CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
-		[tmpCardArray addObject:aCard];
+		[mInboxArray addObject:aCard];
 	}
 	
-	[self setCards:tmpCardArray];
+	for (CardInfo* cInfo in nextArray)
+	{
+		CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
+		[mNextArray addObject:aCard];
+	}
+	
+
+	[self setCards:mInboxArray];
+	[self setNext:mNextArray];
+	
 	[self populateInboxProcessingFields];
 }
 
@@ -221,6 +237,22 @@
 	[self firstCard].title = [[self titleBox] stringValue];
 	[self populateCardsWithStoredData];
 	[self populateInboxProcessingFields];
+}
+
+-(void)updateSubArraysBasedOnType
+{
+	
+}
+
+// ============== think i need these for collection view shit
+-(NSArray*)next
+{
+	return next;
+}
+
+-(void)setNext:(NSMutableArray *)a
+{
+	next = a;
 }
 
 
