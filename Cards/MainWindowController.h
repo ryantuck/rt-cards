@@ -34,6 +34,7 @@
 @property IBOutlet NSDatePicker* duePicker;
 @property IBOutlet NSDatePicker* reminderPicker;
 @property IBOutlet NSTextField* identifierLabel;
+@property IBOutlet NSTextField* cardCount;
 
 
 

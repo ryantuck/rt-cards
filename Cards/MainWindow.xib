@@ -7,6 +7,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController">
             <connections>
                 <outlet property="actions" destination="zhh-uf-BH8" id="70a-Ct-MLL"/>
+                <outlet property="cardCount" destination="yLB-Du-hAK" id="a1G-JW-erJ"/>
                 <outlet property="doneView" destination="KGD-02-xh5" id="8qQ-tV-d4s"/>
                 <outlet property="entryInput" destination="XPI-8A-qRk" id="qdy-Fh-anW"/>
                 <outlet property="entryView" destination="Vf3-44-t9H" id="vmz-Mt-fZ2"/>
@@ -335,6 +336,14 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yLB-Du-hAK">
+                    <rect key="frame" x="207" y="382" width="38" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="0" id="kOn-C6-P0z">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstItem="K92-6I-foo" firstAttribute="top" secondItem="Bg8-cc-uEE" secondAttribute="top" id="3fc-va-8yP"/>
@@ -524,9 +533,6 @@
                             <outlet property="representedObject" destination="xhM-Wx-hW2" id="LRx-g9-4Pm"/>
                         </connections>
                     </buttonCell>
-                    <connections>
-                        <action selector="buttonPressed:" target="-2" id="yBF-aR-blq"/>
-                    </connections>
                 </button>
             </subviews>
             <point key="canvasLocation" x="1231" y="767"/>

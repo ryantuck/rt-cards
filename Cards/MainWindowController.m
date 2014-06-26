@@ -82,7 +82,6 @@
 	else return YES;
 }
 
-// We need to be layer-backed to have subview transitions.
 -(void)awakeFromNib {
 	
 	NSLog(@"Awake From NIB");
@@ -109,6 +108,10 @@
 	[[[self window] contentView] replaceSubview:previousView with:view];
 }
 
+-(void)updateCardCount
+{
+	[[self cardCount] setStringValue:[NSString stringWithFormat:@"%lu",(unsigned long)[[self cards] count]]];
+}
 
 -(void)insertObject:(CardModel *)c inCardsArrayAtIndex:(NSUInteger)index {
 	[cards insertObject:c atIndex:index];
@@ -353,6 +356,7 @@
 	
 	[self.titleBox setStringValue:currentCard.title];
 	[self.identifierLabel setStringValue:currentCard.identifier];
+	[self updateCardCount];
 }
 
 -(void)deleteCardWithIdentifier:(NSString*)myIdentifier
