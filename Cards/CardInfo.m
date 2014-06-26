@@ -14,5 +14,6 @@
 @dynamic title;
 @dynamic identifier;
 @dynamic createdDate;
+@dynamic type;
 
 @end

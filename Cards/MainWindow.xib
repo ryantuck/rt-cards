@@ -677,7 +677,7 @@
                 <string>title</string>
             </declaredKeys>
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="cards" id="rcQ-Z3-U9P"/>
+                <binding destination="-2" name="contentArray" keyPath="inbox" id="fXl-eT-4DO"/>
             </connections>
         </arrayController>
         <arrayController id="wLh-Tb-dVn" userLabel="Next Array Controller">

@@ -15,5 +15,6 @@
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * identifier;
 @property (nonatomic, retain) NSDate * createdDate;
+@property (nonatomic, retain) NSString* type;
 
 @end

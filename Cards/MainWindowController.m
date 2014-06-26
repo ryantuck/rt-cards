@@ -17,6 +17,55 @@
 
 @implementation MainWindowController
 
+
+
+
+
+
+// --------------------------------------------------------
+// Top Level Shit
+// --------------------------------------------------------
+-(id)init
+{
+	self = [super initWithWindowNibName:@"MainWindow"];
+	return self;
+}
+
+- (void)windowDidLoad
+{
+	NSLog(@"Window Did Load");
+	
+    [super windowDidLoad];
+    
+    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	[[self window] setContentSize:[entryView frame].size];
+	[[[self window] contentView] addSubview:entryView];
+	[[[self window] contentView] setWantsLayer:YES];
+}
+
+// --------------------------------------------------------
+// Setup
+// --------------------------------------------------------
+-(void)awakeFromNib {
+	
+	NSLog(@"Awake From NIB");
+	
+	// set entry view as first view
+	[[self window] setContentSize:[entryView frame].size];
+	[[[self window] contentView] addSubview:entryView];
+	
+	// set cards from stored data
+	[self populateCardsWithStoredData];
+	
+	// set up field to create new card upon hitting enter
+	[entryInput setTarget:self];
+	[entryInput setAction:@selector(addToDo:)];
+}
+
+
+// --------------------------------------------------------
+// Toolbar
+// --------------------------------------------------------
 @synthesize entryView;
 @synthesize inboxView;
 @synthesize nextView;
@@ -27,36 +76,6 @@
 @synthesize doneView;
 
 @synthesize currentViewTag;
-
-@synthesize cards;
-
-@synthesize inbox;
-@synthesize next;
-@synthesize tracking;
-@synthesize scheduled;
-@synthesize someday;
-@synthesize done;
-
-@synthesize projects;
-
-@synthesize entryInput;
-
--(id)init
-{
-	self = [super initWithWindowNibName:@"MainWindow"];
-	return self;
-}
-
-- (void)windowDidLoad
-{
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-	[[self window] setContentSize:[entryView frame].size];
-	[[[self window] contentView] addSubview:entryView];
-	[[[self window] contentView] setWantsLayer:YES];
-	NSLog(@"awake from nib ran");
-}
 
 -(NSView*)viewForTag:(int)tag
 {
@@ -84,22 +103,6 @@
 	else return YES;
 }
 
--(void)awakeFromNib {
-	
-	NSLog(@"Awake From NIB");
-	
-	// set entry view as first view
-	[[self window] setContentSize:[entryView frame].size];
-	[[[self window] contentView] addSubview:entryView];
-	
-	// set cards from stored data
-	[self populateCardsWithStoredData];
-	
-	// set up field to create new card upon hitting enter
-	[entryInput setTarget:self];
-	[entryInput setAction:@selector(addToDo:)];
-}
-
 -(IBAction)switchView:(id)sender
 {
 	int tag = (int)[sender tag];
@@ -110,26 +113,11 @@
 	[[[self window] contentView] replaceSubview:previousView with:view];
 }
 
--(void)updateCardCount
-{
-	[[self cardCount] setStringValue:[NSString stringWithFormat:@"%lu",(unsigned long)[[self cards] count]]];
-}
 
--(void)insertObject:(CardModel *)c inCardsArrayAtIndex:(NSUInteger)index {
-	[cards insertObject:c atIndex:index];
-}
-
--(void)removeObjectFromCardsAtIndex:(NSUInteger)index {
-	[cards removeObjectAtIndex:index];
-}
-
--(void)setCards:(NSMutableArray *)a {
-	cards = a;
-}
-
--(NSArray*)cards {
-	return cards;
-}
+// --------------------------------------------------------
+// Entry
+// --------------------------------------------------------
+@synthesize entryInput;
 
 -(IBAction)addToDo:(id)sender
 {
@@ -175,65 +163,16 @@
 		NSLog(@"ID: %@",card.identifier);
 		NSLog(@"Date: %@",card.createdDate);
 	}
-
+	
 }
 
--(void)populateCardsWithStoredData
-{
-	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
-	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription* entity = [NSEntityDescription
-								   entityForName:@"CardInfo"
-								   inManagedObjectContext:context];
-	[fetchRequest setEntity:entity];
-	
-	NSError* error;
-	if (![context save:&error])
-	{
-		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
-	}
-	
-	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-	
-	
-	// test filtering this array
-//	NSPredicate* blahPredicate = [NSPredicate predicateWithFormat:@"identifier contains[c] '9964F35E'"];
-//	NSArray* aArray = [tmpCardArray filteredArrayUsingPredicate:blahPredicate];
-//	NSMutableArray* xArray = [[NSMutableArray alloc] initWithArray:aArray];
-	
-	NSPredicate* inboxPredicate = [NSPredicate predicateWithFormat:@"title contains[c] 'a'"];
-	NSPredicate* nextPredicate = [NSPredicate predicateWithFormat:@"title contains[c] 'n'"];
-	
-	NSArray* inboxArray = [fetchedObjects filteredArrayUsingPredicate:inboxPredicate];
-	NSArray* nextArray = [fetchedObjects filteredArrayUsingPredicate:nextPredicate];
-	
-	NSMutableArray* mInboxArray = [[NSMutableArray alloc] init];
-	NSMutableArray* mNextArray = [[NSMutableArray alloc] init];
-	
-	if ([inboxArray count] != 0)
-	{
-		for (CardInfo* cInfo in inboxArray)
-		{
-			CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
-			[mInboxArray addObject:aCard];
-		}
-	}
-	
-	if ([nextArray count] != 0)
-	{
-		for (CardInfo* cInfo in nextArray)
-		{
-			CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
-			[mNextArray addObject:aCard];
-		}
-	}
-	
-	
 
-	[self setCards:mInboxArray];
-	[self setNext:mNextArray];
-	
-	[self populateInboxProcessingFields];
+// --------------------------------------------------------
+// Inbox
+// --------------------------------------------------------
+-(void)updateCardCount
+{
+	[[self cardCount] setStringValue:[NSString stringWithFormat:@"%lu",(unsigned long)[[self inbox] count]]];
 }
 
 -(IBAction)deleteButtonPressed:(id)sender
@@ -250,22 +189,6 @@
 	[self populateInboxProcessingFields];
 }
 
--(void)updateSubArraysBasedOnType
-{
-	
-}
-
-// ============== think i need these for collection view shit
--(NSArray*)next
-{
-	return next;
-}
-
--(void)setNext:(NSMutableArray *)a
-{
-	next = a;
-}
-
 -(IBAction)changeType:(id)sender
 {
 	int x = (int)[[self types] selectedRow];
@@ -275,23 +198,23 @@
 	{
 		case 0:
 			// next
-			((CardModel*)[[self cards] objectAtIndex:0]).type = @"next";
+			[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"next"];
 			break;
 		case 1:
 			// scheduled
-			((CardModel*)[[self cards] objectAtIndex:0]).type = @"scheduled";
+			[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"scheduled"];
 			break;
 		case 2:
 			// tracking
-			((CardModel*)[[self cards] objectAtIndex:0]).type = @"tracking";
+			[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"tracking"];
 			break;
 		case 3:
 			// someday
-			((CardModel*)[[self cards] objectAtIndex:0]).type = @"someday";
+			[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"someday"];
 			break;
 		case 4:
 			// projects
-			((CardModel*)[[self cards] objectAtIndex:0]).type = @"projects";
+			[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"projects"];
 			break;
 		default:
 			NSLog(@"no case chosen");
@@ -330,6 +253,105 @@
 	}
 }
 
+-(void)populateInboxProcessingFields
+{
+	CardInfo* currentCard = [self firstCard];
+	
+	if (currentCard != nil)
+	{
+		[self.titleBox setStringValue:currentCard.title];
+		[self.identifierLabel setStringValue:currentCard.identifier];
+		[self updateCardCount];
+	}
+	
+	
+}
+
+
+// --------------------------------------------------------
+// Card Handling
+// --------------------------------------------------------
+@synthesize cards;
+
+@synthesize inbox;
+@synthesize next;
+@synthesize tracking;
+@synthesize scheduled;
+@synthesize someday;
+@synthesize done;
+@synthesize projects;
+
+-(void)populateCardsWithStoredData
+{
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"CardInfo"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	NSPredicate* inboxPredicate		= [NSPredicate predicateWithFormat:@"type == 'inbox'"];
+	NSPredicate* nextPredicate		= [NSPredicate predicateWithFormat:@"type == 'next'"];
+	NSPredicate* trackingPredicate	= [NSPredicate predicateWithFormat:@"type == 'tracking'"];
+	NSPredicate* somedayPredicate	= [NSPredicate predicateWithFormat:@"type == 'someday'"];
+	NSPredicate* scheduledPredicate = [NSPredicate predicateWithFormat:@"type == 'scheduled'"];
+	NSPredicate* projectsPredicate	= [NSPredicate predicateWithFormat:@"type == 'projects'"];
+	NSPredicate* donePredicate		= [NSPredicate predicateWithFormat:@"type == 'done'"];
+	
+	
+	
+	NSArray* inboxArray = [fetchedObjects filteredArrayUsingPredicate:inboxPredicate];
+	NSArray* nextArray = [fetchedObjects filteredArrayUsingPredicate:nextPredicate];
+	NSArray* trackingArray = [fetchedObjects filteredArrayUsingPredicate:trackingPredicate];
+	NSArray* somedayArray = [fetchedObjects filteredArrayUsingPredicate:somedayPredicate];
+	NSArray* scheduledArray = [fetchedObjects filteredArrayUsingPredicate:scheduledPredicate];
+	NSArray* projectsArray = [fetchedObjects filteredArrayUsingPredicate:projectsPredicate];
+	NSArray* doneArray = [fetchedObjects filteredArrayUsingPredicate:donePredicate];
+	
+	NSArray* sectionArrays = [[NSArray alloc] initWithObjects:inboxArray, nextArray, trackingArray, somedayArray, scheduledArray, projectsArray, doneArray, nil];
+	
+	NSMutableArray* mInboxArray		= [[NSMutableArray alloc] init];
+	NSMutableArray* mNextArray		= [[NSMutableArray alloc] init];
+	NSMutableArray* mTrackingArray	= [[NSMutableArray alloc] init];
+	NSMutableArray* mSomedayArray	= [[NSMutableArray alloc] init];
+	NSMutableArray* mScheduledArray = [[NSMutableArray alloc] init];
+	NSMutableArray* mProjectsArray	= [[NSMutableArray alloc] init];
+	NSMutableArray* mDoneArray		= [[NSMutableArray alloc] init];
+	
+	NSArray* mSectionArrays = [[NSArray alloc] initWithObjects:mInboxArray, mNextArray, mTrackingArray, mSomedayArray, mScheduledArray, mProjectsArray, mDoneArray, nil];
+	
+	for (int n=0;n<7;n++)
+	{
+		if ([[sectionArrays objectAtIndex:n] count] != 0)
+		{
+			for (CardInfo* cInfo in [sectionArrays objectAtIndex:n])
+			{
+				CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
+				[[mSectionArrays objectAtIndex:n] addObject:aCard];
+				NSLog(@"n = %u",n);
+			}
+		}
+	}
+	
+	[self setInbox:mInboxArray];
+	[self setNext:mNextArray];
+	[self setTracking:mTrackingArray];
+	[self setScheduled:mScheduledArray];
+	[self setSomeday:mSomedayArray];
+	[self setProjects:mProjectsArray];
+	[self setDone:mDoneArray];
+	
+	[self populateInboxProcessingFields];
+}
+
 -(CardInfo*)firstCard
 {
 	CardInfo* cardPtr;
@@ -362,23 +384,9 @@
 	{
 		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
 	}
-
+	
 	
 	return cardPtr;
-}
-
--(void)populateInboxProcessingFields
-{
-	CardInfo* currentCard = [self firstCard];
-	
-	if (currentCard != nil)
-	{
-		[self.titleBox setStringValue:currentCard.title];
-		[self.identifierLabel setStringValue:currentCard.identifier];
-		[self updateCardCount];
-	}
-	
-	
 }
 
 -(void)deleteCardWithIdentifier:(NSString*)myIdentifier
@@ -415,7 +423,7 @@
 	{
 		NSLog(@"array is not long enough you dumb fuck!");
 	}
-
+	
 	// save
 	if (![context save:&error])
 	{
@@ -464,11 +472,56 @@
 	{
 		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
 	}
-
+	
 }
 
-//======================================================================================
-// generates random string. should use for shit.
+-(void)editCardTypeWithIdentifier:(NSString*)myIdentifier toNewType:(NSString*)newType
+{
+	// set up context and fetch bullshit
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"CardInfo"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	// save
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	// get object with certain identifier
+	NSPredicate* predicate = [NSPredicate predicateWithFormat:@"identifier == %@",myIdentifier];
+	NSArray* filteredArray = [fetchedObjects filteredArrayUsingPredicate:predicate];
+	
+	if ([filteredArray count] != 0)
+	{
+		// pick out object who we want to edit and change the type
+		NSManagedObject* objToEdit = [filteredArray objectAtIndex:0];
+		NSLog(@"objToEdit type: %@",((CardInfo*)objToEdit).type);
+		((CardInfo*)objToEdit).type = newType;
+		NSLog(@"new title: %@",((CardInfo*)objToEdit).type);
+	}
+	else
+	{
+		NSLog(@"array is not long enough you dumb fuck!");
+	}
+	
+	// save
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+}
+
+
+// --------------------------------------------------------
+// Helpers
+// --------------------------------------------------------
 -(NSString*)getRandomAlphanumericString
 {
 	CFUUIDRef uuidObj = CFUUIDCreate(nil);//create a new UUID
@@ -476,6 +529,92 @@
 	CFRelease(uuidObj);
 	return [uuidString substringToIndex:8]; //specify length here. even you can use full
 }
+
+// --------------------------------------------------------
+// Bullshit setter getter functions
+// --------------------------------------------------------
+-(void)insertObject:(CardModel *)c inCardsArrayAtIndex:(NSUInteger)index
+{
+	[cards insertObject:c atIndex:index];
+}
+
+-(void)setCards:(NSMutableArray *)a
+{
+	cards = a;
+}
+
+-(void)setNext:(NSMutableArray *)a
+{
+	next = a;
+}
+
+-(void)setTracking:(NSMutableArray *)a
+{
+	tracking = a;
+}
+
+-(void)setScheduled:(NSMutableArray *)a
+{
+	scheduled = a;
+}
+
+-(void)setProjects:(NSMutableArray *)a
+{
+	projects = a;
+}
+
+-(void)setSomeday:(NSMutableArray *)a
+{
+	someday = a;
+}
+
+-(void)setDone:(NSMutableArray *)a
+{
+	done = a;
+}
+
+
+-(NSArray*)cards
+{
+	return cards;
+}
+
+-(NSArray*)next
+{
+	return next;
+}
+
+-(NSArray*)tracking
+{
+	return tracking;
+}
+
+-(NSArray*)scheduled
+{
+	return scheduled;
+}
+
+-(NSArray*)projects
+{
+	return projects;
+}
+
+-(NSArray*)someday
+{
+	return someday;
+}
+
+-(NSArray*)done
+{
+	return done;
+}
+
+
+
+
+
+
+
 
 
 

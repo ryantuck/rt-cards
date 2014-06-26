@@ -11,22 +11,35 @@
 
 @interface MainWindowController : NSWindowController
 
-// Toolbar Sections
+// --------------------------------------------------------
+// Toolbar
+// --------------------------------------------------------
 @property IBOutlet NSView* entryView;
 @property IBOutlet NSView* inboxView;
-
 @property IBOutlet NSView* nextView;
 @property IBOutlet NSView* projectsView;
-
 @property IBOutlet NSView* trackingView;
 @property IBOutlet NSView* scheduledView;
 @property IBOutlet NSView* somedayView;
-
 @property IBOutlet NSView* doneView;
 
 @property int currentViewTag;
 
-// Inbox Processing Shit
+-(IBAction)switchView:(id)sender;
+
+
+// --------------------------------------------------------
+// Entry UI
+// --------------------------------------------------------
+@property IBOutlet NSTextField* entryInput;
+
+-(IBAction)addToDo:(id)sender;
+-(void)createNewCardWithTitle:(NSString*)title;
+
+
+// --------------------------------------------------------
+// Inbox UI
+// --------------------------------------------------------
 @property IBOutlet NSTextField* titleBox;
 @property IBOutlet NSTextField* tagsBox;
 @property IBOutlet NSMatrix* types;
@@ -36,11 +49,22 @@
 @property IBOutlet NSTextField* identifierLabel;
 @property IBOutlet NSTextField* cardCount;
 
+// radio button handling
+-(IBAction)changeType:(id)sender;
+-(IBAction)changeAction:(id)sender;
+
+// button press handling
+-(IBAction)deleteButtonPressed:(id)sender;
+-(IBAction)processButtonPressed:(id)sender;
 
 
+-(void)populateInboxProcessingFields;
 
-// All cards array
-@property NSMutableArray* cards;
+// --------------------------------------------------------
+// Card Handling
+// --------------------------------------------------------
+@property NSMutableArray* cards; // can prob delete?
+
 // Filtered card arrays
 @property NSMutableArray* inbox;
 @property NSMutableArray* next;
@@ -48,32 +72,28 @@
 @property NSMutableArray* scheduled;
 @property NSMutableArray* someday;
 @property NSMutableArray* done;
-
 @property NSMutableArray* projects;
 
+-(CardInfo*)firstCard;	// what's this referring to?
 
-@property IBOutlet NSTextField* entryInput;
-
--(IBAction)switchView:(id)sender;
-
--(IBAction)addToDo:(id)sender;
-
--(IBAction)changeType:(id)sender;
--(IBAction)changeAction:(id)sender;
-
--(void)createNewCardWithTitle:(NSString*)title;
 -(void)populateCardsWithStoredData;
--(NSString*)getRandomAlphanumericString;
 
--(CardInfo*)firstCard;
-
--(void)populateInboxProcessingFields;
--(void)updateSubArraysBasedOnType;
-
+// switch these to take in a card
 -(void)deleteCardWithIdentifier:(NSString*)myIdentifier;
 -(void)editCardTitleWithIdentifier:(NSString*)myIdentifier toNewTitle:(NSString*)newTitle;
 
--(IBAction)deleteButtonPressed:(id)sender;
--(IBAction)processButtonPressed:(id)sender;
+// --------------------------------------------------------
+// Helpers
+// --------------------------------------------------------
+-(NSString*)getRandomAlphanumericString;
+
+
+
+// =========================================================================================
+
+
+
+
+
 
 @end
