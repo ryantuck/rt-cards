@@ -37,6 +37,8 @@
 @synthesize someday;
 @synthesize done;
 
+@synthesize projects;
+
 @synthesize entryInput;
 
 -(id)init
@@ -64,9 +66,9 @@
 		case 0: view = entryView;		break;
 		case 1: view = inboxView;		break;
 		case 2: view = nextView;		break;
-		case 3: view = projectsView;	break;
-		case 4: view = trackingView;	break;
-		case 5: view = scheduledView;	break;
+		case 3: view = trackingView;	break;
+		case 4: view = scheduledView;	break;
+		case 5: view = projectsView;	break;
 		case 6: view = somedayView;		break;
 		case 7: view = doneView;		break;
 
@@ -208,18 +210,24 @@
 	NSMutableArray* mInboxArray = [[NSMutableArray alloc] init];
 	NSMutableArray* mNextArray = [[NSMutableArray alloc] init];
 	
-	
-	for (CardInfo* cInfo in inboxArray)
+	if ([inboxArray count] != 0)
 	{
-		CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
-		[mInboxArray addObject:aCard];
+		for (CardInfo* cInfo in inboxArray)
+		{
+			CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
+			[mInboxArray addObject:aCard];
+		}
 	}
 	
-	for (CardInfo* cInfo in nextArray)
+	if ([nextArray count] != 0)
 	{
-		CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
-		[mNextArray addObject:aCard];
+		for (CardInfo* cInfo in nextArray)
+		{
+			CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
+			[mNextArray addObject:aCard];
+		}
 	}
+	
 	
 
 	[self setCards:mInboxArray];
@@ -267,18 +275,23 @@
 	{
 		case 0:
 			// next
+			((CardModel*)[[self cards] objectAtIndex:0]).type = @"next";
 			break;
 		case 1:
 			// scheduled
+			((CardModel*)[[self cards] objectAtIndex:0]).type = @"scheduled";
 			break;
 		case 2:
 			// tracking
+			((CardModel*)[[self cards] objectAtIndex:0]).type = @"tracking";
 			break;
 		case 3:
 			// someday
+			((CardModel*)[[self cards] objectAtIndex:0]).type = @"someday";
 			break;
 		case 4:
 			// projects
+			((CardModel*)[[self cards] objectAtIndex:0]).type = @"projects";
 			break;
 		default:
 			NSLog(@"no case chosen");
@@ -338,7 +351,11 @@
 	
 	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
 	
-	cardPtr = (CardInfo*)[fetchedObjects objectAtIndex:0];
+	if ([fetchedObjects count] != 0)
+	{
+		cardPtr = (CardInfo*)[fetchedObjects objectAtIndex:0];
+	}
+	
 	
 	// save
 	if (![context save:&error])
@@ -354,9 +371,14 @@
 {
 	CardInfo* currentCard = [self firstCard];
 	
-	[self.titleBox setStringValue:currentCard.title];
-	[self.identifierLabel setStringValue:currentCard.identifier];
-	[self updateCardCount];
+	if (currentCard != nil)
+	{
+		[self.titleBox setStringValue:currentCard.title];
+		[self.identifierLabel setStringValue:currentCard.identifier];
+		[self updateCardCount];
+	}
+	
+	
 }
 
 -(void)deleteCardWithIdentifier:(NSString*)myIdentifier

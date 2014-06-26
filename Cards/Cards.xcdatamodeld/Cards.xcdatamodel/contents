@@ -4,8 +4,9 @@
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" defaultValueString="inbox" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CardInfo" positionX="-414" positionY="-280" width="128" height="88"/>
+        <element name="CardInfo" positionX="-414" positionY="-280" width="128" height="103"/>
     </elements>
 </model>

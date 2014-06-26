@@ -49,6 +49,8 @@
 @property NSMutableArray* someday;
 @property NSMutableArray* done;
 
+@property NSMutableArray* projects;
+
 
 @property IBOutlet NSTextField* entryInput;
 
