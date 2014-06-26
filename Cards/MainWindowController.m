@@ -209,9 +209,9 @@
 	[self populateInboxProcessingFields];
 }
 
--(IBAction)buttonPressed:(id)sender
+-(IBAction)deleteButtonPressed:(id)sender
 {
-	[self editCardTitleWithIdentifier:@"99BEDD24" toNewTitle:@"a new title here bro"];
+	[self deleteCardWithIdentifier:[self firstCard].identifier];
 	[self populateCardsWithStoredData];
 }
 

@@ -66,6 +66,6 @@
 -(void)deleteCardWithIdentifier:(NSString*)myIdentifier;
 -(void)editCardTitleWithIdentifier:(NSString*)myIdentifier toNewTitle:(NSString*)newTitle;
 
--(IBAction)buttonPressed:(id)sender;
+-(IBAction)deleteButtonPressed:(id)sender;
 
 @end

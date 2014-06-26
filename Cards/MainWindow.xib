@@ -306,7 +306,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="buttonPressed:" target="-2" id="Ii4-Ck-7IU"/>
+                        <action selector="deleteButtonPressed:" target="-2" id="ZRA-6O-cRH"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4ac-DP-Ney">
