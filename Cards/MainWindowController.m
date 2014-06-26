@@ -255,6 +255,64 @@
 	next = a;
 }
 
+-(IBAction)changeType:(id)sender
+{
+	int x = (int)[[self types] selectedRow];
+	NSLog(@"type: %@",[NSNumber numberWithInt:x]);
+	
+	switch (x)
+	{
+		case 0:
+			// next
+			break;
+		case 1:
+			// scheduled
+			break;
+		case 2:
+			// tracking
+			break;
+		case 3:
+			// someday
+			break;
+		case 4:
+			// projects
+			break;
+		default:
+			NSLog(@"no case chosen");
+			break;
+	}
+}
+
+-(IBAction)changeAction:(id)sender
+{
+	int x = (int)[[self types] selectedRow];
+	NSLog(@"action: %@",[NSNumber numberWithInt:x]);
+	
+	switch (x)
+	{
+		case 0:
+			// do
+			break;
+		case 1:
+			// brainstorm
+			break;
+		case 2:
+			// research
+			break;
+		case 3:
+			// buy
+			break;
+		case 4:
+			// review
+			break;
+		case 5:
+			// contact
+			break;
+		default:
+			NSLog(@"no case chosen");
+			break;
+	}
+}
 
 -(CardInfo*)firstCard
 {

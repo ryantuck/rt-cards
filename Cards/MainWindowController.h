@@ -55,6 +55,9 @@
 
 -(IBAction)addToDo:(id)sender;
 
+-(IBAction)changeType:(id)sender;
+-(IBAction)changeAction:(id)sender;
+
 -(void)createNewCardWithTitle:(NSString*)title;
 -(void)populateCardsWithStoredData;
 -(NSString*)getRandomAlphanumericString;

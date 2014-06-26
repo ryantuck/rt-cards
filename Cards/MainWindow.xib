@@ -6,6 +6,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController">
             <connections>
+                <outlet property="actions" destination="zhh-uf-BH8" id="70a-Ct-MLL"/>
                 <outlet property="doneView" destination="KGD-02-xh5" id="8qQ-tV-d4s"/>
                 <outlet property="entryInput" destination="XPI-8A-qRk" id="qdy-Fh-anW"/>
                 <outlet property="entryView" destination="Vf3-44-t9H" id="vmz-Mt-fZ2"/>
@@ -17,6 +18,7 @@
                 <outlet property="somedayView" destination="zye-oD-ok2" id="jW6-t9-n1d"/>
                 <outlet property="titleBox" destination="mzF-RW-Jpl" id="Xn0-kR-dAh"/>
                 <outlet property="trackingView" destination="Hin-kP-AyX" id="AMl-TW-Y08"/>
+                <outlet property="types" destination="pqC-Hr-4mf" id="IEP-Ar-edd"/>
                 <outlet property="window" destination="WCU-8y-33f" id="pBz-9l-MOC"/>
             </connections>
         </customObject>
@@ -237,6 +239,9 @@
                             </buttonCell>
                         </column>
                     </cells>
+                    <connections>
+                        <action selector="changeType:" target="-2" id="9yl-vd-oqP"/>
+                    </connections>
                 </matrix>
                 <matrix verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zhh-uf-BH8">
                     <rect key="frame" x="20" y="115" width="91" height="118"/>
@@ -275,6 +280,9 @@
                             </buttonCell>
                         </column>
                     </cells>
+                    <connections>
+                        <action selector="changeAction:" target="-2" id="XSQ-am-3gY"/>
+                    </connections>
                 </matrix>
                 <tokenField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iEa-0d-TDo">
                     <rect key="frame" x="142" y="181" width="161" height="22"/>
