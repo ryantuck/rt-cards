@@ -37,6 +37,26 @@
 	return type;
 }
 
+-(NSString*)actionFromNumber:(int)n
+{
+	NSString* action;
+	
+	switch (n)
+	{
+		case 0: action = @"do";				break;
+		case 1: action = @"brainstorm";		break;
+		case 2: action = @"research";		break;
+		case 3: action = @"buy";			break;
+		case 4: action = @"review";			break;
+		case 5: action = @"contact";		break;
+			
+		default: action = @"do";			break;
+			
+	}
+	
+	return action;
+}
+
 
 // --------------------------------------------------------
 // Top Level Shit
@@ -185,8 +205,17 @@
 -(IBAction)processButtonPressed:(id)sender
 {
 	// set processing stuff to card model
-	[self firstInboxCard].title = [[self titleBox] stringValue];
-	[self firstInboxCard].type	= [self typeFromNumber:(int)[[self types] selectedRow] + 1];
+	[self firstInboxCard].title		= [[self titleBox] stringValue];
+	[self firstInboxCard].type		= [self typeFromNumber:(int)[[self types] selectedRow] + 1];
+	[self firstInboxCard].action	= [self actionFromNumber:(int)[[self actions] selectedRow]];
+	[self firstInboxCard].notes		= [[self notesBox] stringValue];
+	
+	if (self.dueCheckBox.state == NSOnState){
+		[self firstInboxCard].dueDate = [[self duePicker] dateValue];
+	}
+	if (self.reminderCheckBox.state == NSOnState){
+		[self firstInboxCard].reminderDate = [[self reminderPicker] dateValue];
+	}
 	
 	// save to core data
 	[self editCard:[self firstInboxCard]];
@@ -194,11 +223,20 @@
 	// repopulate view
 	[self populateCardsWithStoredData];
 	[self populateInboxProcessingFields];
+	[self logAllNextActionCards];
 }
 
 -(IBAction)doneButtonPressed:(id)sender
 {
 	
+}
+
+-(void)logAllNextActionCards
+{
+	for (CardModel* card in self.next)
+	{
+		[card logInfo];
+	}
 }
 
 -(IBAction)changeType:(id)sender
@@ -314,7 +352,6 @@
 	[self showReminderStuff:NO];
 	
 	[[self types] selectCellAtRow:0 column:0];
-	
 }
 
 -(void)showReminderStuff:(BOOL)show
@@ -366,14 +403,14 @@
 
 -(void)resetDueStuff
 {
-	[self duePicker].enabled	= NO;
 	[self dueCheckBox].state	= NSOffState;
+	[self duePicker].enabled	= NO;
 }
 
 -(void)resetReminderStuff
 {
-	[self reminderPicker].enabled	= NO;
 	[self reminderCheckBox].state	= NSOffState;
+	[self reminderPicker].enabled	= NO;
 }
 
 // --------------------------------------------------------
@@ -561,18 +598,46 @@
 
 -(void)assignCardInfo:(CardInfo*)cInfo fromModel:(CardModel*)cModel
 {
-	cInfo.title			= cModel.title;
-	cInfo.identifier	= cModel.identifier;
-	cInfo.createdDate	= cModel.createdDate;
-	cInfo.type			= cModel.type;
+	cInfo.title				= cModel.title;
+	cInfo.identifier		= cModel.identifier;
+	
+	cInfo.createdDate		= cModel.createdDate;
+	cInfo.completedDate		= cModel.completedDate;
+	cInfo.lastEditedDate	= cModel.lastEditedDate;
+	cInfo.dueDate			= cModel.dueDate;
+	cInfo.reminderDate		= cModel.reminderDate;
+	
+	cInfo.type				= cModel.type;
+	cInfo.action			= cModel.action;
+	
+	cInfo.notes				= cModel.notes;
+	cInfo.tags				= cModel.tags;
+	
+	cInfo.project			= cModel.project;
+	cInfo.waitingOn			= cModel.waitingOn;
+	cInfo.neededFor			= cModel.neededFor;
 }
 
 -(void)assignCardModel:(CardModel*)cModel fromInfo:(CardInfo*)cInfo
 {
-	cModel.title		= cInfo.title;
-	cModel.identifier	= cInfo.identifier;
-	cModel.createdDate	= cInfo.createdDate;
-	cModel.type			= cInfo.type;
+	cModel.title			= cInfo.title;
+	cModel.identifier		= cInfo.identifier;
+	
+	cModel.createdDate		= cInfo.createdDate;
+	cModel.completedDate	= cInfo.completedDate;
+	cModel.lastEditedDate	= cInfo.lastEditedDate;
+	cModel.dueDate			= cInfo.dueDate;
+	cModel.reminderDate		= cInfo.reminderDate;
+	
+	cModel.type				= cInfo.type;
+	cModel.action			= cInfo.action;
+	
+	cModel.notes			= cInfo.notes;
+	cModel.tags				= cInfo.tags;
+	
+	cModel.project			= cInfo.project;
+	cModel.waitingOn		= cInfo.waitingOn;
+	cModel.neededFor		= cInfo.neededFor;
 }
 
 
