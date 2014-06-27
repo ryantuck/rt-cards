@@ -196,32 +196,63 @@
 	[self populateInboxProcessingFields];
 }
 
+-(IBAction)doneButtonPressed:(id)sender
+{
+	
+}
+
 -(IBAction)changeType:(id)sender
 {
 	int x = (int)[[self types] selectedRow];
-	NSLog(@"type: %@",[NSNumber numberWithInt:x]);
-	
+
 	switch (x)
 	{
 		case 0:
 			// next
-			//[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"next"];
+			
+			// hide 'remind me'
+			[self showActions:YES];
+			[self showDueStuff:YES];
+			[self showReminderStuff:NO];
+			
+			
 			break;
 		case 1:
 			// scheduled
-			//[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"scheduled"];
+			
+			// show 'remind me'
+			[self showActions:YES];
+			[self showDueStuff:YES];
+			[self showReminderStuff:YES];
+
+			
 			break;
 		case 2:
 			// tracking
-			//[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"tracking"];
+			
+			// hide all
+			[self showActions:NO];
+			[self showDueStuff:NO];
+			[self showReminderStuff:NO];
+			
 			break;
 		case 3:
 			// someday
-			//[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"someday"];
+			
+			// hide all
+			[self showActions:NO];
+			[self showDueStuff:NO];
+			[self showReminderStuff:NO];
+			
 			break;
 		case 4:
 			// projects
-			//[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"projects"];
+			
+			// hide all (for now)
+			[self showActions:NO];
+			[self showDueStuff:NO];
+			[self showReminderStuff:NO];
+			
 			break;
 		default:
 			NSLog(@"no case chosen");
@@ -276,10 +307,56 @@
 		NSLog(@"first card is nil");
 	}
 	
+	[self showActions:YES];
+	[self showDueStuff:YES];
+	[self showReminderStuff:NO];
+	
+	[[self types] selectCellAtRow:0 column:0];
 	
 }
 
+-(void)showReminderStuff:(BOOL)show
+{
+	[self reminderCheckBox].hidden	= !show;
+	[self reminderPicker].hidden	= !show;
+}
 
+-(void)showDueStuff:(BOOL)show
+{
+	[self dueCheckBox].hidden	= !show;
+	[self duePicker].hidden		= !show;
+}
+
+-(void)enableDatePicker:(NSDatePicker*)picker active:(BOOL)active
+{
+	//[picker setEnabled:active];
+	picker.enabled = active;
+}
+
+-(void)enableCheckBox:(NSButton*)checkbox active:(BOOL)active
+{
+	checkbox.enabled = active;
+}
+
+-(IBAction)dueCheckBoxClicked:(id)sender
+{
+	BOOL isActive = NO;
+	if ([[self dueCheckBox] state] == NSOnState) isActive = YES;
+	
+	[self enableDatePicker:[self duePicker] active:isActive];
+}
+
+-(IBAction)reminderCheckBoxClicked:(id)sender
+{
+	BOOL isActive = NO;
+	if ([[self reminderCheckBox] state] == NSOnState) isActive = YES;
+	[self enableDatePicker:[self reminderPicker] active:isActive];
+}
+
+-(void)showActions:(BOOL)show
+{
+	[self actions].hidden = !show;
+}
 
 // --------------------------------------------------------
 // Card Handling

@@ -9,14 +9,20 @@
                 <outlet property="actions" destination="zhh-uf-BH8" id="70a-Ct-MLL"/>
                 <outlet property="cardCount" destination="yLB-Du-hAK" id="a1G-JW-erJ"/>
                 <outlet property="doneView" destination="KGD-02-xh5" id="8qQ-tV-d4s"/>
+                <outlet property="dueCheckBox" destination="BAo-mE-i2G" id="Vfa-jp-KDp"/>
+                <outlet property="duePicker" destination="dpN-8t-Oep" id="vEb-yB-9Ia"/>
                 <outlet property="entryInput" destination="XPI-8A-qRk" id="qdy-Fh-anW"/>
                 <outlet property="entryView" destination="Vf3-44-t9H" id="vmz-Mt-fZ2"/>
                 <outlet property="identifierLabel" destination="ph5-PF-1Bc" id="Pzq-Q3-bFs"/>
                 <outlet property="inboxView" destination="242-r3-fxu" id="2VY-yv-7ys"/>
                 <outlet property="nextView" destination="5Gu-5W-ab1" id="TKm-UL-3qs"/>
+                <outlet property="notesBox" destination="4jT-D2-hVb" id="v4K-if-A3R"/>
                 <outlet property="projectsView" destination="H67-1X-Ii6" id="oBe-eX-Wvi"/>
+                <outlet property="reminderCheckBox" destination="2K3-Q0-vb6" id="sMd-4c-WgE"/>
+                <outlet property="reminderPicker" destination="EIw-Pr-WZN" id="3TJ-8A-3Gr"/>
                 <outlet property="scheduledView" destination="Ehd-qA-RFK" id="xcS-Z1-FhJ"/>
                 <outlet property="somedayView" destination="zye-oD-ok2" id="jW6-t9-n1d"/>
+                <outlet property="tagsBox" destination="iEa-0d-TDo" id="WoO-of-Stg"/>
                 <outlet property="titleBox" destination="mzF-RW-Jpl" id="Xn0-kR-dAh"/>
                 <outlet property="trackingView" destination="Hin-kP-AyX" id="AMl-TW-Y08"/>
                 <outlet property="types" destination="pqC-Hr-4mf" id="IEP-Ar-edd"/>
@@ -199,6 +205,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="dueCheckBoxClicked:" target="-2" id="kM8-0D-SYe"/>
+                    </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2K3-Q0-vb6">
                     <rect key="frame" x="386" y="182" width="101" height="18"/>
@@ -206,6 +215,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="reminderCheckBoxClicked:" target="-2" id="hqr-dM-OCI"/>
+                    </connections>
                 </button>
                 <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pqC-Hr-4mf">
                     <rect key="frame" x="402" y="301" width="87" height="98"/>
@@ -364,6 +376,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="doneButtonPressed:" target="-2" id="szF-CN-qGi"/>
+                    </connections>
                 </button>
             </subviews>
             <constraints>
