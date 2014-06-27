@@ -63,7 +63,6 @@
 // --------------------------------------------------------
 // Card Handling
 // --------------------------------------------------------
-@property NSMutableArray* cards; // can prob delete?
 
 // Filtered card arrays
 @property NSMutableArray* inbox;
@@ -74,18 +73,13 @@
 @property NSMutableArray* done;
 @property NSMutableArray* projects;
 
--(CardInfo*)firstCard;	// what's this referring to?
-
 -(void)populateCardsWithStoredData;
-
-// switch these to take in a card
--(void)deleteCardWithIdentifier:(NSString*)myIdentifier;
--(void)editCardTitleWithIdentifier:(NSString*)myIdentifier toNewTitle:(NSString*)newTitle;
 
 // --------------------------------------------------------
 // Helpers
 // --------------------------------------------------------
 -(NSString*)getRandomAlphanumericString;
+
 
 
 
