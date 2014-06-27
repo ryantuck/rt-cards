@@ -319,12 +319,16 @@
 {
 	[self reminderCheckBox].hidden	= !show;
 	[self reminderPicker].hidden	= !show;
+	
+	[self resetReminderStuff];
 }
 
 -(void)showDueStuff:(BOOL)show
 {
 	[self dueCheckBox].hidden	= !show;
 	[self duePicker].hidden		= !show;
+	
+	[self resetDueStuff];
 }
 
 -(void)enableDatePicker:(NSDatePicker*)picker active:(BOOL)active
@@ -356,6 +360,18 @@
 -(void)showActions:(BOOL)show
 {
 	[self actions].hidden = !show;
+}
+
+-(void)resetDueStuff
+{
+	[self duePicker].enabled	= NO;
+	[self dueCheckBox].state	= NSOffState;
+}
+
+-(void)resetReminderStuff
+{
+	[self reminderPicker].enabled	= NO;
+	[self reminderCheckBox].state	= NSOffState;
 }
 
 // --------------------------------------------------------
