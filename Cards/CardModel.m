@@ -58,21 +58,21 @@
 -(void)logInfo
 {
 	NSLog(@"== Card Info ==========");
-	NSLog(@"Title:			%@",self.title);
-	NSLog(@"Identifier:		%@",self.identifier);
+	NSLog(@"Title:          %@",self.title);
+	NSLog(@"Identifier:     %@",self.identifier);
 	NSLog(@"Dates");
-	NSLog(@"-- created:		%@",self.createdDate);
-	NSLog(@"-- completed:	%@",self.completedDate);
-	NSLog(@"-- edited:		%@",self.lastEditedDate);
-	NSLog(@"-- due:			%@",self.dueDate);
-	NSLog(@"-- reminder:	%@",self.reminderDate);
-	NSLog(@"Type:			%@",self.type);
-	NSLog(@"Action:			%@",self.action);
-	NSLog(@"Notes:			%@",self.notes);
-	NSLog(@"Tags:			%@",self.tags);
-	NSLog(@"Project:		%@",self.project);
-	NSLog(@"Waiting on:		%@",self.waitingOn);
-	NSLog(@"Needed for:		%@",self.neededFor);
+	NSLog(@"-- created:     %@",self.createdDate);
+	NSLog(@"-- completed:   %@",self.completedDate);
+	NSLog(@"-- edited:      %@",self.lastEditedDate);
+	NSLog(@"-- due:         %@",self.dueDate);
+	NSLog(@"-- reminder:    %@",self.reminderDate);
+	NSLog(@"Type:           %@",self.type);
+	NSLog(@"Action:         %@",self.action);
+	NSLog(@"Notes:          %@",self.notes);
+	NSLog(@"Tags:           %@",self.tags);
+	NSLog(@"Project:        %@",self.project);
+	NSLog(@"Waiting on:     %@",self.waitingOn);
+	NSLog(@"Needed for:     %@",self.neededFor);
 	NSLog(@"");
 }
 
