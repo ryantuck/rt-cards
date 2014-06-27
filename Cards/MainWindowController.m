@@ -262,8 +262,10 @@
 
 -(IBAction)changeAction:(id)sender
 {
+	// ***
+	// currently doesn't do anything - can probably delete
+	
 	int x = (int)[[self types] selectedRow];
-	NSLog(@"action: %@",[NSNumber numberWithInt:x]);
 	
 	switch (x)
 	{
