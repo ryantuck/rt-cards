@@ -8,6 +8,7 @@
 
 #import "CardModel.h"
 
+
 @implementation CardModel
 
 @synthesize title;
