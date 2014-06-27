@@ -14,40 +14,66 @@
 @synthesize identifier;
 
 @synthesize createdDate;
-@synthesize dueDate;
-@synthesize reminderDate;
 @synthesize completedDate;
 @synthesize lastEditedDate;
+@synthesize dueDate;
+@synthesize reminderDate;
 
+@synthesize type;
+@synthesize action;
+
+@synthesize notes;
+@synthesize tags;
+
+@synthesize project;
 @synthesize waitingOn;
 @synthesize neededFor;
 
-@synthesize project;
-@synthesize action;
-@synthesize notes;
-@synthesize tags;
-@synthesize type;
-
--(id)initWithInfo:(CardInfo*)info
+-(id)initWithInfo:(CardInfo*)cInfo
 {
 	// takes in info from managed object and applies to self, which is simply nsobject
 	
-	self.title			= info.title;
-	self.identifier		= info.identifier;
-	self.createdDate	= info.createdDate;
-	self.dueDate		= info.dueDate;
-	self.reminderDate	= info.reminderDate;
-	self.completedDate	= info.completedDate;
-	self.lastEditedDate = info.lastEditedDate;
-	self.waitingOn		= info.waitingOn;
-	self.neededFor		= info.neededFor;
-	self.project		= info.project;
-	self.action			= info.action;
-	self.type			= info.type;
-	self.tags			= info.tags;
-	self.notes			= info.notes;
+	self.title			= cInfo.title;
+	self.identifier		= cInfo.identifier;
+	
+	self.createdDate	= cInfo.createdDate;
+	self.completedDate	= cInfo.completedDate;
+	self.lastEditedDate	= cInfo.lastEditedDate;
+	self.dueDate		= cInfo.dueDate;
+	self.reminderDate	= cInfo.reminderDate;
+	
+	self.type			= cInfo.type;
+	self.action			= cInfo.action;
+	
+	self.notes			= cInfo.notes;
+	self.tags			= cInfo.tags;
+	
+	self.project		= cInfo.project;
+	self.waitingOn		= cInfo.waitingOn;
+	self.neededFor		= cInfo.neededFor;
 	
 	return self;
+}
+
+-(void)logInfo
+{
+	NSLog(@"== Card Info ==========");
+	NSLog(@"Title:			%@",self.title);
+	NSLog(@"Identifier:		%@",self.identifier);
+	NSLog(@"Dates");
+	NSLog(@"-- created:		%@",self.createdDate);
+	NSLog(@"-- completed:	%@",self.completedDate);
+	NSLog(@"-- edited:		%@",self.lastEditedDate);
+	NSLog(@"-- due:			%@",self.dueDate);
+	NSLog(@"-- reminder:	%@",self.reminderDate);
+	NSLog(@"Type:			%@",self.type);
+	NSLog(@"Action:			%@",self.action);
+	NSLog(@"Notes:			%@",self.notes);
+	NSLog(@"Tags:			%@",self.tags);
+	NSLog(@"Project:		%@",self.project);
+	NSLog(@"Waiting on:		%@",self.waitingOn);
+	NSLog(@"Needed for:		%@",self.neededFor);
+	NSLog(@"");
 }
 
 @end

@@ -35,4 +35,6 @@
 
 -(id)initWithInfo:(CardInfo*)info;
 
+-(void)logInfo;
+
 @end
