@@ -42,11 +42,18 @@
 // --------------------------------------------------------
 @property IBOutlet NSTextField* titleBox;
 @property IBOutlet NSTextField* tagsBox;
+@property IBOutlet NSTextField* notesBox;
+
+@property IBOutlet NSTextField* identifierLabel;
+
 @property IBOutlet NSMatrix* types;
+
 @property IBOutlet NSMatrix* actions;
+@property IBOutlet NSButton* dueCheckBox;
+@property IBOutlet NSButton* reminderCheckBox;
 @property IBOutlet NSDatePicker* duePicker;
 @property IBOutlet NSDatePicker* reminderPicker;
-@property IBOutlet NSTextField* identifierLabel;
+
 @property IBOutlet NSTextField* cardCount;
 
 // radio button handling
@@ -56,6 +63,7 @@
 // button press handling
 -(IBAction)deleteButtonPressed:(id)sender;
 -(IBAction)processButtonPressed:(id)sender;
+-(IBAction)doneButtonPressed:(id)sender;
 
 
 -(void)populateInboxProcessingFields;
