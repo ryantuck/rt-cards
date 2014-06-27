@@ -17,15 +17,16 @@
 @synthesize dueDate;
 @synthesize reminderDate;
 @synthesize completedDate;
+@synthesize lastEditedDate;
 
 @synthesize waitingOn;
 @synthesize neededFor;
 
 @synthesize project;
-@synthesize area;
 @synthesize action;
 @synthesize notes;
 @synthesize tags;
+@synthesize type;
 
 -(id)initWithInfo:(CardInfo*)info
 {
@@ -34,7 +35,17 @@
 	self.title			= info.title;
 	self.identifier		= info.identifier;
 	self.createdDate	= info.createdDate;
-	
+	self.dueDate		= info.dueDate;
+	self.reminderDate	= info.reminderDate;
+	self.completedDate	= info.completedDate;
+	self.lastEditedDate = info.lastEditedDate;
+	self.waitingOn		= info.waitingOn;
+	self.neededFor		= info.neededFor;
+	self.project		= info.project;
+	self.action			= info.action;
+	self.type			= info.type;
+	self.tags			= info.tags;
+	self.notes			= info.notes;
 	
 	return self;
 }
