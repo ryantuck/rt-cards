@@ -18,45 +18,6 @@
 
 @implementation MainWindowController
 
--(NSString*)typeFromNumber:(int)n
-{
-	NSString* type;
-	
-	switch (n)
-	{
-		case 0: type = @"inbox";		break;
-		case 1: type = @"next";			break;
-		case 2: type = @"scheduled";	break;
-		case 3: type = @"tracking";		break;
-		case 4: type = @"someday";		break;
-		case 5: type = @"projects";		break;
-		case 6: type = @"done";			break;
-			
-		default: type = @"inbox";		break;
-	}
-	
-	return type;
-}
-
--(NSString*)actionFromNumber:(int)n
-{
-	NSString* action;
-	
-	switch (n)
-	{
-		case 0: action = @"do";				break;
-		case 1: action = @"brainstorm";		break;
-		case 2: action = @"research";		break;
-		case 3: action = @"buy";			break;
-		case 4: action = @"review";			break;
-		case 5: action = @"contact";		break;
-			
-		default: action = @"do";			break;
-			
-	}
-	
-	return action;
-}
 
 
 // --------------------------------------------------------
@@ -97,9 +58,6 @@
 	// set up field to create new card upon hitting enter
 	[entryInput setTarget:self];
 	[entryInput setAction:@selector(addToDo:)];
-
-	[self printAllTags];
-	
 }
 
 
@@ -213,6 +171,7 @@
 	[self firstInboxCard].action	= [self actionFromNumber:(int)[[self actions] selectedRow]];
 	[self firstInboxCard].notes		= [[self notesBox] stringValue];
 	
+	// set dates if dates are specified
 	if (self.dueCheckBox.state == NSOnState){
 		[self firstInboxCard].dueDate = [[self duePicker] dateValue];
 	}
@@ -220,15 +179,11 @@
 		[self firstInboxCard].reminderDate = [[self reminderPicker] dateValue];
 	}
 	
-	// get tags from tagsBox
+	// add tags from tagsBox to the card
 	NSSet* tmpTags = [self.tagsBox objectValue];
-	NSLog(@"temp Tags count: %lu",[tmpTags count]);
-	
-	// create tag objects from entered tags
 	for (NSString* string in tmpTags)
 	{
-		NSLog(@"tag: %@",string);
-		[self.firstInboxCard.tags addObject:string];		// adds as string
+		[self.firstInboxCard.tags addObject:string];
 	}
 
 	// save to core data
@@ -237,7 +192,6 @@
 	// repopulate view
 	[self populateCardsWithStoredData];
 	[self populateInboxProcessingFields];
-	[self logAllNextActionCards];
 }
 
 -(IBAction)doneButtonPressed:(id)sender
@@ -351,19 +305,19 @@
 	
 	if (currentCard != nil)
 	{
-		NSLog(@"first card exists!");
 		[self.titleBox setStringValue:currentCard.title];
 		[self.identifierLabel setStringValue:currentCard.identifier];
 		[self updateCardCount];
 	}
 	else
 	{
-		NSLog(@"first card is nil");
+		NSLog(@"inbox is empty!");
 	}
 	
 	[self showActions:YES];
 	[self showDueStuff:YES];
 	[self showReminderStuff:NO];
+	self.tagsBox.stringValue = @"";
 	
 	[[self types] selectCellAtRow:0 column:0];
 }
@@ -426,6 +380,47 @@
 	[self reminderCheckBox].state	= NSOffState;
 	[self reminderPicker].enabled	= NO;
 }
+
+-(NSString*)typeFromNumber:(int)n
+{
+	NSString* type;
+	
+	switch (n)
+	{
+		case 0: type = @"inbox";		break;
+		case 1: type = @"next";			break;
+		case 2: type = @"scheduled";	break;
+		case 3: type = @"tracking";		break;
+		case 4: type = @"someday";		break;
+		case 5: type = @"projects";		break;
+		case 6: type = @"done";			break;
+			
+		default: type = @"inbox";		break;
+	}
+	
+	return type;
+}
+
+-(NSString*)actionFromNumber:(int)n
+{
+	NSString* action;
+	
+	switch (n)
+	{
+		case 0: action = @"do";				break;
+		case 1: action = @"brainstorm";		break;
+		case 2: action = @"research";		break;
+		case 3: action = @"buy";			break;
+		case 4: action = @"review";			break;
+		case 5: action = @"contact";		break;
+			
+		default: action = @"do";			break;
+			
+	}
+	
+	return action;
+}
+
 
 // --------------------------------------------------------
 // Card Handling
@@ -552,14 +547,12 @@
 	// assign card model's information
 	if ([filteredArray count] != 0)
 	{
-		NSLog(@"card model info adapted");
 		NSManagedObject* objToEdit = [filteredArray objectAtIndex:0];
 		[self assignCardInfo:(CardInfo*)objToEdit fromModel:cModel];
-		NSLog(@"card info title: %@",((CardInfo*)objToEdit).title);
 	}
 	else
 	{
-		NSLog(@"array is not long enough you dumb fuck!");
+		NSLog(@"%lu cards exist that match this card: %@ // %@",[filteredArray count],cModel.title,cModel.identifier);
 	}
 	
 	// save
@@ -601,7 +594,7 @@
 	}
 	else
 	{
-		NSLog(@"array is not long enough you dumb fuck!");
+		NSLog(@"%lu cards exist that match this card: %@ // %@",[filteredArray count],cModel.title,cModel.identifier);
 	}
 	
 	// save
@@ -630,42 +623,14 @@
 	
 	cInfo.notes				= cModel.notes;
 	
-	NSLog(@"# tags: %lu",[cModel.tags count]);
-	
 	for (NSString* string in cModel.tags)
 	{
-		// add a new tag to cInfo.tags
 		[self addTag:string toCardInfo:cInfo];
 	}
-	NSLog(@"outta here bruh");
-	
-	//cInfo.tags				= cModel.tags;
-	
+
 	cInfo.project			= cModel.project;
 	cInfo.waitingOn			= cModel.waitingOn;
 	cInfo.neededFor			= cModel.neededFor;
-}
-
--(void)addTag:(NSString*)t toCardInfo:(CardInfo*)cInfo
-{
-	NSLog(@"addTag: %@ to cardInfo: %@",t,cInfo.title);
-	
-	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
-	Tag* newTag = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:context];
-	newTag.name = t;
-	
-	NSMutableSet* tmpArray = [NSMutableSet setWithSet:cInfo.tags];
-	[tmpArray addObject:newTag];
-	cInfo.tags = tmpArray;
-	
-	// save!
-	NSError* error;
-	if (![context save:&error])
-	{
-		NSLog(@"fuck - couldn't save: %@",[error localizedDescription]);
-	}
-	
-	NSLog(@"addTagToCardInfo saved");
 }
 
 -(void)assignCardModel:(CardModel*)cModel fromInfo:(CardInfo*)cInfo
@@ -683,6 +648,7 @@
 	cModel.action			= cInfo.action;
 	
 	cModel.notes			= cInfo.notes;
+	
 	for (Tag* tag in cInfo.tags)
 	{
 		[cModel.tags addObject:tag.name];
@@ -693,17 +659,31 @@
 	cModel.neededFor		= cInfo.neededFor;
 }
 
--(void)createATagWithName:(NSString*)newName
+-(void)addTag:(NSString*)t toCardInfo:(CardInfo*)cInfo
 {
-	NSLog(@"creating tag: %@",newName);
+	NSLog(@"addTag: %@ to cardInfo: %@",t,cInfo.title);
 	
-	// create new entity and add it to our context
 	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
-	Tag* newTag	= [NSEntityDescription
-						  insertNewObjectForEntityForName:@"Tag"
-						  inManagedObjectContext:context];
 	
-	newTag.name = newName;
+	Tag* tagToAdd;
+	
+	if ([self tagAlreadyExists:t])
+	{
+		NSLog(@"tag: %@ exists",t);
+		// point to already existing tag
+		tagToAdd = [self tagWithName:t];
+	}
+	else
+	{
+		NSLog(@"tag: %@ is unique",t);
+		// create new tag
+		tagToAdd = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:context];
+		tagToAdd.name = t;
+	}
+
+	NSMutableSet* tmpArray = [NSMutableSet setWithSet:cInfo.tags];
+	[tmpArray addObject:tagToAdd];
+	cInfo.tags = tmpArray;
 	
 	// save!
 	NSError* error;
@@ -739,12 +719,15 @@
 	}
 }
 
--(void)addATagToACard
+-(BOOL)tagAlreadyExists:(NSString*)tagName
 {
+	bool check = false;
+	
+	// get tags
 	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
 	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription* entity = [NSEntityDescription
-								   entityForName:@"CardInfo"
+								   entityForName:@"Tag"
 								   inManagedObjectContext:context];
 	[fetchRequest setEntity:entity];
 	
@@ -757,41 +740,51 @@
 	// fetch data from store
 	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
 	
-	NSLog(@"# of fetched cards: %lu",[fetchedObjects count]);
+	// filter using predicate
+	NSPredicate* namePredicate = [NSPredicate predicateWithFormat:@"name == %@",tagName];
+	NSArray* filteredArray = [fetchedObjects filteredArrayUsingPredicate:namePredicate];
 	
-	// set up filtering predicates
-	NSPredicate* titlePredicate	= [NSPredicate predicateWithFormat:@"title == 'ryanscard'"];
-	NSArray* filteredCards = [fetchedObjects filteredArrayUsingPredicate:titlePredicate];
+	if ([filteredArray count] == 0)
+	{
+		NSLog(@"filtered count is zero");
+		check = false;
+	}
+	else
+	{
+		NSLog(@"%lu tags exist with the name: %@",[filteredArray count],tagName);
+		check = true;
+	}
 	
-	CardInfo* card = [filteredCards objectAtIndex:0];
+	return check;
+}
+
+-(Tag*)tagWithName:(NSString*)tagName
+{
+	// get tags
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"Tag"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
 	
-	NSFetchRequest* tagFetch = [[NSFetchRequest alloc] init];
-	NSEntityDescription* tagEntity = [NSEntityDescription entityForName:@"Tag" inManagedObjectContext:context];
-	[tagFetch setEntity:tagEntity];
-	NSArray* fetchedTags = [context executeFetchRequest:tagFetch error:&error];
-	
-	NSLog(@"# of fetched tags: %lu",[fetchedTags count]);
-	
-	NSPredicate* tagPredicate = [NSPredicate predicateWithFormat:@"name == 'cats'"];
-	NSArray* filteredTags = [fetchedTags filteredArrayUsingPredicate:tagPredicate];
-	
-	Tag* tag = [filteredTags objectAtIndex:0];
-	
-	NSLog(@"card: %@",card.title);
-	NSLog(@"tag: %@",tag.name);
-	
-	NSMutableSet* tmpSet = [NSMutableSet setWithSet:card.tags];
-	[tmpSet addObject:tag];
-	card.tags = tmpSet;
-	
-	NSLog(@"added tags");
-	
-	NSLog(@"# of tags on card: %lu",[card.tags count]);
-	
+	NSError* error;
 	if (![context save:&error])
 	{
 		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
 	}
+	
+	// fetch data from store
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	// filter using predicate
+	NSPredicate* namePredicate = [NSPredicate predicateWithFormat:@"name == %@",tagName];
+	NSArray* filteredArray = [fetchedObjects filteredArrayUsingPredicate:namePredicate];
+	
+	// ** do some checks here and log if there are more than one obviously
+	
+	Tag* x = [filteredArray objectAtIndex:0];
+	return x;
 }
 
 // --------------------------------------------------------
