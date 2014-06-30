@@ -30,7 +30,7 @@
 @property (retain, readwrite)	NSString*	action;
 @property (retain, readwrite)	NSString*	notes;
 
-@property (retain, readwrite)	NSMutableArray*	tags;
+@property (retain, readwrite)	NSMutableSet*	tags;
 
 
 -(id)initWithInfo:(CardInfo*)info;
