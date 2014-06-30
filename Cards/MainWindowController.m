@@ -39,6 +39,7 @@
 	[[self window] setContentSize:[entryView frame].size];
 	[[[self window] contentView] addSubview:entryView];
 	[[[self window] contentView] setWantsLayer:YES];
+	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
 }
 
 // --------------------------------------------------------

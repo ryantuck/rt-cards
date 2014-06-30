@@ -25,6 +25,8 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Insert code here to initialize your application
 	[self showMainWindow:nil];
+	
+	
 	NSLog(@"app did finish launching runs");
 }
 
