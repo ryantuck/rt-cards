@@ -27,6 +27,7 @@
 		94E402C41954A270005F41A7 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E402C31954A270005F41A7 /* MainWindowController.m */; };
 		94E402C61954B252005F41A7 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94E402C51954B252005F41A7 /* MainWindow.xib */; };
 		94E4032E1954CA47005F41A7 /* CardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E4032D1954CA47005F41A7 /* CardModel.m */; };
+		94EED5F6195FCB2500A66AFA /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EED5F5195FCB2500A66AFA /* Tag.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,8 @@
 		94E402C51954B252005F41A7 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		94E4032C1954CA47005F41A7 /* CardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardModel.h; sourceTree = "<group>"; };
 		94E4032D1954CA47005F41A7 /* CardModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardModel.m; sourceTree = "<group>"; };
+		94EED5F4195FCB2500A66AFA /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		94EED5F5195FCB2500A66AFA /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +125,8 @@
 				94E4028A1954955B005F41A7 /* Supporting Files */,
 				9482D0F519586D67000A11F6 /* CardInfo.h */,
 				9482D0F619586D67000A11F6 /* CardInfo.m */,
+				94EED5F4195FCB2500A66AFA /* Tag.h */,
+				94EED5F5195FCB2500A66AFA /* Tag.m */,
 				94E4032C1954CA47005F41A7 /* CardModel.h */,
 				94E4032D1954CA47005F41A7 /* CardModel.m */,
 				943C9739195B6282007321B8 /* CardView.h */,
@@ -285,6 +290,7 @@
 				94E4032E1954CA47005F41A7 /* CardModel.m in Sources */,
 				9482D0F719586D67000A11F6 /* CardInfo.m in Sources */,
 				94E402901954955B005F41A7 /* AppDelegate.m in Sources */,
+				94EED5F6195FCB2500A66AFA /* Tag.m in Sources */,
 				94E4028D1954955B005F41A7 /* main.m in Sources */,
 				94E402C41954A270005F41A7 /* MainWindowController.m in Sources */,
 				943C973B195B6282007321B8 /* CardView.m in Sources */,

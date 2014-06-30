@@ -11,12 +11,17 @@
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="project" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="reminderDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="tags" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" defaultValueString="inbox" syncable="YES"/>
         <attribute name="waitingOn" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="cards" inverseEntity="Tag" syncable="YES"/>
+    </entity>
+    <entity name="Tag" representedClassName="Tag" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="cards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CardInfo" inverseName="tags" inverseEntity="CardInfo" syncable="YES"/>
     </entity>
     <elements>
         <element name="CardInfo" positionX="-414" positionY="-280" width="128" height="253"/>
+        <element name="Tag" positionX="-218" positionY="-85" width="128" height="73"/>
     </elements>
 </model>

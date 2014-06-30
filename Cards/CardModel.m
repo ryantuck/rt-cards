@@ -7,7 +7,7 @@
 //
 
 #import "CardModel.h"
-
+#import "Tag.h"
 
 @implementation CardModel
 
@@ -30,9 +30,18 @@
 @synthesize waitingOn;
 @synthesize neededFor;
 
+
+-(id)init
+{
+	self.tags = [[NSMutableSet alloc] init];
+	return self;
+}
+
 -(id)initWithInfo:(CardInfo*)cInfo
 {
 	// takes in info from managed object and applies to self, which is simply nsobject
+	
+	self = [self init];
 	
 	self.title			= cInfo.title;
 	self.identifier		= cInfo.identifier;
@@ -47,7 +56,11 @@
 	self.action			= cInfo.action;
 	
 	self.notes			= cInfo.notes;
-	self.tags			= cInfo.tags;
+	
+	for (Tag* tag in cInfo.tags)
+	{
+		[self.tags addObject:tag.name];
+	}
 	
 	self.project		= cInfo.project;
 	self.waitingOn		= cInfo.waitingOn;
@@ -70,7 +83,11 @@
 	NSLog(@"Type:           %@",self.type);
 	NSLog(@"Action:         %@",self.action);
 	NSLog(@"Notes:          %@",self.notes);
-	NSLog(@"Tags:           %@",self.tags);
+	NSLog(@"Tags ( %lu )",[self.tags count]);
+	for (NSString* tag in self.tags)
+	{
+		NSLog(@"-- %@",tag);
+	}
 	NSLog(@"Project:        %@",self.project);
 	NSLog(@"Waiting on:     %@",self.waitingOn);
 	NSLog(@"Needed for:     %@",self.neededFor);

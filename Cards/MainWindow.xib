@@ -348,7 +348,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-D2-hVb">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-D2-hVb">
                     <rect key="frame" x="20" y="139" width="223" height="118"/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="notes" drawsBackground="YES" id="mTO-MD-a6A">
                         <font key="font" metaFont="system"/>

@@ -41,7 +41,7 @@
 // Inbox UI
 // --------------------------------------------------------
 @property IBOutlet NSTextField* titleBox;
-@property IBOutlet NSTextField* tagsBox;
+@property IBOutlet NSTokenField* tagsBox;
 @property IBOutlet NSTextField* notesBox;
 
 @property IBOutlet NSTextField* identifierLabel;

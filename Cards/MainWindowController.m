@@ -10,6 +10,7 @@
 #import "CardModel.h"
 #import "AppDelegate.h"
 #import "CardInfo.h"
+#import "Tag.h"
 
 @interface MainWindowController ()
 
@@ -96,6 +97,8 @@
 	// set up field to create new card upon hitting enter
 	[entryInput setTarget:self];
 	[entryInput setAction:@selector(addToDo:)];
+
+	[self printAllTags];
 	
 }
 
@@ -217,6 +220,17 @@
 		[self firstInboxCard].reminderDate = [[self reminderPicker] dateValue];
 	}
 	
+	// get tags from tagsBox
+	NSSet* tmpTags = [self.tagsBox objectValue];
+	NSLog(@"temp Tags count: %lu",[tmpTags count]);
+	
+	// create tag objects from entered tags
+	for (NSString* string in tmpTags)
+	{
+		NSLog(@"tag: %@",string);
+		[self.firstInboxCard.tags addObject:string];		// adds as string
+	}
+
 	// save to core data
 	[self editCard:[self firstInboxCard]];
 	
@@ -512,6 +526,8 @@
 
 -(void)editCard:(CardModel*)cModel
 {
+	NSLog(@"editCard: %@",cModel.title);
+	
 	// set up context and fetch bullshit
 	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
 	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
@@ -598,6 +614,8 @@
 
 -(void)assignCardInfo:(CardInfo*)cInfo fromModel:(CardModel*)cModel
 {
+	NSLog(@"assignCardInfo: %@",cInfo.title);
+	
 	cInfo.title				= cModel.title;
 	cInfo.identifier		= cModel.identifier;
 	
@@ -611,11 +629,43 @@
 	cInfo.action			= cModel.action;
 	
 	cInfo.notes				= cModel.notes;
-	cInfo.tags				= cModel.tags;
+	
+	NSLog(@"# tags: %lu",[cModel.tags count]);
+	
+	for (NSString* string in cModel.tags)
+	{
+		// add a new tag to cInfo.tags
+		[self addTag:string toCardInfo:cInfo];
+	}
+	NSLog(@"outta here bruh");
+	
+	//cInfo.tags				= cModel.tags;
 	
 	cInfo.project			= cModel.project;
 	cInfo.waitingOn			= cModel.waitingOn;
 	cInfo.neededFor			= cModel.neededFor;
+}
+
+-(void)addTag:(NSString*)t toCardInfo:(CardInfo*)cInfo
+{
+	NSLog(@"addTag: %@ to cardInfo: %@",t,cInfo.title);
+	
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	Tag* newTag = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:context];
+	newTag.name = t;
+	
+	NSMutableSet* tmpArray = [NSMutableSet setWithSet:cInfo.tags];
+	[tmpArray addObject:newTag];
+	cInfo.tags = tmpArray;
+	
+	// save!
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"fuck - couldn't save: %@",[error localizedDescription]);
+	}
+	
+	NSLog(@"addTagToCardInfo saved");
 }
 
 -(void)assignCardModel:(CardModel*)cModel fromInfo:(CardInfo*)cInfo
@@ -633,14 +683,116 @@
 	cModel.action			= cInfo.action;
 	
 	cModel.notes			= cInfo.notes;
-	cModel.tags				= cInfo.tags;
+	for (Tag* tag in cInfo.tags)
+	{
+		[cModel.tags addObject:tag.name];
+	}
 	
 	cModel.project			= cInfo.project;
 	cModel.waitingOn		= cInfo.waitingOn;
 	cModel.neededFor		= cInfo.neededFor;
 }
 
+-(void)createATagWithName:(NSString*)newName
+{
+	NSLog(@"creating tag: %@",newName);
+	
+	// create new entity and add it to our context
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	Tag* newTag	= [NSEntityDescription
+						  insertNewObjectForEntityForName:@"Tag"
+						  inManagedObjectContext:context];
+	
+	newTag.name = newName;
+	
+	// save!
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"fuck - couldn't save: %@",[error localizedDescription]);
+	}
+}
 
+-(void)printAllTags
+{
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"Tag"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	// fetch data from store
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	NSLog(@"number of fetched objects: %lu",[fetchedObjects count]);
+	
+	for (Tag* tag in fetchedObjects)
+	{
+		NSLog(@"tag name: %@",tag.name);
+	}
+}
+
+-(void)addATagToACard
+{
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"CardInfo"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	// fetch data from store
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	NSLog(@"# of fetched cards: %lu",[fetchedObjects count]);
+	
+	// set up filtering predicates
+	NSPredicate* titlePredicate	= [NSPredicate predicateWithFormat:@"title == 'ryanscard'"];
+	NSArray* filteredCards = [fetchedObjects filteredArrayUsingPredicate:titlePredicate];
+	
+	CardInfo* card = [filteredCards objectAtIndex:0];
+	
+	NSFetchRequest* tagFetch = [[NSFetchRequest alloc] init];
+	NSEntityDescription* tagEntity = [NSEntityDescription entityForName:@"Tag" inManagedObjectContext:context];
+	[tagFetch setEntity:tagEntity];
+	NSArray* fetchedTags = [context executeFetchRequest:tagFetch error:&error];
+	
+	NSLog(@"# of fetched tags: %lu",[fetchedTags count]);
+	
+	NSPredicate* tagPredicate = [NSPredicate predicateWithFormat:@"name == 'cats'"];
+	NSArray* filteredTags = [fetchedTags filteredArrayUsingPredicate:tagPredicate];
+	
+	Tag* tag = [filteredTags objectAtIndex:0];
+	
+	NSLog(@"card: %@",card.title);
+	NSLog(@"tag: %@",tag.name);
+	
+	NSMutableSet* tmpSet = [NSMutableSet setWithSet:card.tags];
+	[tmpSet addObject:tag];
+	card.tags = tmpSet;
+	
+	NSLog(@"added tags");
+	
+	NSLog(@"# of tags on card: %lu",[card.tags count]);
+	
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+}
 
 // --------------------------------------------------------
 // Helpers
