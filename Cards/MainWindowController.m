@@ -199,14 +199,6 @@
 	
 }
 
--(void)logAllNextActionCards
-{
-	for (CardModel* card in self.next)
-	{
-		[card logInfo];
-	}
-}
-
 -(IBAction)changeType:(id)sender
 {
 	int x = (int)[[self types] selectedRow];
@@ -785,6 +777,15 @@
 	
 	Tag* x = [filteredArray objectAtIndex:0];
 	return x;
+}
+
+-(void)logCardsFrom:(NSArray*)cardList
+{
+	NSLog(@"###############################################");
+	for (CardModel* card in cardList)
+	{
+		[card logInfo];
+	}
 }
 
 // --------------------------------------------------------
