@@ -19,6 +19,7 @@
 
 @property (retain, readwrite)	NSDate*		dueDate;
 @property (retain, readwrite)	NSDate*		reminderDate;
+@property (retain, readwrite)	NSDate*		lastEditedDate;
 
 @property (retain, readwrite)	NSString*	waitingOn;
 @property (retain, readwrite)	NSString*	neededFor;
@@ -26,13 +27,14 @@
 @property (retain, readwrite)	NSString*	type;
 
 @property (retain, readwrite)	NSString*	project;
-@property (retain, readwrite)	NSString*	area;
 @property (retain, readwrite)	NSString*	action;
 @property (retain, readwrite)	NSString*	notes;
 
-@property (retain, readwrite)	NSMutableArray*	tags;
+@property (retain, readwrite)	NSMutableSet*	tags;
 
 
 -(id)initWithInfo:(CardInfo*)info;
+
+-(void)logInfo;
 
 @end

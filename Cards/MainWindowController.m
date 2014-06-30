@@ -10,6 +10,7 @@
 #import "CardModel.h"
 #import "AppDelegate.h"
 #import "CardInfo.h"
+#import "Tag.h"
 
 @interface MainWindowController ()
 
@@ -17,25 +18,6 @@
 
 @implementation MainWindowController
 
--(NSString*)typeFromNumber:(int)n
-{
-	NSString* type;
-	
-	switch (n)
-	{
-		case 0: type = @"inbox";		break;
-		case 1: type = @"next";			break;
-		case 2: type = @"scheduled";	break;
-		case 3: type = @"tracking";		break;
-		case 4: type = @"someday";		break;
-		case 5: type = @"projects";		break;
-		case 6: type = @"done";			break;
-			
-		default: type = @"inbox";		break;
-	}
-	
-	return type;
-}
 
 
 // --------------------------------------------------------
@@ -76,7 +58,6 @@
 	// set up field to create new card upon hitting enter
 	[entryInput setTarget:self];
 	[entryInput setAction:@selector(addToDo:)];
-	
 }
 
 
@@ -185,9 +166,26 @@
 -(IBAction)processButtonPressed:(id)sender
 {
 	// set processing stuff to card model
-	[self firstInboxCard].title = [[self titleBox] stringValue];
-	[self firstInboxCard].type	= [self typeFromNumber:(int)[[self types] selectedRow] + 1];
+	[self firstInboxCard].title		= [[self titleBox] stringValue];
+	[self firstInboxCard].type		= [self typeFromNumber:(int)[[self types] selectedRow] + 1];
+	[self firstInboxCard].action	= [self actionFromNumber:(int)[[self actions] selectedRow]];
+	[self firstInboxCard].notes		= [[self notesBox] stringValue];
 	
+	// set dates if dates are specified
+	if (self.dueCheckBox.state == NSOnState){
+		[self firstInboxCard].dueDate = [[self duePicker] dateValue];
+	}
+	if (self.reminderCheckBox.state == NSOnState){
+		[self firstInboxCard].reminderDate = [[self reminderPicker] dateValue];
+	}
+	
+	// add tags from tagsBox to the card
+	NSSet* tmpTags = [self.tagsBox objectValue];
+	for (NSString* string in tmpTags)
+	{
+		[self.firstInboxCard.tags addObject:string];
+	}
+
 	// save to core data
 	[self editCard:[self firstInboxCard]];
 	
@@ -196,32 +194,63 @@
 	[self populateInboxProcessingFields];
 }
 
+-(IBAction)doneButtonPressed:(id)sender
+{
+	
+}
+
 -(IBAction)changeType:(id)sender
 {
 	int x = (int)[[self types] selectedRow];
-	NSLog(@"type: %@",[NSNumber numberWithInt:x]);
-	
+
 	switch (x)
 	{
 		case 0:
 			// next
-			//[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"next"];
+			
+			// hide 'remind me'
+			[self showActions:YES];
+			[self showDueStuff:YES];
+			[self showReminderStuff:NO];
+			
+			
 			break;
 		case 1:
 			// scheduled
-			//[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"scheduled"];
+			
+			// show 'remind me'
+			[self showActions:YES];
+			[self showDueStuff:YES];
+			[self showReminderStuff:YES];
+
+			
 			break;
 		case 2:
 			// tracking
-			//[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"tracking"];
+			
+			// hide all
+			[self showActions:NO];
+			[self showDueStuff:NO];
+			[self showReminderStuff:NO];
+			
 			break;
 		case 3:
 			// someday
-			//[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"someday"];
+			
+			// hide all
+			[self showActions:NO];
+			[self showDueStuff:NO];
+			[self showReminderStuff:NO];
+			
 			break;
 		case 4:
 			// projects
-			//[self editCardTypeWithIdentifier:((CardModel*)[[self inbox] objectAtIndex:0]).identifier toNewType:@"projects"];
+			
+			// hide all (for now)
+			[self showActions:NO];
+			[self showDueStuff:NO];
+			[self showReminderStuff:NO];
+			
 			break;
 		default:
 			NSLog(@"no case chosen");
@@ -231,8 +260,10 @@
 
 -(IBAction)changeAction:(id)sender
 {
+	// ***
+	// currently doesn't do anything - can probably delete
+	
 	int x = (int)[[self types] selectedRow];
-	NSLog(@"action: %@",[NSNumber numberWithInt:x]);
 	
 	switch (x)
 	{
@@ -266,19 +297,121 @@
 	
 	if (currentCard != nil)
 	{
-		NSLog(@"first card exists!");
 		[self.titleBox setStringValue:currentCard.title];
 		[self.identifierLabel setStringValue:currentCard.identifier];
 		[self updateCardCount];
 	}
 	else
 	{
-		NSLog(@"first card is nil");
+		NSLog(@"inbox is empty!");
 	}
 	
+	[self showActions:YES];
+	[self showDueStuff:YES];
+	[self showReminderStuff:NO];
+	self.tagsBox.stringValue = @"";
 	
+	[[self types] selectCellAtRow:0 column:0];
 }
 
+-(void)showReminderStuff:(BOOL)show
+{
+	[self reminderCheckBox].hidden	= !show;
+	[self reminderPicker].hidden	= !show;
+	
+	[self resetReminderStuff];
+}
+
+-(void)showDueStuff:(BOOL)show
+{
+	[self dueCheckBox].hidden	= !show;
+	[self duePicker].hidden		= !show;
+	
+	[self resetDueStuff];
+}
+
+-(void)enableDatePicker:(NSDatePicker*)picker active:(BOOL)active
+{
+	//[picker setEnabled:active];
+	picker.enabled = active;
+}
+
+-(void)enableCheckBox:(NSButton*)checkbox active:(BOOL)active
+{
+	checkbox.enabled = active;
+}
+
+-(IBAction)dueCheckBoxClicked:(id)sender
+{
+	BOOL isActive = NO;
+	if ([[self dueCheckBox] state] == NSOnState) isActive = YES;
+	
+	[self enableDatePicker:[self duePicker] active:isActive];
+}
+
+-(IBAction)reminderCheckBoxClicked:(id)sender
+{
+	BOOL isActive = NO;
+	if ([[self reminderCheckBox] state] == NSOnState) isActive = YES;
+	[self enableDatePicker:[self reminderPicker] active:isActive];
+}
+
+-(void)showActions:(BOOL)show
+{
+	[self actions].hidden = !show;
+}
+
+-(void)resetDueStuff
+{
+	[self dueCheckBox].state	= NSOffState;
+	[self duePicker].enabled	= NO;
+}
+
+-(void)resetReminderStuff
+{
+	[self reminderCheckBox].state	= NSOffState;
+	[self reminderPicker].enabled	= NO;
+}
+
+-(NSString*)typeFromNumber:(int)n
+{
+	NSString* type;
+	
+	switch (n)
+	{
+		case 0: type = @"inbox";		break;
+		case 1: type = @"next";			break;
+		case 2: type = @"scheduled";	break;
+		case 3: type = @"tracking";		break;
+		case 4: type = @"someday";		break;
+		case 5: type = @"projects";		break;
+		case 6: type = @"done";			break;
+			
+		default: type = @"inbox";		break;
+	}
+	
+	return type;
+}
+
+-(NSString*)actionFromNumber:(int)n
+{
+	NSString* action;
+	
+	switch (n)
+	{
+		case 0: action = @"do";				break;
+		case 1: action = @"brainstorm";		break;
+		case 2: action = @"research";		break;
+		case 3: action = @"buy";			break;
+		case 4: action = @"review";			break;
+		case 5: action = @"contact";		break;
+			
+		default: action = @"do";			break;
+			
+	}
+	
+	return action;
+}
 
 
 // --------------------------------------------------------
@@ -380,6 +513,8 @@
 
 -(void)editCard:(CardModel*)cModel
 {
+	NSLog(@"editCard: %@",cModel.title);
+	
 	// set up context and fetch bullshit
 	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
 	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
@@ -404,14 +539,12 @@
 	// assign card model's information
 	if ([filteredArray count] != 0)
 	{
-		NSLog(@"card model info adapted");
 		NSManagedObject* objToEdit = [filteredArray objectAtIndex:0];
 		[self assignCardInfo:(CardInfo*)objToEdit fromModel:cModel];
-		NSLog(@"card info title: %@",((CardInfo*)objToEdit).title);
 	}
 	else
 	{
-		NSLog(@"array is not long enough you dumb fuck!");
+		NSLog(@"%lu cards exist that match this card: %@ // %@",[filteredArray count],cModel.title,cModel.identifier);
 	}
 	
 	// save
@@ -453,7 +586,7 @@
 	}
 	else
 	{
-		NSLog(@"array is not long enough you dumb fuck!");
+		NSLog(@"%lu cards exist that match this card: %@ // %@",[filteredArray count],cModel.title,cModel.identifier);
 	}
 	
 	// save
@@ -466,21 +599,194 @@
 
 -(void)assignCardInfo:(CardInfo*)cInfo fromModel:(CardModel*)cModel
 {
-	cInfo.title			= cModel.title;
-	cInfo.identifier	= cModel.identifier;
-	cInfo.createdDate	= cModel.createdDate;
-	cInfo.type			= cModel.type;
+	NSLog(@"assignCardInfo: %@",cInfo.title);
+	
+	cInfo.title				= cModel.title;
+	cInfo.identifier		= cModel.identifier;
+	
+	cInfo.createdDate		= cModel.createdDate;
+	cInfo.completedDate		= cModel.completedDate;
+	cInfo.lastEditedDate	= cModel.lastEditedDate;
+	cInfo.dueDate			= cModel.dueDate;
+	cInfo.reminderDate		= cModel.reminderDate;
+	
+	cInfo.type				= cModel.type;
+	cInfo.action			= cModel.action;
+	
+	cInfo.notes				= cModel.notes;
+	
+	for (NSString* string in cModel.tags)
+	{
+		[self addTag:string toCardInfo:cInfo];
+	}
+
+	cInfo.project			= cModel.project;
+	cInfo.waitingOn			= cModel.waitingOn;
+	cInfo.neededFor			= cModel.neededFor;
 }
 
 -(void)assignCardModel:(CardModel*)cModel fromInfo:(CardInfo*)cInfo
 {
-	cModel.title		= cInfo.title;
-	cModel.identifier	= cInfo.identifier;
-	cModel.createdDate	= cInfo.createdDate;
-	cModel.type			= cInfo.type;
+	cModel.title			= cInfo.title;
+	cModel.identifier		= cInfo.identifier;
+	
+	cModel.createdDate		= cInfo.createdDate;
+	cModel.completedDate	= cInfo.completedDate;
+	cModel.lastEditedDate	= cInfo.lastEditedDate;
+	cModel.dueDate			= cInfo.dueDate;
+	cModel.reminderDate		= cInfo.reminderDate;
+	
+	cModel.type				= cInfo.type;
+	cModel.action			= cInfo.action;
+	
+	cModel.notes			= cInfo.notes;
+	
+	for (Tag* tag in cInfo.tags)
+	{
+		[cModel.tags addObject:tag.name];
+	}
+	
+	cModel.project			= cInfo.project;
+	cModel.waitingOn		= cInfo.waitingOn;
+	cModel.neededFor		= cInfo.neededFor;
 }
 
+-(void)addTag:(NSString*)t toCardInfo:(CardInfo*)cInfo
+{
+	NSLog(@"addTag: %@ to cardInfo: %@",t,cInfo.title);
+	
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	
+	Tag* tagToAdd;
+	
+	if ([self tagAlreadyExists:t])
+	{
+		NSLog(@"tag: %@ exists",t);
+		// point to already existing tag
+		tagToAdd = [self tagWithName:t];
+	}
+	else
+	{
+		NSLog(@"tag: %@ is unique",t);
+		// create new tag
+		tagToAdd = [NSEntityDescription insertNewObjectForEntityForName:@"Tag" inManagedObjectContext:context];
+		tagToAdd.name = t;
+	}
 
+	NSMutableSet* tmpArray = [NSMutableSet setWithSet:cInfo.tags];
+	[tmpArray addObject:tagToAdd];
+	cInfo.tags = tmpArray;
+	
+	// save!
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"fuck - couldn't save: %@",[error localizedDescription]);
+	}
+}
+
+-(void)printAllTags
+{
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"Tag"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	// fetch data from store
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	NSLog(@"number of fetched objects: %lu",[fetchedObjects count]);
+	
+	for (Tag* tag in fetchedObjects)
+	{
+		NSLog(@"tag name: %@",tag.name);
+	}
+}
+
+-(BOOL)tagAlreadyExists:(NSString*)tagName
+{
+	bool check = false;
+	
+	// get tags
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"Tag"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	// fetch data from store
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	// filter using predicate
+	NSPredicate* namePredicate = [NSPredicate predicateWithFormat:@"name == %@",tagName];
+	NSArray* filteredArray = [fetchedObjects filteredArrayUsingPredicate:namePredicate];
+	
+	if ([filteredArray count] == 0)
+	{
+		NSLog(@"filtered count is zero");
+		check = false;
+	}
+	else
+	{
+		NSLog(@"%lu tags exist with the name: %@",[filteredArray count],tagName);
+		check = true;
+	}
+	
+	return check;
+}
+
+-(Tag*)tagWithName:(NSString*)tagName
+{
+	// get tags
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"Tag"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	// fetch data from store
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	// filter using predicate
+	NSPredicate* namePredicate = [NSPredicate predicateWithFormat:@"name == %@",tagName];
+	NSArray* filteredArray = [fetchedObjects filteredArrayUsingPredicate:namePredicate];
+	
+	// ** do some checks here and log if there are more than one obviously
+	
+	Tag* x = [filteredArray objectAtIndex:0];
+	return x;
+}
+
+-(void)logCardsFrom:(NSArray*)cardList
+{
+	NSLog(@"###############################################");
+	for (CardModel* card in cardList)
+	{
+		[card logInfo];
+	}
+}
 
 // --------------------------------------------------------
 // Helpers

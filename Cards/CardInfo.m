@@ -13,7 +13,23 @@
 
 @dynamic title;
 @dynamic identifier;
+
 @dynamic createdDate;
+@dynamic dueDate;
+@dynamic reminderDate;
+@dynamic lastEditedDate;
+@dynamic completedDate;
+
 @dynamic type;
+
+@dynamic action;
+@dynamic notes;
+@dynamic tags;
+
+// project stuff
+@dynamic project;
+@dynamic waitingOn;
+@dynamic neededFor;
+
 
 @end
