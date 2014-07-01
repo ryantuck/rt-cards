@@ -21,6 +21,7 @@
                 <outlet property="reminderCheckBox" destination="2K3-Q0-vb6" id="sMd-4c-WgE"/>
                 <outlet property="reminderPicker" destination="EIw-Pr-WZN" id="3TJ-8A-3Gr"/>
                 <outlet property="scheduledView" destination="Ehd-qA-RFK" id="xcS-Z1-FhJ"/>
+                <outlet property="searchBox" destination="9hr-gH-sKa" id="8KB-Jl-qHc"/>
                 <outlet property="somedayView" destination="zye-oD-ok2" id="jW6-t9-n1d"/>
                 <outlet property="tagsBox" destination="iEa-0d-TDo" id="WoO-of-Stg"/>
                 <outlet property="titleBox" destination="mzF-RW-Jpl" id="Xn0-kR-dAh"/>
@@ -35,7 +36,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="702" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1200"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="SfL-yS-baZ">
                 <rect key="frame" x="0.0" y="0.0" width="702" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -503,12 +504,83 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="eVG-M4-uhy">
+                    <rect key="frame" x="18" y="227" width="54" height="18"/>
+                    <buttonCell key="cell" type="check" title="Filter" bezelStyle="regularSquare" imagePosition="left" inset="2" id="rzr-Gu-jer">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9xu-o7-ciz">
+                    <rect key="frame" x="32" y="103" width="91" height="118"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="118" id="WVA-tF-9L5"/>
+                    </constraints>
+                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    <size key="cellSize" width="91" height="18"/>
+                    <size key="intercellSpacing" width="4" height="2"/>
+                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" enabled="NO" inset="2" id="ppG-gB-hFV">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <cells>
+                        <column>
+                            <buttonCell type="radio" title="do!" imagePosition="left" alignment="left" enabled="NO" state="on" tag="1" inset="2" id="hz4-Ni-o8X">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <buttonCell type="radio" title="brainstorm" imagePosition="left" alignment="left" enabled="NO" inset="2" id="u8E-nc-eD7">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <buttonCell type="radio" title="research" imagePosition="left" alignment="left" enabled="NO" inset="2" id="Hc0-36-hgP">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <buttonCell type="radio" title="buy" imagePosition="left" alignment="left" enabled="NO" inset="2" id="45C-ps-8lP">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <buttonCell type="radio" title="review" imagePosition="left" alignment="left" enabled="NO" inset="2" id="cyk-VQ-c9z">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <buttonCell type="radio" title="contact" imagePosition="left" alignment="left" enabled="NO" inset="2" id="Jh8-ec-HpV">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </column>
+                    </cells>
+                    <connections>
+                        <action selector="changeAction:" target="-2" id="j2Z-m8-3HM"/>
+                    </connections>
+                </matrix>
+                <searchField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9hr-gH-sKa">
+                    <rect key="frame" x="20" y="251" width="300" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="FxY-8a-0h0"/>
+                    </constraints>
+                    <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" sendsSearchStringImmediately="YES" id="xrc-B0-sq7">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </searchFieldCell>
+                    <connections>
+                        <action selector="textEnteredInSearchField:" target="-2" id="1kT-xe-z3X"/>
+                    </connections>
+                </searchField>
             </subviews>
             <constraints>
+                <constraint firstItem="eVG-M4-uhy" firstAttribute="leading" secondItem="5Gu-5W-ab1" secondAttribute="leading" constant="20" id="0mP-0c-sYg"/>
+                <constraint firstItem="9hr-gH-sKa" firstAttribute="leading" secondItem="5Gu-5W-ab1" secondAttribute="leading" constant="20" id="Cmu-d5-1K6"/>
                 <constraint firstItem="had-tM-apz" firstAttribute="leading" secondItem="5Gu-5W-ab1" secondAttribute="leading" constant="20" id="DWW-IQ-bO2"/>
                 <constraint firstAttribute="bottom" secondItem="qek-HR-des" secondAttribute="bottom" constant="20" id="KvI-cr-CMN"/>
+                <constraint firstItem="9xu-o7-ciz" firstAttribute="leading" secondItem="5Gu-5W-ab1" secondAttribute="leading" constant="32" id="RCn-g1-34A"/>
+                <constraint firstItem="eVG-M4-uhy" firstAttribute="top" secondItem="9hr-gH-sKa" secondAttribute="bottom" constant="8" id="YPg-fQ-KUb"/>
                 <constraint firstAttribute="trailing" secondItem="qek-HR-des" secondAttribute="trailing" constant="20" id="b4j-cK-TqY"/>
                 <constraint firstItem="had-tM-apz" firstAttribute="top" secondItem="5Gu-5W-ab1" secondAttribute="top" constant="20" id="gG9-xk-Cfh"/>
+                <constraint firstItem="9hr-gH-sKa" firstAttribute="top" secondItem="5Gu-5W-ab1" secondAttribute="top" constant="100" id="xfc-Cg-JyW"/>
+                <constraint firstItem="9xu-o7-ciz" firstAttribute="top" secondItem="eVG-M4-uhy" secondAttribute="bottom" constant="8" id="yVm-70-8Nm"/>
                 <constraint firstItem="qek-HR-des" firstAttribute="top" secondItem="5Gu-5W-ab1" secondAttribute="top" constant="20" id="yeJ-FA-hWJ"/>
             </constraints>
             <point key="canvasLocation" x="711" y="1731.5"/>

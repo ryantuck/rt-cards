@@ -424,6 +424,61 @@
 }
 
 
+
+// --------------------------------------------------------
+// Next Actions
+// --------------------------------------------------------
+@synthesize searchBox;
+
+-(IBAction)textEnteredInSearchField:(id)sender
+{
+	// filter the 'next' list dynamically
+	[self filterList:self.next];
+}
+
+-(void)filterList:(NSMutableArray*)list
+{
+	NSLog(@"search text entered");
+
+	// re-populate list from core data
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"CardInfo"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	// fetch data from store
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	// filter predicates
+	
+	NSString* currentSearch = [self.searchBox stringValue];
+	
+	if ([currentSearch  isEqual: @""])
+	{
+		// show all next
+		NSMutableArray* mNext = [[NSMutableArray alloc] initWithArray:fetchedObjects];
+		[self setNext:mNext];
+	}
+	else
+	{
+		// show filtered results
+		NSPredicate* nextPredicate = [NSPredicate predicateWithFormat:@"type == 'next'"];
+		NSArray* nextArray = [fetchedObjects filteredArrayUsingPredicate:nextPredicate];
+		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",currentSearch];
+		NSArray* tArray = [nextArray filteredArrayUsingPredicate:titlePredicate];
+		NSMutableArray* mNext = [[NSMutableArray alloc] initWithArray:tArray];
+		[self setNext:mNext];
+	}
+}
+
 // --------------------------------------------------------
 // Card Handling
 // --------------------------------------------------------
