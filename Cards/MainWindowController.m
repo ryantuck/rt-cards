@@ -440,8 +440,7 @@
 
 -(void)filterList:(NSMutableArray*)list
 {
-	NSLog(@"search text entered");
-
+	NSLog(@"filterList ran");
 	// re-populate list from core data
 	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
 	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
@@ -460,8 +459,33 @@
 	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
 	
 	// filter predicates
-	
 	NSString* currentSearch = [self.searchBox stringValue];
+	bool filtersEnabled = self.nextActionRadioButtons.enabled;
+
+	if (![currentSearch isEqualToString:@""])
+	{
+		// filter by title using currentSearch
+		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",currentSearch];
+		NSArray* tmp = [NSArray arrayWithArray:fetchedObjects];
+		fetchedObjects = [tmp filteredArrayUsingPredicate:titlePredicate];
+	}
+	
+	if (filtersEnabled)
+	{
+		// filter by action
+		NSString* action = [self actionFromNumber:(int)[self.nextActionRadioButtons selectedRow]];
+		NSLog(@"action # = %@",action);
+		
+		NSPredicate* actionPredicate = [NSPredicate predicateWithFormat:@"action == %@",action];
+		NSArray* tmp = [NSArray arrayWithArray:fetchedObjects];
+		fetchedObjects = [tmp filteredArrayUsingPredicate:actionPredicate];
+	}
+	
+	NSMutableArray* mNext = [[NSMutableArray alloc] initWithArray:fetchedObjects];
+	[self setNext:mNext];
+	
+	
+	
 	
 	if ([currentSearch  isEqual: @""])
 	{
@@ -486,7 +510,15 @@
 	bool isActive = false;
 	if ([self.filterCheckBox state] == NSOnState) isActive = true;
 	self.nextActionRadioButtons.enabled = isActive;
+	
+	[self filterList:self.next];
 }
+
+-(IBAction)nextRadioButtonSelected:(id)sender
+{
+	[self filterList:self.next];
+}
+
 
 // --------------------------------------------------------
 // Card Handling

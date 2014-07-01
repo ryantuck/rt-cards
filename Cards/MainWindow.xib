@@ -557,7 +557,7 @@
                         </column>
                     </cells>
                     <connections>
-                        <action selector="changeAction:" target="-2" id="j2Z-m8-3HM"/>
+                        <action selector="nextRadioButtonSelected:" target="-2" id="24i-ds-EX6"/>
                     </connections>
                 </matrix>
                 <searchField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9hr-gH-sKa">
