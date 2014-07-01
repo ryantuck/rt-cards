@@ -116,6 +116,9 @@
 	currentViewTag = tag;
 	
 	[[[self window] contentView] replaceSubview:previousView with:view];
+	
+	// stretch current view to take up entire window
+	view.frame = [self.window.contentView bounds];
 }
 
 
