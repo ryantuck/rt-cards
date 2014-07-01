@@ -429,6 +429,8 @@
 // Next Actions
 // --------------------------------------------------------
 @synthesize searchBox;
+@synthesize filterCheckBox;
+@synthesize nextActionRadioButtons;
 
 -(IBAction)textEnteredInSearchField:(id)sender
 {
@@ -477,6 +479,13 @@
 		NSMutableArray* mNext = [[NSMutableArray alloc] initWithArray:tArray];
 		[self setNext:mNext];
 	}
+}
+
+-(IBAction)filterCheckBoxClicked:(id)sender
+{
+	bool isActive = false;
+	if ([self.filterCheckBox state] == NSOnState) isActive = true;
+	self.nextActionRadioButtons.enabled = isActive;
 }
 
 // --------------------------------------------------------

@@ -13,8 +13,10 @@
                 <outlet property="duePicker" destination="dpN-8t-Oep" id="vEb-yB-9Ia"/>
                 <outlet property="entryInput" destination="XPI-8A-qRk" id="qdy-Fh-anW"/>
                 <outlet property="entryView" destination="Vf3-44-t9H" id="vmz-Mt-fZ2"/>
+                <outlet property="filterCheckBox" destination="eVG-M4-uhy" id="bHs-4H-eoc"/>
                 <outlet property="identifierLabel" destination="ph5-PF-1Bc" id="Pzq-Q3-bFs"/>
                 <outlet property="inboxView" destination="242-r3-fxu" id="2VY-yv-7ys"/>
+                <outlet property="nextActionRadioButtons" destination="9xu-o7-ciz" id="N5g-PW-SCd"/>
                 <outlet property="nextView" destination="5Gu-5W-ab1" id="TKm-UL-3qs"/>
                 <outlet property="notesBox" destination="4jT-D2-hVb" id="v4K-if-A3R"/>
                 <outlet property="projectsView" destination="H67-1X-Ii6" id="oBe-eX-Wvi"/>
@@ -510,6 +512,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="filterCheckBoxClicked:" target="-2" id="zQe-SG-KmS"/>
+                    </connections>
                 </button>
                 <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9xu-o7-ciz">
                     <rect key="frame" x="32" y="103" width="91" height="118"/>
