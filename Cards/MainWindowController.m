@@ -38,8 +38,14 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 	[[self window] setContentSize:[entryView frame].size];
 	[[[self window] contentView] addSubview:entryView];
-	[[[self window] contentView] setWantsLayer:YES];
+	//[[[self window] contentView] setWantsLayer:YES];
 	[self.window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+	
+	[self.window.contentView setAutoresizesSubviews:YES];
+	[self.entryView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+	
+	[self.entryView setAutoresizesSubviews:YES];
+	[self.entryInput setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
 }
 
 // --------------------------------------------------------

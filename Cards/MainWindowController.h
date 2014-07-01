@@ -56,6 +56,7 @@
 
 @property IBOutlet NSTextField* cardCount;
 
+
 // radio button handling
 -(IBAction)changeType:(id)sender;
 -(IBAction)changeAction:(id)sender;
