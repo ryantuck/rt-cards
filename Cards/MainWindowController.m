@@ -44,8 +44,8 @@
 	[self.window.contentView setAutoresizesSubviews:YES];
 	[self.entryView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
 	
-	[self.entryView setAutoresizesSubviews:YES];
-	[self.entryInput setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+//	[self.entryView setAutoresizesSubviews:YES];
+//	[self.entryInput setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
 }
 
 // --------------------------------------------------------

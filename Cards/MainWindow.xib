@@ -35,7 +35,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="702" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1200"/>
             <view key="contentView" id="SfL-yS-baZ">
                 <rect key="frame" x="0.0" y="0.0" width="702" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -102,27 +102,27 @@
             <point key="canvasLocation" x="437" y="4"/>
         </window>
         <customView id="Vf3-44-t9H" userLabel="Entry View">
-            <rect key="frame" x="0.0" y="0.0" width="406" height="352"/>
+            <rect key="frame" x="0.0" y="0.0" width="574" height="300"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IY4-jV-GKF">
-                    <rect key="frame" x="18" y="293" width="370" height="39"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Entry" id="XsX-hm-uCF">
-                        <font key="font" size="24" name="LucidaGrande"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XPI-8A-qRk">
-                    <rect key="frame" x="20" y="68" width="366" height="217"/>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XPI-8A-qRk">
+                    <rect key="frame" x="37" y="75" width="500" height="150"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="ZuY-NZ-aMW"/>
+                        <constraint firstAttribute="width" constant="500" id="u9K-pI-YLu"/>
+                    </constraints>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="New To-Do" drawsBackground="YES" id="Xx2-XZ-lTq">
                         <font key="font" size="18" name="LucidaGrande"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jr6-5p-869">
-                    <rect key="frame" x="20" y="19" width="366" height="42"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jr6-5p-869">
+                    <rect key="frame" x="37" y="16" width="500" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="500" id="8dt-nK-HHP"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="KA3-hu-GsI"/>
+                    </constraints>
                     <buttonCell key="cell" type="smallSquare" title="Add" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="acS-dE-ujj">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system" size="18"/>
@@ -131,8 +131,24 @@
                         <action selector="addToDo:" target="-2" id="YzK-sd-odT"/>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IY4-jV-GKF">
+                    <rect key="frame" x="18" y="251" width="64" height="29"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Entry" id="XsX-hm-uCF">
+                        <font key="font" size="24" name="LucidaGrande"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
-            <point key="canvasLocation" x="289" y="422"/>
+            <constraints>
+                <constraint firstItem="Jr6-5p-869" firstAttribute="top" secondItem="XPI-8A-qRk" secondAttribute="bottom" constant="8" id="0yV-sm-lOS"/>
+                <constraint firstAttribute="centerX" secondItem="XPI-8A-qRk" secondAttribute="centerX" id="4ak-xL-Hu2"/>
+                <constraint firstAttribute="centerY" secondItem="XPI-8A-qRk" secondAttribute="centerY" id="HDN-LW-Shb"/>
+                <constraint firstItem="IY4-jV-GKF" firstAttribute="leading" secondItem="Vf3-44-t9H" secondAttribute="leading" constant="20" id="VVj-Cz-9Fn"/>
+                <constraint firstAttribute="centerX" secondItem="Jr6-5p-869" secondAttribute="centerX" id="den-Cd-BRT"/>
+                <constraint firstItem="IY4-jV-GKF" firstAttribute="top" secondItem="Vf3-44-t9H" secondAttribute="top" constant="20" id="skT-gt-kLU"/>
+            </constraints>
+            <point key="canvasLocation" x="320" y="422"/>
         </customView>
         <customView id="242-r3-fxu" userLabel="Inbox View">
             <rect key="frame" x="0.0" y="0.0" width="946" height="419"/>
