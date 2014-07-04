@@ -1,5 +1,5 @@
 //
-//  CardView.h
+//  CardCollectionViewItem.h
 //  Cards
 //
 //  Created by Ryan Tuck on 7/2/14.
@@ -8,9 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface CardView : NSView
-
-@property BOOL selected;
+@interface CardCollectionViewItem : NSCollectionViewItem
 
 -(void)logShit;
 

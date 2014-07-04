@@ -30,7 +30,6 @@
 @synthesize waitingOn;
 @synthesize neededFor;
 
-
 -(id)init
 {
 	self.tags = [[NSMutableSet alloc] init];

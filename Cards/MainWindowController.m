@@ -11,6 +11,8 @@
 #import "AppDelegate.h"
 #import "CardInfo.h"
 #import "Tag.h"
+#import "CardView.h"
+#import "CardCollectionViewItem.h"
 
 @interface MainWindowController ()
 
@@ -64,7 +66,7 @@
 	
 	// set up field to create new card upon hitting enter
 	[entryInput setTarget:self];
-	[entryInput setAction:@selector(addToDo:)];
+	[entryInput setAction:@selector(addToDo:)];	
 }
 
 
@@ -195,7 +197,7 @@
 	{
 		[self.firstInboxCard.tags addObject:string];
 	}
-
+	
 	// save to core data
 	[self editCard:[self firstInboxCard]];
 	
@@ -904,6 +906,19 @@
 	CFRelease(uuidObj);
 	return [uuidString substringToIndex:8]; //specify length here. even you can use full
 }
+
+-(IBAction)cardCheckBoxClicked:(id)sender
+{
+	CardModel* cModel = [[[sender cell] representedObject] representedObject];
+	
+	cModel.type = @"done";
+	
+	[self editCard:cModel];
+	[self populateCardsWithStoredData];
+	
+	NSLog(@"card title: %@",cModel.title);
+}
+
 
 // --------------------------------------------------------
 // Bullshit setter getter functions

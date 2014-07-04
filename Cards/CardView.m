@@ -2,26 +2,40 @@
 //  CardView.m
 //  Cards
 //
-//  Created by Ryan Tuck on 6/25/14.
+//  Created by Ryan Tuck on 7/2/14.
 //  Copyright (c) 2014 Ryan Tuck. All rights reserved.
 //
 
 #import "CardView.h"
 
-@interface CardView ()
-
-@end
-
 @implementation CardView
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+@synthesize selected;
+
+- (instancetype)initWithFrame:(NSRect)frame
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
     }
     return self;
 }
 
+- (void)drawRect:(NSRect)dirtyRect
+{
+    [super drawRect:dirtyRect];
+    
+    // Drawing code here.
+	if (selected)
+	{
+		[[NSColor yellowColor] set];
+		NSRectFill([self bounds]);
+	}
+}
+
+-(void)logShit
+{
+	NSLog(@"logging shit");
+}
 
 @end

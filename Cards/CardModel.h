@@ -32,7 +32,6 @@
 
 @property (retain, readwrite)	NSMutableSet*	tags;
 
-
 -(id)initWithInfo:(CardInfo*)info;
 
 -(void)logInfo;
