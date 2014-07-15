@@ -66,7 +66,9 @@
 	
 	// set up field to create new card upon hitting enter
 	[entryInput setTarget:self];
-	[entryInput setAction:@selector(addToDo:)];	
+	[entryInput setAction:@selector(addToDo:)];
+	
+	
 }
 
 
@@ -534,6 +536,8 @@
 @synthesize done;
 @synthesize projects;
 
+@synthesize projectsList;
+
 -(void)populateCardsWithStoredData
 {
 	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
@@ -605,6 +609,10 @@
 	
 	// go ahead and re-populate the inbox bullshit
 	[self populateInboxProcessingFields];
+	
+	NSMutableArray* plArray = [[NSMutableArray alloc] initWithObjects:@"hey",@"a",@"butt", nil];
+	[self setProjectsList:plArray];
+	
 }
 
 -(CardModel*)firstInboxCard
@@ -983,7 +991,15 @@
 	return done;
 }
 
+-(void)setProjectsList:(NSMutableArray *)a
+{
+	projectsList = a;
+}
 
+-(NSArray*)projectsList
+{
+	return projectsList;
+}
 
 
 

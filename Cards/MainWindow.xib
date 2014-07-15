@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6154.17" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6154.17"/>
     </dependencies>
@@ -226,7 +226,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mzF-RW-Jpl">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mzF-RW-Jpl">
                     <rect key="frame" x="20" y="644" width="300" height="100"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="100" id="ZUv-o0-vFh"/>
@@ -672,9 +672,65 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ifb-mZ-E36">
+                    <rect key="frame" x="20" y="66" width="240" height="250"/>
+                    <clipView key="contentView" id="Ig3-vv-FxD">
+                        <rect key="frame" x="1" y="17" width="238" height="117"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="e6c-Nj-RVp" id="887-rR-h7I">
+                                <rect key="frame" x="0.0" y="0.0" width="238" height="117"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn identifier="AutomaticTableColumnIdentifier.0" width="235" minWidth="40" maxWidth="1000" id="9zS-S3-ILL">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Projects">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="rNz-tb-pNC">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="CKE-HJ-zlh" name="value" keyPath="arrangedObjects.self" id="WHg-Px-ym8"/>
+                                        </connections>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <binding destination="CKE-HJ-zlh" name="content" keyPath="arrangedObjects" id="kRq-Dw-UIo"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </clipView>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="250" id="C8F-WI-ORp"/>
+                    </constraints>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="y1r-R2-6vU">
+                        <rect key="frame" x="1" y="119" width="223" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="6wD-xE-I1v">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <tableHeaderView key="headerView" id="e6c-Nj-RVp">
+                        <rect key="frame" x="0.0" y="0.0" width="238" height="17"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tableHeaderView>
+                </scrollView>
             </subviews>
             <constraints>
+                <constraint firstItem="EEI-d9-8p5" firstAttribute="leading" secondItem="Ifb-mZ-E36" secondAttribute="trailing" constant="263" id="0hk-4b-VxD"/>
+                <constraint firstItem="Ifb-mZ-E36" firstAttribute="top" secondItem="HWh-L6-9e7" secondAttribute="bottom" constant="8" id="Ese-jV-btO"/>
                 <constraint firstItem="EEI-d9-8p5" firstAttribute="top" secondItem="H67-1X-Ii6" secondAttribute="top" constant="20" id="PuA-Xc-j58"/>
+                <constraint firstItem="Ifb-mZ-E36" firstAttribute="leading" secondItem="H67-1X-Ii6" secondAttribute="leading" constant="20" id="QBC-1A-4nb"/>
                 <constraint firstAttribute="bottom" secondItem="EEI-d9-8p5" secondAttribute="bottom" constant="20" id="S91-Cj-GCw"/>
                 <constraint firstItem="HWh-L6-9e7" firstAttribute="top" secondItem="H67-1X-Ii6" secondAttribute="top" constant="20" id="ceQ-hs-Efj"/>
                 <constraint firstAttribute="trailing" secondItem="EEI-d9-8p5" secondAttribute="trailing" constant="20" id="eqa-bM-rnb"/>
@@ -931,6 +987,11 @@
         <arrayController id="cJ9-Y8-glO" userLabel="Done Array Controller">
             <connections>
                 <binding destination="-2" name="contentArray" keyPath="done" id="PSX-hl-cVT"/>
+            </connections>
+        </arrayController>
+        <arrayController id="CKE-HJ-zlh" userLabel="Project List Array Controller">
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="projectsList" id="8ji-K0-EUf"/>
             </connections>
         </arrayController>
         <userDefaultsController representsSharedInstance="YES" id="PZc-Gq-FHU"/>

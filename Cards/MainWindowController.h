@@ -89,6 +89,8 @@
 @property NSMutableArray* done;
 @property NSMutableArray* projects;
 
+@property NSMutableArray* projectsList;
+
 -(void)populateCardsWithStoredData;
 
 // --------------------------------------------------------
