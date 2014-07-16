@@ -19,6 +19,7 @@
                 <outlet property="nextActionRadioButtons" destination="9xu-o7-ciz" id="N5g-PW-SCd"/>
                 <outlet property="nextView" destination="5Gu-5W-ab1" id="TKm-UL-3qs"/>
                 <outlet property="notesBox" destination="4jT-D2-hVb" id="v4K-if-A3R"/>
+                <outlet property="pTableView" destination="887-rR-h7I" id="jxn-PY-cLb"/>
                 <outlet property="projectsView" destination="H67-1X-Ii6" id="oBe-eX-Wvi"/>
                 <outlet property="reminderCheckBox" destination="2K3-Q0-vb6" id="sMd-4c-WgE"/>
                 <outlet property="reminderPicker" destination="EIw-Pr-WZN" id="3TJ-8A-3Gr"/>
@@ -80,7 +81,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="702" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1200"/>
             <view key="contentView" id="SfL-yS-baZ">
                 <rect key="frame" x="0.0" y="0.0" width="702" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -679,7 +680,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="e6c-Nj-RVp" id="887-rR-h7I">
-                                <rect key="frame" x="0.0" y="0.0" width="238" height="117"/>
+                                <rect key="frame" x="0.0" y="0.0" width="238" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -703,6 +704,7 @@
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
+                                    <action selector="projectsListSelected:" target="-2" id="n7v-dU-SfB"/>
                                     <binding destination="CKE-HJ-zlh" name="content" keyPath="arrangedObjects" id="kRq-Dw-UIo"/>
                                 </connections>
                             </tableView>

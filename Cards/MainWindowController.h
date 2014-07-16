@@ -90,6 +90,7 @@
 @property NSMutableArray* projects;
 
 @property NSMutableArray* projectsList;
+@property IBOutlet NSTableView* pTableView;
 
 -(void)populateCardsWithStoredData;
 
