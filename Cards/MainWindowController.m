@@ -598,6 +598,9 @@
 		}
 	}
 	
+	NSMutableArray* currentArray = [[NSMutableArray alloc] initWithArray:fetchedObjects];
+	[self setCurrent:currentArray];
+	
 	// set member arrays
 	[self setInbox:mInboxArray];
 	[self setNext:mNextArray];
