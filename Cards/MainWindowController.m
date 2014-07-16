@@ -1020,7 +1020,12 @@
 	
 }
 
+@synthesize current;
+@synthesize tagsList;
+@synthesize projectTable;
+@synthesize tagTable;
 
+@synthesize monoView;
 
 
 

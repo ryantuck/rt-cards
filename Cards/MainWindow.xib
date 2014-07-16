@@ -20,12 +20,14 @@
                 <outlet property="nextView" destination="5Gu-5W-ab1" id="TKm-UL-3qs"/>
                 <outlet property="notesBox" destination="4jT-D2-hVb" id="v4K-if-A3R"/>
                 <outlet property="pTableView" destination="887-rR-h7I" id="jxn-PY-cLb"/>
+                <outlet property="projectTable" destination="xHd-pz-cCZ" id="gIa-34-mIf"/>
                 <outlet property="projectsView" destination="H67-1X-Ii6" id="oBe-eX-Wvi"/>
                 <outlet property="reminderCheckBox" destination="2K3-Q0-vb6" id="sMd-4c-WgE"/>
                 <outlet property="reminderPicker" destination="EIw-Pr-WZN" id="3TJ-8A-3Gr"/>
                 <outlet property="scheduledView" destination="Ehd-qA-RFK" id="xcS-Z1-FhJ"/>
                 <outlet property="searchBox" destination="9hr-gH-sKa" id="8KB-Jl-qHc"/>
                 <outlet property="somedayView" destination="zye-oD-ok2" id="jW6-t9-n1d"/>
+                <outlet property="tagTable" destination="cia-XB-rzF" id="155-xP-jS1"/>
                 <outlet property="tagsBox" destination="iEa-0d-TDo" id="WoO-of-Stg"/>
                 <outlet property="titleBox" destination="mzF-RW-Jpl" id="Xn0-kR-dAh"/>
                 <outlet property="trackingView" destination="Hin-kP-AyX" id="AMl-TW-Y08"/>
@@ -996,6 +998,7 @@
                 <binding destination="-2" name="contentArray" keyPath="projectsList" id="8ji-K0-EUf"/>
             </connections>
         </arrayController>
+        <arrayController id="6Ob-le-hQ2" userLabel="Tag List Array Controller"/>
         <userDefaultsController representsSharedInstance="YES" id="PZc-Gq-FHU"/>
         <customView id="dhc-g1-aIh" userLabel="Mono View">
             <rect key="frame" x="0.0" y="0.0" width="1279" height="824"/>
@@ -1013,7 +1016,7 @@
                                 <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="secondaryBackgroundColor" name="controlAlternatingRowColor" catalog="System" colorSpace="catalog"/>
                                 <connections>
-                                    <binding destination="enL-sz-pxP" name="content" keyPath="arrangedObjects" id="g0R-YE-E1U"/>
+                                    <binding destination="n16-9z-ymO" name="content" keyPath="arrangedObjects" id="Y2v-cB-iKG"/>
                                     <outlet property="itemPrototype" destination="oxu-NE-ARW" id="6cK-I9-ggL"/>
                                 </connections>
                             </collectionView>
@@ -1392,7 +1395,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Er-nG-zCG">
+                <scrollView hidden="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Er-nG-zCG">
                     <rect key="frame" x="421" y="152" width="300" height="200"/>
                     <clipView key="contentView" id="3Lt-Xd-abH">
                         <rect key="frame" x="1" y="17" width="238" height="117"/>
@@ -1446,6 +1449,20 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Ux-vQ-uWr">
+                    <rect key="frame" x="421" y="81" width="300" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="Stq-GJ-vVz"/>
+                        <constraint firstAttribute="height" constant="50" id="uTv-8B-EDS"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" title="Clear Filters" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HB4-8T-2Va">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="processButtonPressed:" target="-2" id="bZU-t0-Z6J"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="6TM-BB-AOV" firstAttribute="top" secondItem="gzH-RY-9HJ" secondAttribute="bottom" constant="8" id="0h3-ZC-0tZ"/>
@@ -1488,6 +1505,7 @@
                 <constraint firstItem="dIT-Fm-pFD" firstAttribute="top" secondItem="UBj-3d-6fM" secondAttribute="bottom" constant="20" id="hN3-M1-Vem"/>
                 <constraint firstItem="dIT-Fm-pFD" firstAttribute="leading" secondItem="dhc-g1-aIh" secondAttribute="leading" constant="20" id="jQN-AW-4jD"/>
                 <constraint firstItem="Ae0-DG-Mea" firstAttribute="leading" secondItem="dhc-g1-aIh" secondAttribute="leading" constant="20" id="kPw-w1-NXw"/>
+                <constraint firstItem="1Er-nG-zCG" firstAttribute="leading" secondItem="4Ux-vQ-uWr" secondAttribute="leading" id="l8e-YI-zZG"/>
                 <constraint firstItem="MSB-hG-nxo" firstAttribute="leading" secondItem="cnK-yk-cBb" secondAttribute="leading" id="lNV-be-SAV"/>
                 <constraint firstItem="wwh-yi-r2t" firstAttribute="trailing" secondItem="cnK-yk-cBb" secondAttribute="trailing" id="leB-GC-HkO"/>
                 <constraint firstItem="nNA-pr-HEm" firstAttribute="leading" secondItem="dhc-g1-aIh" secondAttribute="leading" constant="20" id="nGS-iQ-6vF"/>
@@ -1500,9 +1518,15 @@
                 <constraint firstItem="tDH-G4-ggF" firstAttribute="leading" secondItem="1Er-nG-zCG" secondAttribute="leading" id="xEB-Si-HcK"/>
                 <constraint firstItem="6yz-MF-Aop" firstAttribute="top" secondItem="Ae0-DG-Mea" secondAttribute="bottom" constant="20" id="ym7-uG-8MS"/>
                 <constraint firstItem="Ae0-DG-Mea" firstAttribute="top" secondItem="dIT-Fm-pFD" secondAttribute="bottom" constant="8" id="yrk-iz-DlL"/>
+                <constraint firstItem="4Ux-vQ-uWr" firstAttribute="top" secondItem="1Er-nG-zCG" secondAttribute="bottom" constant="20" id="zs0-H7-AQS"/>
             </constraints>
             <point key="canvasLocation" x="725.5" y="1065"/>
         </customView>
+        <arrayController id="n16-9z-ymO" userLabel="Current Array Controller">
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="current" id="HRm-ER-ecL"/>
+            </connections>
+        </arrayController>
     </objects>
     <resources>
         <image name="archive" width="32" height="32"/>

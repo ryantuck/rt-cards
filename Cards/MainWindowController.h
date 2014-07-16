@@ -92,6 +92,12 @@
 @property NSMutableArray* projectsList;
 @property IBOutlet NSTableView* pTableView;
 
+@property NSMutableArray* current;
+@property NSMutableArray* tagsList;
+@property IBOutlet NSTableView* tagTable;
+@property IBOutlet NSTableView* projectTable;
+@property IBOutlet NSView* monoView;
+
 -(void)populateCardsWithStoredData;
 
 // --------------------------------------------------------
