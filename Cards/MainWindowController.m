@@ -93,12 +93,12 @@
 	{
 		case 0: view = entryView;		break;
 		case 1: view = inboxView;		break;
-		case 2: view = nextView;		break;
-		case 3: view = trackingView;	break;
-		case 4: view = scheduledView;	break;
-		case 5: view = projectsView;	break;
+		case 2: view = monoView;		break;
+		case 3: view = monoView;		break;
+		case 4: view = monoView;		break;
+		case 5: view = monoView;		break;
 		case 6: view = monoView;		break;
-		case 7: view = doneView;		break;
+		case 7: view = monoView;		break;
 
 		default: view = entryView;		break;
 	}
@@ -118,6 +118,11 @@
 	NSView* view = [self viewForTag:tag];
 	NSView* previousView = [self viewForTag:currentViewTag];
 	currentViewTag = tag;
+	
+	currentType = tag;
+	[self filterCurrentCardsByType:[self typeFromNumber:currentType-1]];
+	[self changeSectionHeaderAndCount];
+	
 	
 	[[[self window] contentView] replaceSubview:previousView with:view];
 	
@@ -395,10 +400,10 @@
 	{
 		case 0: type = @"inbox";		break;
 		case 1: type = @"next";			break;
-		case 2: type = @"scheduled";	break;
+		case 2: type = @"projects";		break;
 		case 3: type = @"tracking";		break;
-		case 4: type = @"someday";		break;
-		case 5: type = @"projects";		break;
+		case 4: type = @"scheduled";	break;
+		case 5: type = @"someday";		break;
 		case 6: type = @"done";			break;
 			
 		default: type = @"inbox";		break;
@@ -540,6 +545,8 @@
 
 -(void)populateCardsWithStoredData
 {
+	NSLog(@"populateCardsWithStoredData");
+	
 	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
 	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription* entity = [NSEntityDescription
@@ -1030,6 +1037,8 @@
 
 @synthesize current;
 
+@synthesize currentType;
+
 @synthesize tagsList;
 @synthesize projectsList;
 
@@ -1182,7 +1191,6 @@
 	
 	for (Tag* t in fetchedObjects)
 	{
-		NSLog(@"tag name: %@",t.name);
 		NSString* name = [NSString stringWithString:t.name];
 		[tmpTags addObject:name];
 	}
@@ -1199,6 +1207,71 @@
 {
 	return tagsList;
 }
+
+-(void)changeSectionHeaderAndCount
+{
+	NSLog(@"changesectionheaderandtype %i",self.currentType);
+	
+	self.sectionCount.stringValue = [NSString stringWithFormat:@"%lu",self.current.count];
+	
+	switch (self.currentType)
+	{
+		case 2:
+			self.sectionTitle.stringValue = @"Next";
+			break;
+		case 3:
+			self.sectionTitle.stringValue = @"Projects";
+			break;
+		case 4:
+			self.sectionTitle.stringValue = @"Tracking";
+			break;
+		case 5:
+			self.sectionTitle.stringValue = @"Scheduled";
+			break;
+		case 6:
+			self.sectionTitle.stringValue = @"Someday";
+			break;
+		case 7:
+			self.sectionTitle.stringValue = @"Done";
+			break;
+		default:
+			self.sectionTitle.stringValue = @"poop";
+			break;
+	}
+}
+
+-(void)filterCurrentCardsByType:(NSString*)aType
+{
+	// takes in filters in monoView and adjusts 'current' accordingly
+	
+	NSLog(@"filterCurrentCardsByType");
+	// re-populate list from core data
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"CardInfo"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	// fetch data from store
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	NSPredicate* typePredicate = [NSPredicate predicateWithFormat:@"type == %@",aType];
+	fetchedObjects = [fetchedObjects filteredArrayUsingPredicate:typePredicate];
+	
+	[self setCurrent:[NSMutableArray arrayWithArray:fetchedObjects]];
+}
+
+
+
+
+
 
 @end
 

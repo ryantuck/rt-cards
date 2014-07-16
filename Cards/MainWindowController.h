@@ -108,6 +108,8 @@
 
 @property NSMutableArray* current;		// current cards after filtering
 
+@property int currentType;
+
 @property IBOutlet NSTextField* sectionTitle;
 @property IBOutlet NSTextField* sectionCount;
 

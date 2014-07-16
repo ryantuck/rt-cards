@@ -44,6 +44,8 @@
                 <outlet property="reminderPicker" destination="EIw-Pr-WZN" id="3TJ-8A-3Gr"/>
                 <outlet property="scheduledView" destination="Ehd-qA-RFK" id="xcS-Z1-FhJ"/>
                 <outlet property="searchBox" destination="9hr-gH-sKa" id="8KB-Jl-qHc"/>
+                <outlet property="sectionCount" destination="wwh-yi-r2t" id="ehv-OM-YEU"/>
+                <outlet property="sectionTitle" destination="YR0-jO-eN4" id="5XB-YJ-C3X"/>
                 <outlet property="somedayView" destination="zye-oD-ok2" id="jW6-t9-n1d"/>
                 <outlet property="tagTable" destination="cia-XB-rzF" id="155-xP-jS1"/>
                 <outlet property="tagsBox" destination="iEa-0d-TDo" id="WoO-of-Stg"/>
@@ -123,17 +125,17 @@
                             <action selector="switchView:" target="-2" id="mkQ-8E-CFi"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="76B6E55F-E4F8-4AB7-8F82-AE33440F4D52" label="Tracking" paletteLabel="Tracking" tag="3" image="tracking" id="BQe-pc-jMg">
+                    <toolbarItem implicitItemIdentifier="76B6E55F-E4F8-4AB7-8F82-AE33440F4D52" label="Tracking" paletteLabel="Tracking" tag="4" image="tracking" id="BQe-pc-jMg">
                         <connections>
                             <action selector="switchView:" target="-2" id="2af-1d-1ec"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="66518C09-0760-4049-9361-6B735FB99BB5" label="Scheduled" paletteLabel="Scheduled" tag="4" image="calendar" id="YcJ-T9-fMg">
+                    <toolbarItem implicitItemIdentifier="66518C09-0760-4049-9361-6B735FB99BB5" label="Scheduled" paletteLabel="Scheduled" tag="5" image="calendar" id="YcJ-T9-fMg">
                         <connections>
                             <action selector="switchView:" target="-2" id="jZb-Z3-Ul0"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="04591F19-EA65-4412-B79F-D24383AC318E" label="Projects" paletteLabel="Projects" tag="5" image="projects" id="9Fi-hy-5Sb">
+                    <toolbarItem implicitItemIdentifier="04591F19-EA65-4412-B79F-D24383AC318E" label="Projects" paletteLabel="Projects" tag="3" image="projects" id="9Fi-hy-5Sb">
                         <connections>
                             <action selector="switchView:" target="-2" id="Leq-Gn-YLV"/>
                         </connections>
