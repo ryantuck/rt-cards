@@ -1149,6 +1149,16 @@
 	[self filterCurrentCards];
 }
 
+-(IBAction)clearFilters:(id)sender
+{
+	self.currentSearch.stringValue = @"";
+	self.actionCheckBox.state = NSOffState;
+	self.actionRadioButtons.enabled = false;
+	
+	[self filterCurrentCards];
+}
+
+
 @end
 
 

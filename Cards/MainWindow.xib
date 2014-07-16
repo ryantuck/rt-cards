@@ -1478,7 +1478,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="processButtonPressed:" target="-2" id="bZU-t0-Z6J"/>
+                        <action selector="clearFilters:" target="-2" id="VIT-Nn-zSg"/>
                     </connections>
                 </button>
             </subviews>
