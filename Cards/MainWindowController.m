@@ -97,7 +97,7 @@
 		case 3: view = trackingView;	break;
 		case 4: view = scheduledView;	break;
 		case 5: view = projectsView;	break;
-		case 6: view = somedayView;		break;
+		case 6: view = monoView;		break;
 		case 7: view = doneView;		break;
 
 		default: view = entryView;		break;
@@ -536,7 +536,7 @@
 @synthesize done;
 @synthesize projects;
 
-@synthesize projectsList;
+
 
 -(void)populateCardsWithStoredData
 {
@@ -1020,12 +1020,42 @@
 	
 }
 
-@synthesize current;
-@synthesize tagsList;
-@synthesize projectTable;
-@synthesize tagTable;
+//	=====================================================================
 
 @synthesize monoView;
+
+@synthesize current;
+
+@synthesize tagsList;
+@synthesize projectsList;
+
+// card details
+@synthesize cardTitleBox;
+@synthesize cardIdentifier;
+
+@synthesize cardActionRadioButtons;
+@synthesize cardTypeRadioButtons;
+@synthesize cardDueCheckBox;
+@synthesize cardReminderCheckBox;
+@synthesize cardDuePicker;
+@synthesize cardReminderPicker;
+
+@synthesize cardTags;
+@synthesize cardNotes;
+
+@synthesize cardDoneButton;
+@synthesize cardDeleteButton;
+@synthesize cardEditButton;
+
+// filtering
+@synthesize currentSearch;
+@synthesize actionCheckBox;
+@synthesize actionRadioButtons;
+@synthesize projectTable;
+@synthesize tagTable;
+@synthesize clearFiltersButton;
+
+
 
 
 

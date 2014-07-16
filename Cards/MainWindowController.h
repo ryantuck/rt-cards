@@ -89,15 +89,6 @@
 @property NSMutableArray* done;
 @property NSMutableArray* projects;
 
-@property NSMutableArray* projectsList;
-@property IBOutlet NSTableView* pTableView;
-
-@property NSMutableArray* current;
-@property NSMutableArray* tagsList;
-@property IBOutlet NSTableView* tagTable;
-@property IBOutlet NSTableView* projectTable;
-@property IBOutlet NSView* monoView;
-
 -(void)populateCardsWithStoredData;
 
 // --------------------------------------------------------
@@ -109,6 +100,49 @@
 
 
 // =========================================================================================
+
+
+@property IBOutlet NSTableView* pTableView;
+
+@property IBOutlet NSView* monoView;	// overall view
+
+@property NSMutableArray* current;		// current cards after filtering
+
+@property IBOutlet NSTextField* sectionTitle;
+@property IBOutlet NSTextField* sectionCount;
+
+
+@property NSMutableArray* tagsList;		// lists of available projects and tags
+@property NSMutableArray* projectsList;
+
+
+// card details
+@property IBOutlet NSTextField* cardTitleBox;
+@property IBOutlet NSTextField* cardIdentifier;
+
+@property IBOutlet NSMatrix* cardActionRadioButtons;
+@property IBOutlet NSMatrix* cardTypeRadioButtons;
+@property IBOutlet NSButton* cardDueCheckBox;
+@property IBOutlet NSButton* cardReminderCheckBox;
+@property IBOutlet NSDatePicker* cardDuePicker;
+@property IBOutlet NSDatePicker* cardReminderPicker;
+
+@property IBOutlet NSTokenField* cardTags;
+@property IBOutlet NSTextField* cardNotes;
+
+@property IBOutlet NSButton* cardDoneButton;
+@property IBOutlet NSButton* cardDeleteButton;
+@property IBOutlet NSButton* cardEditButton;
+
+
+
+// filtering stuff
+@property IBOutlet NSSearchField* currentSearch;
+@property IBOutlet NSButton* actionCheckBox;
+@property IBOutlet NSMatrix* actionRadioButtons;
+@property IBOutlet NSTableView* tagTable;
+@property IBOutlet NSTableView* projectTable;
+@property IBOutlet NSButton* clearFiltersButton;
 
 
 

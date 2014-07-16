@@ -6,8 +6,25 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController">
             <connections>
+                <outlet property="actionCheckBox" destination="gzH-RY-9HJ" id="Jsl-sc-HpG"/>
+                <outlet property="actionRadioButtons" destination="6TM-BB-AOV" id="Fvg-mS-vu6"/>
                 <outlet property="actions" destination="zhh-uf-BH8" id="70a-Ct-MLL"/>
+                <outlet property="cardActionRadioButtons" destination="6yz-MF-Aop" id="9ud-g2-R5c"/>
                 <outlet property="cardCount" destination="yLB-Du-hAK" id="a1G-JW-erJ"/>
+                <outlet property="cardDeleteButton" destination="Ae0-DG-Mea" id="eZz-qX-YTS"/>
+                <outlet property="cardDoneButton" destination="dIT-Fm-pFD" id="Rqb-GO-3Cq"/>
+                <outlet property="cardDueCheckBox" destination="Xd1-mA-i3M" id="zzy-1l-v3v"/>
+                <outlet property="cardDuePicker" destination="mKY-EZ-sXa" id="73L-w8-MQf"/>
+                <outlet property="cardEditButton" destination="fen-3D-f0e" id="cYk-QY-T7R"/>
+                <outlet property="cardIdentifier" destination="UBj-3d-6fM" id="pGb-S0-vce"/>
+                <outlet property="cardNotes" destination="MSB-hG-nxo" id="7RP-fM-oD0"/>
+                <outlet property="cardReminderCheckBox" destination="Ztd-ww-j6T" id="S7W-VO-owm"/>
+                <outlet property="cardReminderPicker" destination="8nE-iZ-eYl" id="wQO-Py-oRw"/>
+                <outlet property="cardTags" destination="nNA-pr-HEm" id="YLc-Bf-nI8"/>
+                <outlet property="cardTitleBox" destination="cnK-yk-cBb" id="7uz-im-TO7"/>
+                <outlet property="cardTypeRadioButtons" destination="bvc-Po-MJv" id="kFK-Nz-kqP"/>
+                <outlet property="clearFiltersButton" destination="4Ux-vQ-uWr" id="smu-pg-nCm"/>
+                <outlet property="currentSearch" destination="kUV-Db-Laf" id="CSC-fk-no6"/>
                 <outlet property="doneView" destination="KGD-02-xh5" id="8qQ-tV-d4s"/>
                 <outlet property="dueCheckBox" destination="BAo-mE-i2G" id="Vfa-jp-KDp"/>
                 <outlet property="duePicker" destination="dpN-8t-Oep" id="vEb-yB-9Ia"/>
@@ -16,6 +33,7 @@
                 <outlet property="filterCheckBox" destination="eVG-M4-uhy" id="bHs-4H-eoc"/>
                 <outlet property="identifierLabel" destination="ph5-PF-1Bc" id="Pzq-Q3-bFs"/>
                 <outlet property="inboxView" destination="242-r3-fxu" id="2VY-yv-7ys"/>
+                <outlet property="monoView" destination="dhc-g1-aIh" id="SMe-fv-suZ"/>
                 <outlet property="nextActionRadioButtons" destination="9xu-o7-ciz" id="N5g-PW-SCd"/>
                 <outlet property="nextView" destination="5Gu-5W-ab1" id="TKm-UL-3qs"/>
                 <outlet property="notesBox" destination="4jT-D2-hVb" id="v4K-if-A3R"/>
