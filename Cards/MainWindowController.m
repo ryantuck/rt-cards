@@ -1058,9 +1058,96 @@
 @synthesize tagTable;
 @synthesize clearFiltersButton;
 
+-(void)filterCurrentCards
+{
+	// takes in filters in monoView and adjusts 'current' accordingly
+	
+	NSLog(@"filterCurrentCards");
+	// re-populate list from core data
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"CardInfo"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	// fetch data from store
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	// filter predicates
+	NSString* searchText = [self.currentSearch stringValue];
+	bool actionFiltersEnabled = self.actionRadioButtons.enabled;
+	
+	if (![searchText isEqualToString:@""])
+	{
+		// filter by title using currentSearch
+		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",searchText];
+		NSArray* tmp = [NSArray arrayWithArray:fetchedObjects];
+		fetchedObjects = [tmp filteredArrayUsingPredicate:titlePredicate];
+	}
+	
+	if (actionFiltersEnabled)
+	{
+		// filter by action
+		NSString* action = [self actionFromNumber:(int)[self.actionRadioButtons selectedRow]];
+		NSLog(@"action # = %@",action);
+		
+		NSPredicate* actionPredicate = [NSPredicate predicateWithFormat:@"action == %@",action];
+		NSArray* tmp = [NSArray arrayWithArray:fetchedObjects];
+		fetchedObjects = [tmp filteredArrayUsingPredicate:actionPredicate];
+	}
+	
+//	NSMutableArray* mNext = [[NSMutableArray alloc] initWithArray:fetchedObjects];
+//	[self setNext:mNext];
+	
+	
+	
+	
+	if ([searchText  isEqual: @""])
+	{
+		// show all next
+//		NSMutableArray* mNext = [[NSMutableArray alloc] initWithArray:fetchedObjects];
+//		[self setNext:mNext];
+		NSMutableArray* mCurrent = [[NSMutableArray alloc] initWithArray: fetchedObjects];
+		[self setCurrent:mCurrent];
+	}
+	else
+	{
+		// show filtered results
+//		NSPredicate* nextPredicate = [NSPredicate predicateWithFormat:@"type == 'next'"];
+//		NSArray* nextArray = [fetchedObjects filteredArrayUsingPredicate:nextPredicate];
+		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",searchText];
+		NSArray* tArray = [fetchedObjects filteredArrayUsingPredicate:titlePredicate];
+		NSMutableArray* mCurrent = [[NSMutableArray alloc] initWithArray:tArray];
+		[self setCurrent:mCurrent];
+	}
+	
+}
 
+-(IBAction)textEnteredInCurrentSearchField:(id)sender
+{
+	[self filterCurrentCards];
+}
 
+-(IBAction)currentActionCheckBoxClicked:(id)sender
+{
+	bool isActive = false;
+	if ([self.actionCheckBox state] == NSOnState) isActive = true;
+	self.actionRadioButtons.enabled = isActive;
+	
+	[self filterCurrentCards];
+}
 
+-(IBAction)currentActionRadioButtonSelected:(id)sender
+{
+	[self filterCurrentCards];
+}
 
 @end
 

@@ -1302,7 +1302,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </searchFieldCell>
                     <connections>
-                        <action selector="textEnteredInSearchField:" target="-2" id="dVV-FC-yZf"/>
+                        <action selector="textEnteredInCurrentSearchField:" target="-2" id="c2W-ul-kl0"/>
                     </connections>
                 </searchField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="gzH-RY-9HJ">
@@ -1312,7 +1312,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="filterCheckBoxClicked:" target="-2" id="DkE-kr-0CE"/>
+                        <action selector="currentActionCheckBoxClicked:" target="-2" id="tQ9-eg-21G"/>
                     </connections>
                 </button>
                 <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6TM-BB-AOV">
@@ -1356,7 +1356,7 @@
                         </column>
                     </cells>
                     <connections>
-                        <action selector="nextRadioButtonSelected:" target="-2" id="lTd-VV-RrU"/>
+                        <action selector="currentActionRadioButtonSelected:" target="-2" id="JlP-l0-onC"/>
                     </connections>
                 </matrix>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tDH-G4-ggF">
