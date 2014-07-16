@@ -1016,39 +1016,16 @@
                 <binding destination="-2" name="contentArray" keyPath="projectsList" id="8ji-K0-EUf"/>
             </connections>
         </arrayController>
-        <arrayController id="6Ob-le-hQ2" userLabel="Tag List Array Controller"/>
+        <arrayController id="6Ob-le-hQ2" userLabel="Tags List Array Controller">
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="tagsList" id="w7y-Gn-c12"/>
+            </connections>
+        </arrayController>
         <userDefaultsController representsSharedInstance="YES" id="PZc-Gq-FHU"/>
         <customView id="dhc-g1-aIh" userLabel="Mono View">
             <rect key="frame" x="0.0" y="0.0" width="1279" height="824"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2LD-2l-Gbn">
-                    <rect key="frame" x="771" y="20" width="488" height="784"/>
-                    <clipView key="contentView" id="KVK-F9-Dff">
-                        <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView selectable="YES" id="lAK-q6-vPE">
-                                <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <color key="secondaryBackgroundColor" name="controlAlternatingRowColor" catalog="System" colorSpace="catalog"/>
-                                <connections>
-                                    <binding destination="n16-9z-ymO" name="content" keyPath="arrangedObjects" id="Y2v-cB-iKG"/>
-                                    <outlet property="itemPrototype" destination="oxu-NE-ARW" id="6cK-I9-ggL"/>
-                                </connections>
-                            </collectionView>
-                        </subviews>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="sb6-8w-lfO">
-                        <rect key="frame" x="1" y="144" width="233" height="15"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="JbC-La-UsR">
-                        <rect key="frame" x="234" y="1" width="15" height="143"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cnK-yk-cBb">
                     <rect key="frame" x="20" y="644" width="300" height="100"/>
                     <constraints>
@@ -1222,6 +1199,20 @@
                         <action selector="processButtonPressed:" target="-2" id="fWh-Bl-zER"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Ux-vQ-uWr">
+                    <rect key="frame" x="421" y="81" width="300" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="Stq-GJ-vVz"/>
+                        <constraint firstAttribute="height" constant="50" id="uTv-8B-EDS"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" title="Clear Filters" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HB4-8T-2Va">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="clearFilters:" target="-2" id="VIT-Nn-zSg"/>
+                    </connections>
+                </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UBj-3d-6fM">
                     <rect key="frame" x="18" y="617" width="84" height="17"/>
                     <constraints>
@@ -1365,7 +1356,7 @@
                         <rect key="frame" x="1" y="17" width="238" height="117"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="jlI-TA-wYG" id="cia-XB-rzF">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" headerView="B3M-rf-O9W" id="cia-XB-rzF">
                                 <rect key="frame" x="0.0" y="0.0" width="238" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -1385,13 +1376,12 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <connections>
-                                            <binding destination="CKE-HJ-zlh" name="value" keyPath="arrangedObjects.self" id="MOg-KN-3dN"/>
+                                            <binding destination="6Ob-le-hQ2" name="value" keyPath="arrangedObjects.self" id="MFF-dT-9aa"/>
                                         </connections>
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
-                                    <action selector="projectsListSelected:" target="-2" id="Bbo-ee-sh8"/>
-                                    <binding destination="CKE-HJ-zlh" name="content" keyPath="arrangedObjects" id="teS-BL-eUd"/>
+                                    <binding destination="6Ob-le-hQ2" name="content" keyPath="arrangedObjects" id="54A-bM-aod"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -1408,12 +1398,12 @@
                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <tableHeaderView key="headerView" id="jlI-TA-wYG">
-                        <rect key="frame" x="0.0" y="0.0" width="238" height="17"/>
+                    <tableHeaderView key="headerView" id="B3M-rf-O9W">
+                        <rect key="frame" x="0.0" y="0.0" width="10000" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <scrollView hidden="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Er-nG-zCG">
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Er-nG-zCG">
                     <rect key="frame" x="421" y="152" width="300" height="200"/>
                     <clipView key="contentView" id="3Lt-Xd-abH">
                         <rect key="frame" x="1" y="17" width="238" height="117"/>
@@ -1444,7 +1434,6 @@
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
-                                    <action selector="projectsListSelected:" target="-2" id="LGv-BH-nen"/>
                                     <binding destination="CKE-HJ-zlh" name="content" keyPath="arrangedObjects" id="P7Z-Jo-w5c"/>
                                 </connections>
                             </tableView>
@@ -1467,20 +1456,33 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Ux-vQ-uWr">
-                    <rect key="frame" x="421" y="81" width="300" height="52"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="300" id="Stq-GJ-vVz"/>
-                        <constraint firstAttribute="height" constant="50" id="uTv-8B-EDS"/>
-                    </constraints>
-                    <buttonCell key="cell" type="smallSquare" title="Clear Filters" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HB4-8T-2Va">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="clearFilters:" target="-2" id="VIT-Nn-zSg"/>
-                    </connections>
-                </button>
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2LD-2l-Gbn">
+                    <rect key="frame" x="771" y="20" width="488" height="784"/>
+                    <clipView key="contentView" id="KVK-F9-Dff">
+                        <rect key="frame" x="1" y="1" width="248" height="158"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView selectable="YES" id="lAK-q6-vPE">
+                                <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="secondaryBackgroundColor" name="controlAlternatingRowColor" catalog="System" colorSpace="catalog"/>
+                                <connections>
+                                    <binding destination="n16-9z-ymO" name="content" keyPath="arrangedObjects" id="Y2v-cB-iKG"/>
+                                    <outlet property="itemPrototype" destination="oxu-NE-ARW" id="6cK-I9-ggL"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="sb6-8w-lfO">
+                        <rect key="frame" x="1" y="144" width="233" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="JbC-La-UsR">
+                        <rect key="frame" x="234" y="1" width="15" height="143"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
             </subviews>
             <constraints>
                 <constraint firstItem="6TM-BB-AOV" firstAttribute="top" secondItem="gzH-RY-9HJ" secondAttribute="bottom" constant="8" id="0h3-ZC-0tZ"/>

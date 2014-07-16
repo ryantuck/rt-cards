@@ -616,6 +616,7 @@
 	NSMutableArray* plArray = [[NSMutableArray alloc] initWithObjects:@"hey",@"a",@"butt", nil];
 	[self setProjectsList:plArray];
 	
+	[self populateTagsList];
 }
 
 -(CardModel*)firstInboxCard
@@ -1158,6 +1159,46 @@
 	[self filterCurrentCards];
 }
 
+-(void)populateTagsList
+{
+	// populate list from core data
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"Tag"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	// fetch data from store
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	NSMutableArray* tmpTags = [[NSMutableArray alloc] init];
+	
+	for (Tag* t in fetchedObjects)
+	{
+		NSLog(@"tag name: %@",t.name);
+		NSString* name = [NSString stringWithString:t.name];
+		[tmpTags addObject:name];
+	}
+	
+	[self setTagsList:tmpTags];
+}
+
+-(void)setTagsList:(NSMutableArray *)a
+{
+	tagsList = a;
+}
+
+-(NSMutableArray*)tagsList
+{
+	return tagsList;
+}
 
 @end
 
