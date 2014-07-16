@@ -318,7 +318,7 @@
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
-                            <buttonCell type="radio" title="Scheduled" imagePosition="right" alignment="right" inset="2" id="dbK-nY-swB">
+                            <buttonCell type="radio" title="Projects" imagePosition="right" alignment="right" inset="2" id="dbK-nY-swB">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -326,11 +326,11 @@
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
-                            <buttonCell type="radio" title="Someday" imagePosition="right" alignment="right" inset="2" id="W9K-Rr-qvA">
+                            <buttonCell type="radio" title="Scheduled" imagePosition="right" alignment="right" inset="2" id="W9K-Rr-qvA">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
-                            <buttonCell type="radio" title="Projects" imagePosition="right" alignment="right" inset="2" id="BeB-gv-L7d">
+                            <buttonCell type="radio" title="Someday" imagePosition="right" alignment="right" inset="2" id="BeB-gv-L7d">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>

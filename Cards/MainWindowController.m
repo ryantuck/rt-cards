@@ -1073,22 +1073,7 @@
 	// takes in filters in monoView and adjusts 'current' accordingly
 	
 	NSLog(@"filterCurrentCards");
-	// re-populate list from core data
-	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
-	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription* entity = [NSEntityDescription
-								   entityForName:@"CardInfo"
-								   inManagedObjectContext:context];
-	[fetchRequest setEntity:entity];
-	
-	NSError* error;
-	if (![context save:&error])
-	{
-		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
-	}
-	
-	// fetch data from store
-	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	[self filterCurrentCardsByType:[self typeFromNumber:currentType-1]];
 	
 	// filter predicates
 	NSString* searchText = [self.currentSearch stringValue];
@@ -1098,45 +1083,37 @@
 	{
 		// filter by title using currentSearch
 		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",searchText];
-		NSArray* tmp = [NSArray arrayWithArray:fetchedObjects];
-		fetchedObjects = [tmp filteredArrayUsingPredicate:titlePredicate];
+		NSArray* tmp = [NSArray arrayWithArray:self.current];
+		tmp = [tmp filteredArrayUsingPredicate:titlePredicate];
+		NSMutableArray* mTmp = [[NSMutableArray alloc] initWithArray:tmp];
+		[self setCurrent:mTmp];
 	}
 	
 	if (actionFiltersEnabled)
 	{
 		// filter by action
 		NSString* action = [self actionFromNumber:(int)[self.actionRadioButtons selectedRow]];
-		NSLog(@"action # = %@",action);
-		
 		NSPredicate* actionPredicate = [NSPredicate predicateWithFormat:@"action == %@",action];
-		NSArray* tmp = [NSArray arrayWithArray:fetchedObjects];
-		fetchedObjects = [tmp filteredArrayUsingPredicate:actionPredicate];
+		NSArray* tmp = [NSArray arrayWithArray:self.current];
+		tmp = [tmp filteredArrayUsingPredicate:actionPredicate];
+		NSMutableArray* mTmp = [[NSMutableArray alloc] initWithArray:tmp];
+		[self setCurrent:mTmp];
 	}
-	
-//	NSMutableArray* mNext = [[NSMutableArray alloc] initWithArray:fetchedObjects];
-//	[self setNext:mNext];
-	
-	
-	
-	
+
 	if ([searchText  isEqual: @""])
 	{
-		// show all next
-//		NSMutableArray* mNext = [[NSMutableArray alloc] initWithArray:fetchedObjects];
-//		[self setNext:mNext];
-		NSMutableArray* mCurrent = [[NSMutableArray alloc] initWithArray: fetchedObjects];
-		[self setCurrent:mCurrent];
+		// leave current as is (?)
 	}
 	else
 	{
 		// show filtered results
-//		NSPredicate* nextPredicate = [NSPredicate predicateWithFormat:@"type == 'next'"];
-//		NSArray* nextArray = [fetchedObjects filteredArrayUsingPredicate:nextPredicate];
 		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",searchText];
-		NSArray* tArray = [fetchedObjects filteredArrayUsingPredicate:titlePredicate];
+		NSArray* tArray = [self.current filteredArrayUsingPredicate:titlePredicate];
 		NSMutableArray* mCurrent = [[NSMutableArray alloc] initWithArray:tArray];
 		[self setCurrent:mCurrent];
 	}
+	
+	[self changeSectionHeaderAndCount];
 	
 }
 
