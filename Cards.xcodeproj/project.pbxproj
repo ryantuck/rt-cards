@@ -46,6 +46,7 @@
 		94056CAD19647CD40076CEF9 /* CardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardView.m; sourceTree = "<group>"; };
 		94056CAF19647E230076CEF9 /* CardCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCollectionViewItem.h; sourceTree = "<group>"; };
 		94056CB019647E230076CEF9 /* CardCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCollectionViewItem.m; sourceTree = "<group>"; };
+		9481C4FF196B63C800B3212C /* Cards 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Cards 2.xcdatamodel"; sourceTree = "<group>"; };
 		9482D0F519586D67000A11F6 /* CardInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardInfo.h; sourceTree = "<group>"; };
 		9482D0F619586D67000A11F6 /* CardInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardInfo.m; sourceTree = "<group>"; };
 		94E402871954955B005F41A7 /* Cards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cards.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -505,6 +506,7 @@
 		94E402911954955B005F41A7 /* Cards.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9481C4FF196B63C800B3212C /* Cards 2.xcdatamodel */,
 				94E402921954955B005F41A7 /* Cards.xcdatamodel */,
 			);
 			currentVersion = 94E402921954955B005F41A7 /* Cards.xcdatamodel */;
