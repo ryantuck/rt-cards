@@ -61,6 +61,8 @@
 		[self.tags addObject:tag.name];
 	}
 	
+	// here, tags are registered as strings
+	
 	self.project		= cInfo.project;
 	self.waitingOn		= cInfo.waitingOn;
 	self.neededFor		= cInfo.neededFor;

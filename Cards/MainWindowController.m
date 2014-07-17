@@ -609,8 +609,19 @@
 		}
 	}
 	
-	NSMutableArray* currentArray = [[NSMutableArray alloc] initWithArray:fetchedObjects];
-	[self setCurrent:currentArray];
+//	NSMutableArray* currentArray = [[NSMutableArray alloc] initWithArray:fetchedObjects];
+//	[self setCurrent:currentArray];
+	
+	NSMutableArray* ca = [[NSMutableArray alloc] init];
+	for (CardInfo* cInfo in fetchedObjects)
+	{
+		CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
+		[ca addObject:aCard];
+	}
+	[self setCurrent:ca];
+	
+	
+	
 	
 	// set member arrays
 	[self setInbox:mInboxArray];
@@ -691,6 +702,8 @@
 	{
 		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
 	}
+	
+	NSLog(@"end of editCard function");
 }
 
 -(void)deleteCard:(CardModel*)cModel
@@ -754,6 +767,9 @@
 	
 	cInfo.notes				= cModel.notes;
 	
+	NSLog(@"cModel tags:");
+	NSLog(@"count: %lu",[cModel.tags count]);
+	
 	for (NSString* string in cModel.tags)
 	{
 		[self addTag:string toCardInfo:cInfo];
@@ -782,7 +798,9 @@
 	
 	for (Tag* tag in cInfo.tags)
 	{
-		[cModel.tags addObject:tag.name];
+		[cModel.tags addObject:[NSString stringWithString:tag.name]];
+//		[cModel.tags addObject:tag.name];
+		
 	}
 	
 	cModel.project			= cInfo.project;
@@ -1270,7 +1288,15 @@
 	NSPredicate* typePredicate = [NSPredicate predicateWithFormat:@"type == %@",aType];
 	fetchedObjects = [fetchedObjects filteredArrayUsingPredicate:typePredicate];
 	
-	[self setCurrent:[NSMutableArray arrayWithArray:fetchedObjects]];
+	NSMutableArray* ca = [[NSMutableArray alloc] init];
+	
+	for (CardInfo* c in fetchedObjects)
+	{
+		CardModel* cModel = [[CardModel alloc] initWithInfo:c];
+		[ca addObject:cModel];
+	}
+	
+	[self setCurrent:ca];
 }
 
 -(IBAction)populateCardDetailsFields:(id)sender
@@ -1300,6 +1326,11 @@
 	NSLog(@"do shit was called");
 	
 	[self populateCardDetailsFromSelectedCard];
+	
+	for (CardModel* cModel in self.current)
+	{
+		[cModel logInfo];
+	}
 }
 
 -(CardModel*)currentSelectedCard
@@ -1338,15 +1369,44 @@
 	}
 	
 	// add tags from tagsBox to card
-	NSSet* tmpTags = self.cardTags.objectValue;
-	for (NSString* string in tmpTags)
+	NSSet* tmpTags = [self.cardTags objectValue];
+	NSLog(@"tmpTags = %lu",[tmpTags count]);
+	
+	if ([tmpTags count] != 0)
 	{
-		[myCard.tags addObject:string];				// should probably check here for already existing tags?
+		for (NSString* string in tmpTags)
+		{
+			
+			[myCard.tags addObject:string];				// should probably check here for already existing tags?
+		}
+	}
+	
+	for (NSString* string in myCard.tags)
+	{
+		NSLog(@"%@",string);
 	}
 	
 	[self editCard:myCard];
 	
 	[self populateCardsWithStoredData];
+	[self filterCurrentCardsByType:[self typeFromNumber:currentType-1]];
+	[self changeSectionHeaderAndCount];
+	[self clearCardDetailFields];
+}
+
+-(void)clearCardDetailFields
+{
+	self.cardTitleBox.stringValue = @"";
+	self.cardIdentifier.stringValue = @"identifier";
+	self.cardNotes.stringValue = @"";
+	
+	self.cardDueCheckBox.state = NSOffState;
+	self.cardReminderCheckBox.state = NSOffState;
+	
+	[self.cardActionRadioButtons selectCellAtRow:0 column:0];
+	[self.cardTypeRadioButtons selectCellAtRow:0 column:0];
+	
+	// reset tags too
 }
 
 @end
