@@ -1277,6 +1277,53 @@
 	[self populateCardDetailsFromSelectedCard];
 }
 
+-(CardModel*)currentSelectedCard
+{
+	NSIndexSet* xy = [self.currentCollectionView selectionIndexes];
+	CardModel* c = [[self.currentCollectionView itemAtIndex:xy.firstIndex] representedObject];
+	
+	return c;
+}
+
+-(IBAction)editButtonPressed:(id)sender
+{
+	[self saveEdits];
+}
+
+
+-(void)saveEdits
+{
+	// change details of card and save to core data
+	
+	CardModel* myCard = [self currentSelectedCard];
+	
+	myCard.title	= self.cardTitleBox.stringValue;
+	myCard.type		= [self typeFromNumber:(int)[[self cardTypeRadioButtons] selectedRow] + 1];
+	myCard.action	= [self actionFromNumber:(int)[[self cardActionRadioButtons] selectedRow]];
+	myCard.notes	= self.cardNotes.stringValue;
+	
+	// set relevant dates
+	if (self.cardDueCheckBox.state == NSOnState)
+	{
+		myCard.dueDate = self.cardDuePicker.dateValue;
+	}
+	if (self.cardReminderCheckBox.state == NSOnState)
+	{
+		myCard.reminderDate = self.cardReminderPicker.dateValue;
+	}
+	
+	// add tags from tagsBox to card
+	NSSet* tmpTags = self.cardTags.objectValue;
+	for (NSString* string in tmpTags)
+	{
+		[myCard.tags addObject:string];				// should probably check here for already existing tags?
+	}
+	
+	[self editCard:myCard];
+	
+	[self populateCardsWithStoredData];
+}
+
 @end
 
 

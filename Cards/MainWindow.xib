@@ -108,7 +108,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="702" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1200"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
             <view key="contentView" id="SfL-yS-baZ">
                 <rect key="frame" x="0.0" y="0.0" width="702" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -1198,12 +1198,12 @@
                         <constraint firstAttribute="height" constant="50" id="3T2-2D-Nxw"/>
                         <constraint firstAttribute="width" constant="300" id="3kq-q2-GGc"/>
                     </constraints>
-                    <buttonCell key="cell" type="smallSquare" title="Process!" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ojW-pW-Cek">
+                    <buttonCell key="cell" type="smallSquare" title="Edit!" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ojW-pW-Cek">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="processButtonPressed:" target="-2" id="fWh-Bl-zER"/>
+                        <action selector="editButtonPressed:" target="-2" id="9b6-Ut-tX3"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Ux-vQ-uWr">
@@ -1364,7 +1364,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" headerView="B3M-rf-O9W" id="cia-XB-rzF">
-                                <rect key="frame" x="0.0" y="0.0" width="238" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="298" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1417,7 +1417,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="7v0-1X-ifj" id="xHd-pz-cCZ">
-                                <rect key="frame" x="0.0" y="0.0" width="238" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="298" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
