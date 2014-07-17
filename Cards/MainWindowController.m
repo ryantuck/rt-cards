@@ -1332,8 +1332,17 @@
 	[self.cardActionRadioButtons selectCellAtRow:actionNum column:0];
 	[self.cardTypeRadioButtons selectCellAtRow:typeNum-1 column:0];
 	
-	
-	
+	// date shit
+	if (cModel.dueDate != nil)
+	{
+		self.cardDueCheckBox.state = NSOnState;
+		self.cardDuePicker.dateValue = cModel.dueDate;
+	}
+	if (cModel.reminderDate != nil)
+	{
+		self.cardReminderCheckBox.state = NSOnState;
+		self.cardReminderPicker.dateValue = cModel.reminderDate;
+	}
 }
 
 -(int)numberFromType:(NSString*)type
@@ -1357,7 +1366,7 @@
 	else if	([action isEqual: @"buy"])			return 3;
 	else if	([action isEqual: @"review"])		return 4;
 	else if	([action isEqual: @"contact"])		return 5;
-	else return 1;
+	else										return 1;
 }
 
 
