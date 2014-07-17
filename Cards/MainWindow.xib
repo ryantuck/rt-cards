@@ -1102,7 +1102,7 @@
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
-                            <buttonCell type="radio" title="Scheduled" imagePosition="right" alignment="right" inset="2" id="RLN-Bm-xRz">
+                            <buttonCell type="radio" title="Projects" imagePosition="right" alignment="right" inset="2" id="RLN-Bm-xRz">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -1110,11 +1110,11 @@
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
-                            <buttonCell type="radio" title="Someday" imagePosition="right" alignment="right" inset="2" id="kHM-i6-huZ">
+                            <buttonCell type="radio" title="Scheduled" imagePosition="right" alignment="right" inset="2" id="kHM-i6-huZ">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
-                            <buttonCell type="radio" title="Projects" imagePosition="right" alignment="right" inset="2" id="Ojq-xt-AJd">
+                            <buttonCell type="radio" title="Someday" imagePosition="right" alignment="right" inset="2" id="Ojq-xt-AJd">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
