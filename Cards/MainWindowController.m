@@ -20,8 +20,6 @@
 
 @implementation MainWindowController
 
-
-
 // --------------------------------------------------------
 // Top Level Shit
 // --------------------------------------------------------
@@ -70,7 +68,6 @@
 	
 	
 }
-
 
 // --------------------------------------------------------
 // Toolbar
@@ -1319,6 +1316,13 @@
 	self.cardTitleBox.stringValue		= cModel.title;
 	self.cardIdentifier.stringValue		= cModel.identifier;
 	self.cardNotes.stringValue			= cModel.notes;
+	
+	NSMutableArray* x = [[NSMutableArray alloc] init];
+	for (NSString* t in cModel.tags)
+	{
+		[x addObject:t];
+	}
+	self.cardTags.objectValue			= x;
 }
 
 -(void)doShit:(NSEvent *)theEvent
