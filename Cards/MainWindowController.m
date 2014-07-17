@@ -563,6 +563,8 @@
 	// fetch data from store
 	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
 	
+	NSLog(@"got fetched objects");
+	
 	// set up filtering predicates
 	NSPredicate* inboxPredicate		= [NSPredicate predicateWithFormat:@"type == 'inbox'"];
 	NSPredicate* nextPredicate		= [NSPredicate predicateWithFormat:@"type == 'next'"];
@@ -592,6 +594,8 @@
 	NSArray* sectionArrays = [[NSArray alloc] initWithObjects:inboxArray, nextArray, trackingArray, somedayArray, scheduledArray, projectsArray, doneArray, nil];
 	NSArray* mSectionArrays = [[NSArray alloc] initWithObjects:mInboxArray, mNextArray, mTrackingArray, mSomedayArray, mScheduledArray, mProjectsArray, mDoneArray, nil];
 	
+	NSLog(@"set array bullshit no prol");
+	
 	// populate mutable arrays required for the 'setting' bullshit below
 	for (int n=0;n<7;n++)
 	{
@@ -617,13 +621,21 @@
 	[self setProjects:mProjectsArray];
 	[self setDone:mDoneArray];
 	
+	NSLog(@"got through for loop and shit");
+	
 	// go ahead and re-populate the inbox bullshit
 	[self populateInboxProcessingFields];
+	
+	NSLog(@"popped inbox processing fields");
 	
 	NSMutableArray* plArray = [[NSMutableArray alloc] initWithObjects:@"hey",@"a",@"butt", nil];
 	[self setProjectsList:plArray];
 	
+	NSLog(@"set projects list");
+	
 	[self populateTagsList];
+	
+	NSLog(@"end of popcardswithstoreddata");
 }
 
 -(CardModel*)firstInboxCard
@@ -1063,7 +1075,7 @@
 @synthesize cardEditButton;
 
 // filtering
-@synthesize currentSearch;
+@synthesize currentSearchBox;
 @synthesize actionCheckBox;
 @synthesize actionRadioButtons;
 @synthesize projectTable;
@@ -1078,7 +1090,7 @@
 	[self filterCurrentCardsByType:[self typeFromNumber:currentType-1]];
 	
 	// filter predicates
-	NSString* searchText = [self.currentSearch stringValue];
+	NSString* searchText = [self.currentSearchBox stringValue];
 	bool actionFiltersEnabled = self.actionRadioButtons.enabled;
 	
 	if (![searchText isEqualToString:@""])
@@ -1141,7 +1153,7 @@
 
 -(IBAction)clearFilters:(id)sender
 {
-	self.currentSearch.stringValue = @"";
+	self.currentSearchBox.stringValue = @"";
 	self.actionCheckBox.state = NSOffState;
 	self.actionRadioButtons.enabled = false;
 	
@@ -1150,6 +1162,8 @@
 
 -(void)populateTagsList
 {
+	NSLog(@"populateTagsList");
+	
 	// populate list from core data
 	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
 	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
@@ -1167,13 +1181,24 @@
 	// fetch data from store
 	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
 	
+	NSLog(@"fetched data no prob %lu",[fetchedObjects count]);
+	
 	NSMutableArray* tmpTags = [[NSMutableArray alloc] init];
 	
 	for (Tag* t in fetchedObjects)
 	{
-		NSString* name = [NSString stringWithString:t.name];
-		[tmpTags addObject:name];
+		if (t.name != nil)
+		{
+			NSString* name = [NSString stringWithString:t.name];
+			[tmpTags addObject:name];
+		}
+		else
+		{
+			NSLog(@"tag with no name!");
+		}
 	}
+	
+	NSLog(@"got through for loop");
 	
 	[self setTagsList:tmpTags];
 }

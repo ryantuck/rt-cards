@@ -142,7 +142,7 @@
 
 
 // filtering stuff
-@property IBOutlet NSSearchField* currentSearch;
+@property IBOutlet NSSearchField* currentSearchBox;
 @property IBOutlet NSButton* actionCheckBox;
 @property IBOutlet NSMatrix* actionRadioButtons;
 @property IBOutlet NSTableView* tagTable;
