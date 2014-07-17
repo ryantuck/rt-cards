@@ -24,6 +24,7 @@
                 <outlet property="cardTitleBox" destination="cnK-yk-cBb" id="7uz-im-TO7"/>
                 <outlet property="cardTypeRadioButtons" destination="bvc-Po-MJv" id="kFK-Nz-kqP"/>
                 <outlet property="clearFiltersButton" destination="4Ux-vQ-uWr" id="smu-pg-nCm"/>
+                <outlet property="currentCollectionView" destination="lAK-q6-vPE" id="2QV-zO-tBT"/>
                 <outlet property="currentSearch" destination="kUV-Db-Laf" id="CSC-fk-no6"/>
                 <outlet property="doneView" destination="KGD-02-xh5" id="8qQ-tV-d4s"/>
                 <outlet property="dueCheckBox" destination="BAo-mE-i2G" id="Vfa-jp-KDp"/>
@@ -69,6 +70,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <action selector="populateCardDetailsFields:" target="-2" id="ZLn-h5-Mke"/>
                         <binding destination="oxu-NE-ARW" name="value" keyPath="representedObject.title" id="gPO-Wa-3bf"/>
                     </connections>
                 </textField>
@@ -97,7 +99,10 @@
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="822" y="319"/>
+            <connections>
+                <outlet property="delegate" destination="-2" id="33i-6C-jVg"/>
+            </connections>
+            <point key="canvasLocation" x="836" y="319"/>
         </view>
         <window title="Cards" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="WCU-8y-33f">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>

@@ -8,8 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import "CardInfo.h"
+#import "CardView.h"
 
-@interface MainWindowController : NSWindowController
+
+@interface MainWindowController : NSWindowController <RTDelegate>
 
 // --------------------------------------------------------
 // Toolbar
@@ -101,6 +103,7 @@
 
 // =========================================================================================
 
+@property IBOutlet NSCollectionView* currentCollectionView;
 
 @property IBOutlet NSTableView* pTableView;
 
@@ -146,7 +149,7 @@
 @property IBOutlet NSTableView* projectTable;
 @property IBOutlet NSButton* clearFiltersButton;
 
-
+-(void)populateCardDetailsFromSelectedCard;
 
 
 

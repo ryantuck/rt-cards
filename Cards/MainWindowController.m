@@ -1035,6 +1035,8 @@
 
 @synthesize monoView;
 
+@synthesize currentCollectionView;
+
 @synthesize current;
 
 @synthesize currentType;
@@ -1114,6 +1116,7 @@
 	}
 	
 	[self changeSectionHeaderAndCount];
+	[self populateCardDetailsFromSelectedCard];
 	
 }
 
@@ -1245,10 +1248,34 @@
 	[self setCurrent:[NSMutableArray arrayWithArray:fetchedObjects]];
 }
 
+-(IBAction)populateCardDetailsFields:(id)sender
+{
+	
+}
 
+-(void)populateCardDetailsFromSelectedCard
+{
+	NSIndexSet* xy = [self.currentCollectionView selectionIndexes];
+	NSLog(@"index: %lu",xy.firstIndex);
+	CardModel* c = [[self.currentCollectionView itemAtIndex:xy.firstIndex] representedObject];
+	NSLog(@"title of card: %@",c.title);
+	
+	[self populateCardDetailsFromCard:c];
+}
 
+-(void)populateCardDetailsFromCard:(CardModel*)cModel
+{
+	self.cardTitleBox.stringValue		= cModel.title;
+	self.cardIdentifier.stringValue		= cModel.identifier;
+	self.cardNotes.stringValue			= cModel.notes;
+}
 
-
+-(void)doShit:(NSEvent *)theEvent
+{
+	NSLog(@"do shit was called");
+	
+	[self populateCardDetailsFromSelectedCard];
+}
 
 @end
 

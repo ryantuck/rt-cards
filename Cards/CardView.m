@@ -11,6 +11,9 @@
 @implementation CardView
 
 @synthesize selected;
+@synthesize delegate;
+
+@class MainWindowController;
 
 - (instancetype)initWithFrame:(NSRect)frame
 {
@@ -37,5 +40,18 @@
 {
 	NSLog(@"logging shit");
 }
+
+-(void)mouseDown:(NSEvent *)theEvent
+{
+	[super mouseDown:theEvent];
+	NSLog(@"mouse down!");
+	
+	if (delegate && [(NSObject*)delegate respondsToSelector:@selector(doShit:)])
+	{
+		[delegate doShit:theEvent];
+	}
+	
+}
+
 
 @end
