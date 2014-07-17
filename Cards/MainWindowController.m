@@ -1313,28 +1313,59 @@
 
 -(void)populateCardDetailsFromCard:(CardModel*)cModel
 {
+	// text fields
 	self.cardTitleBox.stringValue		= cModel.title;
 	self.cardIdentifier.stringValue		= cModel.identifier;
 	self.cardNotes.stringValue			= cModel.notes;
 	
+	// tags field
 	NSMutableArray* x = [[NSMutableArray alloc] init];
 	for (NSString* t in cModel.tags)
 	{
 		[x addObject:t];
 	}
-	self.cardTags.objectValue			= x;
+	self.cardTags.objectValue = x;
+	
+	// radio buttons
+	int typeNum		= [self numberFromType:cModel.type];
+	int actionNum	= [self numberFromAction:cModel.action];
+	[self.cardActionRadioButtons selectCellAtRow:actionNum column:0];
+	[self.cardTypeRadioButtons selectCellAtRow:typeNum-1 column:0];
+	
+	
+	
 }
+
+-(int)numberFromType:(NSString*)type
+{
+	if		([type  isEqual: @"inbox"])			return 0;
+	else if ([type  isEqual: @"next"])			return 1;
+	else if ([type  isEqual: @"projects"])		return 2;
+	else if ([type  isEqual: @"tracking"])		return 3;
+	else if ([type  isEqual: @"scheduled"])		return 4;
+	else if ([type  isEqual: @"someday"])		return 5;
+	else if ([type  isEqual: @"done"])			return 6;
+	else										return 1;
+	
+}
+
+-(int)numberFromAction:(NSString*)action
+{
+	if		([action isEqual: @"do"])			return 0;
+	else if	([action isEqual: @"brainstorm"])	return 1;
+	else if	([action isEqual: @"research"])		return 2;
+	else if	([action isEqual: @"buy"])			return 3;
+	else if	([action isEqual: @"review"])		return 4;
+	else if	([action isEqual: @"contact"])		return 5;
+	else return 1;
+}
+
 
 -(void)doShit:(NSEvent *)theEvent
 {
 	NSLog(@"do shit was called");
 	
 	[self populateCardDetailsFromSelectedCard];
-	
-	for (CardModel* cModel in self.current)
-	{
-		[cModel logInfo];
-	}
 }
 
 -(CardModel*)currentSelectedCard
