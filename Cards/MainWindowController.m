@@ -1407,9 +1407,18 @@
 	{
 		myCard.dueDate = self.cardDuePicker.dateValue;
 	}
+	else
+	{
+		myCard.dueDate = nil;
+	}
+	
 	if (self.cardReminderCheckBox.state == NSOnState)
 	{
 		myCard.reminderDate = self.cardReminderPicker.dateValue;
+	}
+	else
+	{
+		myCard.reminderDate = nil;
 	}
 	
 	// add tags from tagsBox to card
