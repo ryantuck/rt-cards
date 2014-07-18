@@ -1096,8 +1096,11 @@
 	NSString* searchText = [self.currentSearchBox stringValue];
 	bool actionFiltersEnabled = self.actionRadioButtons.enabled;
 	
+	NSLog(@"searchText = %@",searchText);
+	
 	if (![searchText isEqualToString:@""])
 	{
+		NSLog(@"searchText is not blank");
 		// filter by title using currentSearch
 		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",searchText];
 		NSArray* tmp = [NSArray arrayWithArray:self.current];
@@ -1108,6 +1111,7 @@
 	
 	if (actionFiltersEnabled)
 	{
+		NSLog(@"action filters are enabled");
 		// filter by action
 		NSString* action = [self actionFromNumber:(int)[self.actionRadioButtons selectedRow]];
 		NSPredicate* actionPredicate = [NSPredicate predicateWithFormat:@"action == %@",action];
@@ -1120,15 +1124,19 @@
 	if ([searchText  isEqual: @""])
 	{
 		// leave current as is (?)
+		NSLog(@"searchText is blank");
 	}
 	else
 	{
+		NSLog(@"searchText isn't blank again");
 		// show filtered results
 		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",searchText];
 		NSArray* tArray = [self.current filteredArrayUsingPredicate:titlePredicate];
 		NSMutableArray* mCurrent = [[NSMutableArray alloc] initWithArray:tArray];
 		[self setCurrent:mCurrent];
 	}
+	
+	NSLog(@"current count: %lu",[self.current count]);
 	
 	[self changeSectionHeaderAndCount];
 	[self populateCardDetailsFromSelectedCard];
@@ -1217,6 +1225,7 @@
 
 -(void)changeSectionHeaderAndCount
 {
+	NSLog(@"changeSectionHeaderAndCount");
 	self.sectionCount.stringValue = [NSString stringWithFormat:@"%lu",self.current.count];
 	
 	switch (self.currentType)
@@ -1288,14 +1297,25 @@
 
 -(void)populateCardDetailsFromSelectedCard
 {
-	NSIndexSet* xy = [self.currentCollectionView selectionIndexes];
-	CardModel* c = [[self.currentCollectionView itemAtIndex:xy.firstIndex] representedObject];
+	NSLog(@"populateCardDetailsFromSelectedCard");
 	
-	[self populateCardDetailsFromCard:c];
+	NSIndexSet* xy = [self.currentCollectionView selectionIndexes];
+	
+	if (xy.firstIndex < [self.current count])
+	{
+		CardModel* c = [[self.currentCollectionView itemAtIndex:xy.firstIndex] representedObject];
+		[self populateCardDetailsFromCard:c];
+	}
+	else
+	{
+		// no card selected, so don't bother populating
+		NSLog(@"no card selected -- bypassing population");
+	}
 }
 
 -(void)populateCardDetailsFromCard:(CardModel*)cModel
 {
+	NSLog(@"populateCardDetailsFromCard:c");
 	// text fields
 	self.cardTitleBox.stringValue		= cModel.title;
 	self.cardIdentifier.stringValue		= cModel.identifier;

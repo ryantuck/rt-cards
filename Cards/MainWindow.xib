@@ -26,6 +26,7 @@
                 <outlet property="clearFiltersButton" destination="4Ux-vQ-uWr" id="smu-pg-nCm"/>
                 <outlet property="currentCollectionView" destination="lAK-q6-vPE" id="2QV-zO-tBT"/>
                 <outlet property="currentSearch" destination="kUV-Db-Laf" id="CSC-fk-no6"/>
+                <outlet property="currentSearchBox" destination="kUV-Db-Laf" id="ZPG-u0-sxc"/>
                 <outlet property="doneView" destination="KGD-02-xh5" id="8qQ-tV-d4s"/>
                 <outlet property="dueCheckBox" destination="BAo-mE-i2G" id="Vfa-jp-KDp"/>
                 <outlet property="duePicker" destination="dpN-8t-Oep" id="vEb-yB-9Ia"/>
