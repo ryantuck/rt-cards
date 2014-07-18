@@ -127,6 +127,9 @@
 	{
 		// populate 'current' with just cards tagged 'today'
 		[self filterCurrentCardsByTag:@"today"];
+		self.sectionCount.stringValue = [NSString stringWithFormat:@"%lu",self.current.count];
+		self.sectionTitle.stringValue = @"Today";
+		
 	}
 	
 	
