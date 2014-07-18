@@ -675,6 +675,11 @@
                             <action selector="switchView:" target="-2" id="ORP-vQ-2qJ"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="E858220D-3FC2-4158-AAA1-C79AB370C851" label="Today" paletteLabel="Today" tag="8" image="next" id="UQR-Ai-XDB">
+                        <connections>
+                            <action selector="switchView:" target="-2" id="cMc-cU-bGg"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="PJm-Xc-gg8"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="ZzS-ZL-XVS"/>
                 </allowedToolbarItems>
@@ -690,6 +695,8 @@
                     <toolbarItem reference="BGk-U7-qb6"/>
                     <toolbarItem reference="ZzS-ZL-XVS"/>
                     <toolbarItem reference="Xb5-rU-aeU"/>
+                    <toolbarItem reference="ZzS-ZL-XVS"/>
+                    <toolbarItem reference="UQR-Ai-XDB"/>
                 </defaultToolbarItems>
             </toolbar>
             <point key="canvasLocation" x="452" y="-4"/>
