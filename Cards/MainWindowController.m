@@ -1088,6 +1088,7 @@
 @synthesize cardDoneButton;
 @synthesize cardDeleteButton;
 @synthesize cardEditButton;
+@synthesize cardTodayButton;
 
 // filtering
 @synthesize currentSearchBox;
@@ -1461,6 +1462,17 @@
 	
 	// reset tags too
 }
+
+-(void)addToTodayList:(CardModel*)card
+{
+	NSLog(@"add to today list function");
+}
+
+-(IBAction)todayButtonPressed:(id)sender
+{
+	[self addToTodayList:[self currentSelectedCard]];
+}
+
 
 @end
 
