@@ -1466,6 +1466,11 @@
 -(void)addToTodayList:(CardModel*)card
 {
 	NSLog(@"add to today list function");
+	
+	// add tag 'today' to card
+	[card.tags addObject:@"today"];
+	
+	[self editCard:card];
 }
 
 -(IBAction)todayButtonPressed:(id)sender
