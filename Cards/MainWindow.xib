@@ -1569,7 +1569,7 @@
         </arrayController>
         <arrayController id="6Ob-le-hQ2" userLabel="Tags List Array Controller">
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="tagsList" id="w7y-Gn-c12"/>
+                <binding destination="-2" name="contentArray" keyPath="currentTagsList" id="Wpt-Nq-Ytp"/>
             </connections>
         </arrayController>
         <userDefaultsController representsSharedInstance="YES" id="PZc-Gq-FHU"/>

@@ -122,6 +122,7 @@
 		currentType = tag;
 		[self filterCurrentCardsByType:[self typeFromNumber:currentType-1]];
 		[self changeSectionHeaderAndCount];
+		[self populateCurrentTagsList];
 	}
 	else
 	{
@@ -636,6 +637,7 @@
 	NSMutableArray* plArray = [[NSMutableArray alloc] initWithObjects:@"hey",@"a",@"butt", nil];
 	[self setProjectsList:plArray];
 	
+	[self populateCurrentTagsList];
 	[self populateTagsList];
 }
 
@@ -1037,7 +1039,8 @@
 -(IBAction)projectsListSelected:(id)sender
 {
 	// get selected row
-	long x = [self.pTableView selectedRow];
+//	long x = [self.pTableView selectedRow];
+	
 	
 	// filter projects cards by selected project
 	
@@ -1046,6 +1049,8 @@
 }
 
 //	=====================================================================
+
+#pragma mark - bullshit
 
 @synthesize monoView;
 
@@ -1084,6 +1089,8 @@
 @synthesize projectTable;
 @synthesize tagTable;
 @synthesize clearFiltersButton;
+
+@synthesize currentTagsList;
 
 -(void)filterCurrentCards
 {
@@ -1140,7 +1147,7 @@
 	
 	[self changeSectionHeaderAndCount];
 	[self populateCardDetailsFromSelectedCard];
-	
+	[self populateCurrentTagsList];
 }
 
 -(IBAction)textEnteredInCurrentSearchField:(id)sender
@@ -1170,6 +1177,35 @@
 	self.actionRadioButtons.enabled = false;
 	
 	[self filterCurrentCards];
+}
+
+-(void)populateCurrentTagsList
+{
+	NSLog(@"populateCurrentTagsList");
+	NSMutableArray* ct = [[NSMutableArray alloc] init];
+	
+	for (CardModel* cModel in self.current)
+	{
+		for (NSString* t in cModel.tags)
+		{
+			bool alreadyAdded = false;
+			
+			for (NSString* existingTag in ct)
+			{
+				if ([t isEqual:existingTag])
+				{
+					alreadyAdded = true;
+				}
+			}
+			
+			if (!alreadyAdded)
+			{
+				[ct addObject:t];
+			}
+		}
+	}
+	
+	self.currentTagsList = ct;
 }
 
 -(void)populateTagsList

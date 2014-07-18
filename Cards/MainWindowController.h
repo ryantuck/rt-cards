@@ -150,6 +150,8 @@
 @property IBOutlet NSTableView* projectTable;
 @property IBOutlet NSButton* clearFiltersButton;
 
+@property NSMutableArray* currentTagsList;
+
 -(void)populateCardDetailsFromSelectedCard;
 
 
