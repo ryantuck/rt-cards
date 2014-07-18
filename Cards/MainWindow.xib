@@ -519,6 +519,20 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NjX-hX-jsU">
+                    <rect key="frame" x="20" y="66" width="300" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="7Cq-FR-5Kn"/>
+                        <constraint firstAttribute="height" constant="50" id="d4B-Xi-niL"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" title="Do Today!" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ocX-L1-Ptp">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="todayButtonPressed:" target="-2" id="M6t-3E-dNs"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="6TM-BB-AOV" firstAttribute="top" secondItem="gzH-RY-9HJ" secondAttribute="bottom" constant="8" id="0h3-ZC-0tZ"/>
@@ -554,6 +568,7 @@
                 <constraint firstItem="8nE-iZ-eYl" firstAttribute="top" secondItem="Ztd-ww-j6T" secondAttribute="bottom" constant="8" id="TDV-R8-xck"/>
                 <constraint firstItem="tDH-G4-ggF" firstAttribute="top" secondItem="6TM-BB-AOV" secondAttribute="bottom" constant="50" id="UCr-SS-htO"/>
                 <constraint firstItem="mKY-EZ-sXa" firstAttribute="top" secondItem="Xd1-mA-i3M" secondAttribute="bottom" constant="8" id="ZKx-kV-uwP"/>
+                <constraint firstItem="NjX-hX-jsU" firstAttribute="top" secondItem="fen-3D-f0e" secondAttribute="bottom" constant="8" id="dJk-xf-rKK"/>
                 <constraint firstItem="6TM-BB-AOV" firstAttribute="leading" secondItem="gzH-RY-9HJ" secondAttribute="trailing" constant="-33" id="eee-5N-qHn"/>
                 <constraint firstItem="Ztd-ww-j6T" firstAttribute="trailing" secondItem="8nE-iZ-eYl" secondAttribute="trailing" id="gQX-cR-2L8"/>
                 <constraint firstItem="6yz-MF-Aop" firstAttribute="leading" secondItem="dhc-g1-aIh" secondAttribute="leading" constant="20" id="hEi-r1-lrQ"/>
@@ -561,6 +576,7 @@
                 <constraint firstItem="dIT-Fm-pFD" firstAttribute="top" secondItem="UBj-3d-6fM" secondAttribute="bottom" constant="20" id="hN3-M1-Vem"/>
                 <constraint firstItem="dIT-Fm-pFD" firstAttribute="leading" secondItem="dhc-g1-aIh" secondAttribute="leading" constant="20" id="jQN-AW-4jD"/>
                 <constraint firstItem="Ae0-DG-Mea" firstAttribute="leading" secondItem="dhc-g1-aIh" secondAttribute="leading" constant="20" id="kPw-w1-NXw"/>
+                <constraint firstItem="NjX-hX-jsU" firstAttribute="leading" secondItem="fen-3D-f0e" secondAttribute="leading" id="l4H-OT-wuK"/>
                 <constraint firstItem="1Er-nG-zCG" firstAttribute="leading" secondItem="4Ux-vQ-uWr" secondAttribute="leading" id="l8e-YI-zZG"/>
                 <constraint firstItem="MSB-hG-nxo" firstAttribute="leading" secondItem="cnK-yk-cBb" secondAttribute="leading" id="lNV-be-SAV"/>
                 <constraint firstItem="wwh-yi-r2t" firstAttribute="trailing" secondItem="cnK-yk-cBb" secondAttribute="trailing" id="leB-GC-HkO"/>
@@ -675,6 +691,11 @@
                             <action selector="switchView:" target="-2" id="ORP-vQ-2qJ"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="E858220D-3FC2-4158-AAA1-C79AB370C851" label="Today" paletteLabel="Today" tag="8" image="next" id="UQR-Ai-XDB">
+                        <connections>
+                            <action selector="switchView:" target="-2" id="cMc-cU-bGg"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="PJm-Xc-gg8"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="ZzS-ZL-XVS"/>
                 </allowedToolbarItems>
@@ -690,6 +711,8 @@
                     <toolbarItem reference="BGk-U7-qb6"/>
                     <toolbarItem reference="ZzS-ZL-XVS"/>
                     <toolbarItem reference="Xb5-rU-aeU"/>
+                    <toolbarItem reference="ZzS-ZL-XVS"/>
+                    <toolbarItem reference="UQR-Ai-XDB"/>
                 </defaultToolbarItems>
             </toolbar>
             <point key="canvasLocation" x="452" y="-4"/>

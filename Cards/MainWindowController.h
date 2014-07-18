@@ -138,6 +138,7 @@
 @property IBOutlet NSButton* cardDoneButton;
 @property IBOutlet NSButton* cardDeleteButton;
 @property IBOutlet NSButton* cardEditButton;
+@property IBOutlet NSButton* cardTodayButton;
 
 
 

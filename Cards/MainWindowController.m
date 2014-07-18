@@ -96,6 +96,7 @@
 		case 5: view = monoView;		break;
 		case 6: view = monoView;		break;
 		case 7: view = monoView;		break;
+		case 8: view = monoView;		break;
 
 		default: view = entryView;		break;
 	}
@@ -116,9 +117,20 @@
 	NSView* previousView = [self viewForTag:currentViewTag];
 	currentViewTag = tag;
 	
-	currentType = tag;
-	[self filterCurrentCardsByType:[self typeFromNumber:currentType-1]];
-	[self changeSectionHeaderAndCount];
+	if (tag < 8)
+	{
+		currentType = tag;
+		[self filterCurrentCardsByType:[self typeFromNumber:currentType-1]];
+		[self changeSectionHeaderAndCount];
+	}
+	else
+	{
+		// populate 'current' with just cards tagged 'today'
+		[self filterCurrentCardsByTag:@"today"];
+		self.sectionCount.stringValue = [NSString stringWithFormat:@"%lu",self.current.count];
+		self.sectionTitle.stringValue = @"Today";
+		
+	}
 	
 	
 	[[[self window] contentView] replaceSubview:previousView with:view];
@@ -1088,6 +1100,7 @@
 @synthesize cardDoneButton;
 @synthesize cardDeleteButton;
 @synthesize cardEditButton;
+@synthesize cardTodayButton;
 
 // filtering
 @synthesize currentSearchBox;
@@ -1460,6 +1473,68 @@
 	[self.cardTypeRadioButtons selectCellAtRow:0 column:0];
 	
 	// reset tags too
+}
+
+-(void)addToTodayList:(CardModel*)card
+{
+	NSLog(@"add to today list function");
+	
+	// add tag 'today' to card
+	[card.tags addObject:@"today"];
+	
+	[self editCard:card];
+}
+
+-(IBAction)todayButtonPressed:(id)sender
+{
+	[self addToTodayList:[self currentSelectedCard]];
+}
+
+-(void)filterCurrentCardsByTag:(NSString*)aTag
+{
+	// takes in filters in monoView and adjusts 'current' accordingly
+	
+	NSLog(@"filter current cards by tag");
+	// re-populate list from core data
+	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
+	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription* entity = [NSEntityDescription
+								   entityForName:@"Tag"
+								   inManagedObjectContext:context];
+	[fetchRequest setEntity:entity];
+	
+	NSError* error;
+	if (![context save:&error])
+	{
+		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+	}
+	
+	// fetch data from store
+	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+	
+	NSPredicate* tagPredicate = [NSPredicate predicateWithFormat:@"name == %@",aTag];
+	fetchedObjects = [fetchedObjects filteredArrayUsingPredicate:tagPredicate];
+	
+	NSLog(@"tags with name today: %lu",[fetchedObjects count]);
+	
+	if ([fetchedObjects count] == 1)
+	{
+		NSMutableArray* ca = [[NSMutableArray alloc] init];
+		
+		Tag* todayTag = [fetchedObjects objectAtIndex:0];
+		
+		for (CardInfo* c in todayTag.cards)
+		{
+			CardModel* cModel = [[CardModel alloc] initWithInfo:c];
+			[ca addObject:cModel];
+		}
+		
+		[self setCurrent:ca];
+	}
+	else
+	{
+		NSLog(@"didn't save shit bc fetched count != 1");
+	}
 }
 
 @end
