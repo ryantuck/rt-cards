@@ -26,6 +26,7 @@
                 <outlet property="clearFiltersButton" destination="4Ux-vQ-uWr" id="smu-pg-nCm"/>
                 <outlet property="currentCollectionView" destination="lAK-q6-vPE" id="2QV-zO-tBT"/>
                 <outlet property="currentSearch" destination="kUV-Db-Laf" id="CSC-fk-no6"/>
+                <outlet property="currentSearchBox" destination="kUV-Db-Laf" id="ZPG-u0-sxc"/>
                 <outlet property="doneView" destination="KGD-02-xh5" id="8qQ-tV-d4s"/>
                 <outlet property="dueCheckBox" destination="BAo-mE-i2G" id="Vfa-jp-KDp"/>
                 <outlet property="duePicker" destination="dpN-8t-Oep" id="vEb-yB-9Ia"/>
@@ -417,6 +418,7 @@
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
+                                    <action selector="tagTableClicked:" target="-2" id="ivg-6a-XNr"/>
                                     <binding destination="6Ob-le-hQ2" name="content" keyPath="arrangedObjects" id="54A-bM-aod"/>
                                 </connections>
                             </tableView>
@@ -1568,7 +1570,7 @@
         </arrayController>
         <arrayController id="6Ob-le-hQ2" userLabel="Tags List Array Controller">
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="tagsList" id="w7y-Gn-c12"/>
+                <binding destination="-2" name="contentArray" keyPath="currentTagsList" id="Wpt-Nq-Ytp"/>
             </connections>
         </arrayController>
         <userDefaultsController representsSharedInstance="YES" id="PZc-Gq-FHU"/>

@@ -122,6 +122,7 @@
 		currentType = tag;
 		[self filterCurrentCardsByType:[self typeFromNumber:currentType-1]];
 		[self changeSectionHeaderAndCount];
+		[self populateCurrentTagsList];
 	}
 	else
 	{
@@ -172,7 +173,7 @@
 	NSError* error;
 	if (![context save:&error])
 	{
-		NSLog(@"fuck - couldn't save: %@",[error localizedDescription]);
+		NSLog(@"couldn't save in createNewCardWithTitle");
 	}
 }
 
@@ -458,7 +459,7 @@
 
 -(void)filterList:(NSMutableArray*)list
 {
-	NSLog(@"filterList ran");
+	NSLog(@"filterList");
 	// re-populate list from core data
 	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
 	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
@@ -470,7 +471,7 @@
 	NSError* error;
 	if (![context save:&error])
 	{
-		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+		NSLog(@"couldn't save in filterList");
 	}
 	
 	// fetch data from store
@@ -492,7 +493,6 @@
 	{
 		// filter by action
 		NSString* action = [self actionFromNumber:(int)[self.nextActionRadioButtons selectedRow]];
-		NSLog(@"action # = %@",action);
 		
 		NSPredicate* actionPredicate = [NSPredicate predicateWithFormat:@"action == %@",action];
 		NSArray* tmp = [NSArray arrayWithArray:fetchedObjects];
@@ -566,13 +566,11 @@
 	NSError* error;
 	if (![context save:&error])
 	{
-		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+		NSLog(@"couldn't save in populateCardsWithStoredData");
 	}
 	
 	// fetch data from store
 	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-	
-	NSLog(@"got fetched objects");
 	
 	// set up filtering predicates
 	NSPredicate* inboxPredicate		= [NSPredicate predicateWithFormat:@"type == 'inbox'"];
@@ -603,8 +601,6 @@
 	NSArray* sectionArrays = [[NSArray alloc] initWithObjects:inboxArray, nextArray, trackingArray, somedayArray, scheduledArray, projectsArray, doneArray, nil];
 	NSArray* mSectionArrays = [[NSArray alloc] initWithObjects:mInboxArray, mNextArray, mTrackingArray, mSomedayArray, mScheduledArray, mProjectsArray, mDoneArray, nil];
 	
-	NSLog(@"set array bullshit no prol");
-	
 	// populate mutable arrays required for the 'setting' bullshit below
 	for (int n=0;n<7;n++)
 	{
@@ -618,9 +614,6 @@
 		}
 	}
 	
-//	NSMutableArray* currentArray = [[NSMutableArray alloc] initWithArray:fetchedObjects];
-//	[self setCurrent:currentArray];
-	
 	NSMutableArray* ca = [[NSMutableArray alloc] init];
 	for (CardInfo* cInfo in fetchedObjects)
 	{
@@ -628,10 +621,7 @@
 		[ca addObject:aCard];
 	}
 	[self setCurrent:ca];
-	
-	
-	
-	
+
 	// set member arrays
 	[self setInbox:mInboxArray];
 	[self setNext:mNextArray];
@@ -641,21 +631,14 @@
 	[self setProjects:mProjectsArray];
 	[self setDone:mDoneArray];
 	
-	NSLog(@"got through for loop and shit");
-	
 	// go ahead and re-populate the inbox bullshit
 	[self populateInboxProcessingFields];
-	
-	NSLog(@"popped inbox processing fields");
-	
+
 	NSMutableArray* plArray = [[NSMutableArray alloc] initWithObjects:@"hey",@"a",@"butt", nil];
 	[self setProjectsList:plArray];
 	
-	NSLog(@"set projects list");
-	
+	[self populateCurrentTagsList];
 	[self populateTagsList];
-	
-	NSLog(@"end of popcardswithstoreddata");
 }
 
 -(CardModel*)firstInboxCard
@@ -686,7 +669,7 @@
 	NSError* error;
 	if (![context save:&error])
 	{
-		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+		NSLog(@"couldn't save in editCard:cardmodel");
 	}
 	
 	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
@@ -709,10 +692,8 @@
 	// save
 	if (![context save:&error])
 	{
-		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+		NSLog(@"couldn't save in editCard:cardmodel");
 	}
-	
-	NSLog(@"end of editCard function");
 }
 
 -(void)deleteCard:(CardModel*)cModel
@@ -729,7 +710,7 @@
 	NSError* error;
 	if (![context save:&error])
 	{
-		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+		NSLog(@"couldn't save in deleteCard");
 	}
 	
 	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
@@ -753,7 +734,7 @@
 	// save
 	if (![context save:&error])
 	{
-		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+		NSLog(@"couldn't save in deleteCard");
 	}
 
 }
@@ -775,9 +756,6 @@
 	cInfo.action			= cModel.action;
 	
 	cInfo.notes				= cModel.notes;
-	
-	NSLog(@"cModel tags:");
-	NSLog(@"count: %lu",[cModel.tags count]);
 	
 	for (NSString* string in cModel.tags)
 	{
@@ -847,7 +825,7 @@
 	NSError* error;
 	if (![context save:&error])
 	{
-		NSLog(@"fuck - couldn't save: %@",[error localizedDescription]);
+		NSLog(@"couldn't save in addTag: toCardInfo");
 	}
 }
 
@@ -863,7 +841,7 @@
 	NSError* error;
 	if (![context save:&error])
 	{
-		NSLog(@"shit mother fucker couldn't save: %@",[error localizedDescription]);
+		NSLog(@"couldn't save in printAllTags");
 	}
 	
 	// fetch data from store
@@ -904,12 +882,12 @@
 	
 	if ([filteredArray count] == 0)
 	{
-		NSLog(@"filtered count is zero");
+		NSLog(@"tagAlreadyExists -- filtered count is zero");
 		check = false;
 	}
 	else
 	{
-		NSLog(@"%lu tags exist with the name: %@",[filteredArray count],tagName);
+		NSLog(@"tagAlreadyExists -- %lu tags exist with the name: %@",[filteredArray count],tagName);
 		check = true;
 	}
 	
@@ -974,7 +952,7 @@
 	[self editCard:cModel];
 	[self populateCardsWithStoredData];
 	
-	NSLog(@"card title: %@",cModel.title);
+	NSLog(@"card's checkbox clicked - %@",cModel.title);
 }
 
 
@@ -1061,8 +1039,8 @@
 -(IBAction)projectsListSelected:(id)sender
 {
 	// get selected row
-	long x = [self.pTableView selectedRow];
-	NSLog(@"%i",(int)x);
+//	long x = [self.pTableView selectedRow];
+	
 	
 	// filter projects cards by selected project
 	
@@ -1071,6 +1049,8 @@
 }
 
 //	=====================================================================
+
+#pragma mark - bullshit
 
 @synthesize monoView;
 
@@ -1110,6 +1090,8 @@
 @synthesize tagTable;
 @synthesize clearFiltersButton;
 
+@synthesize currentTagsList;
+
 -(void)filterCurrentCards
 {
 	// takes in filters in monoView and adjusts 'current' accordingly
@@ -1121,8 +1103,22 @@
 	NSString* searchText = [self.currentSearchBox stringValue];
 	bool actionFiltersEnabled = self.actionRadioButtons.enabled;
 	
+	// if a tag is selected, filter by that tag
+	NSInteger r = [[self tagTable] selectedRow];
+	if (r < [currentTagsList count])
+	{
+		NSString* filterTag = [currentTagsList objectAtIndex:r];
+		NSLog(@"filter row = %lu",r);
+		NSLog(@"filter tag = %@",filterTag);
+		
+		[self filterCurrentCardsByTag:filterTag];
+	}
+	
+	NSLog(@"searchText = %@",searchText);
+	
 	if (![searchText isEqualToString:@""])
 	{
+		NSLog(@"searchText is not blank");
 		// filter by title using currentSearch
 		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",searchText];
 		NSArray* tmp = [NSArray arrayWithArray:self.current];
@@ -1133,6 +1129,7 @@
 	
 	if (actionFiltersEnabled)
 	{
+		NSLog(@"action filters are enabled");
 		// filter by action
 		NSString* action = [self actionFromNumber:(int)[self.actionRadioButtons selectedRow]];
 		NSPredicate* actionPredicate = [NSPredicate predicateWithFormat:@"action == %@",action];
@@ -1145,9 +1142,11 @@
 	if ([searchText  isEqual: @""])
 	{
 		// leave current as is (?)
+		NSLog(@"searchText is blank");
 	}
 	else
 	{
+		NSLog(@"searchText isn't blank again");
 		// show filtered results
 		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",searchText];
 		NSArray* tArray = [self.current filteredArrayUsingPredicate:titlePredicate];
@@ -1155,9 +1154,11 @@
 		[self setCurrent:mCurrent];
 	}
 	
+	NSLog(@"current count: %lu",[self.current count]);
+	
 	[self changeSectionHeaderAndCount];
 	[self populateCardDetailsFromSelectedCard];
-	
+	[self populateCurrentTagsList];
 }
 
 -(IBAction)textEnteredInCurrentSearchField:(id)sender
@@ -1167,6 +1168,7 @@
 
 -(IBAction)currentActionCheckBoxClicked:(id)sender
 {
+	NSLog(@"currentActionCheckBoxClicked");
 	bool isActive = false;
 	if ([self.actionCheckBox state] == NSOnState) isActive = true;
 	self.actionRadioButtons.enabled = isActive;
@@ -1186,6 +1188,35 @@
 	self.actionRadioButtons.enabled = false;
 	
 	[self filterCurrentCards];
+}
+
+-(void)populateCurrentTagsList
+{
+	NSLog(@"populateCurrentTagsList");
+	NSMutableArray* ct = [[NSMutableArray alloc] init];
+	
+	for (CardModel* cModel in self.current)
+	{
+		for (NSString* t in cModel.tags)
+		{
+			bool alreadyAdded = false;
+			
+			for (NSString* existingTag in ct)
+			{
+				if ([t isEqual:existingTag])
+				{
+					alreadyAdded = true;
+				}
+			}
+			
+			if (!alreadyAdded)
+			{
+				[ct addObject:t];
+			}
+		}
+	}
+	
+	self.currentTagsList = ct;
 }
 
 -(void)populateTagsList
@@ -1225,9 +1256,7 @@
 			NSLog(@"tag with no name!");
 		}
 	}
-	
-	NSLog(@"got through for loop");
-	
+
 	[self setTagsList:tmpTags];
 }
 
@@ -1243,8 +1272,7 @@
 
 -(void)changeSectionHeaderAndCount
 {
-	NSLog(@"changesectionheaderandtype %i",self.currentType);
-	
+	NSLog(@"changeSectionHeaderAndCount");
 	self.sectionCount.stringValue = [NSString stringWithFormat:@"%lu",self.current.count];
 	
 	switch (self.currentType)
@@ -1316,16 +1344,25 @@
 
 -(void)populateCardDetailsFromSelectedCard
 {
-	NSIndexSet* xy = [self.currentCollectionView selectionIndexes];
-	NSLog(@"index: %lu",xy.firstIndex);
-	CardModel* c = [[self.currentCollectionView itemAtIndex:xy.firstIndex] representedObject];
-	NSLog(@"title of card: %@",c.title);
+	NSLog(@"populateCardDetailsFromSelectedCard");
 	
-	[self populateCardDetailsFromCard:c];
+	NSIndexSet* xy = [self.currentCollectionView selectionIndexes];
+	
+	if (xy.firstIndex < [self.current count])
+	{
+		CardModel* c = [[self.currentCollectionView itemAtIndex:xy.firstIndex] representedObject];
+		[self populateCardDetailsFromCard:c];
+	}
+	else
+	{
+		// no card selected, so don't bother populating
+		NSLog(@"no card selected -- bypassing population");
+	}
 }
 
 -(void)populateCardDetailsFromCard:(CardModel*)cModel
 {
+	NSLog(@"populateCardDetailsFromCard:c");
 	// text fields
 	self.cardTitleBox.stringValue		= cModel.title;
 	self.cardIdentifier.stringValue		= cModel.identifier;
@@ -1406,6 +1443,7 @@
 
 -(void)saveEdits
 {
+	NSLog(@"saveEdits");
 	// change details of card and save to core data
 	
 	CardModel* myCard = [self currentSelectedCard];
@@ -1436,7 +1474,6 @@
 	
 	// add tags from tagsBox to card
 	NSSet* tmpTags = [self.cardTags objectValue];
-	NSLog(@"tmpTags = %lu",[tmpTags count]);
 	
 	if ([tmpTags count] != 0)
 	{
@@ -1447,9 +1484,10 @@
 		}
 	}
 	
+	NSLog(@" - %@",myCard.title);
 	for (NSString* string in myCard.tags)
 	{
-		NSLog(@"%@",string);
+		NSLog(@" --- %@",string);
 	}
 	
 	[self editCard:myCard];
@@ -1477,7 +1515,7 @@
 
 -(void)addToTodayList:(CardModel*)card
 {
-	NSLog(@"add to today list function");
+	NSLog(@"addToTodayList");
 	
 	// add tag 'today' to card
 	[card.tags addObject:@"today"];
@@ -1515,8 +1553,6 @@
 	NSPredicate* tagPredicate = [NSPredicate predicateWithFormat:@"name == %@",aTag];
 	fetchedObjects = [fetchedObjects filteredArrayUsingPredicate:tagPredicate];
 	
-	NSLog(@"tags with name today: %lu",[fetchedObjects count]);
-	
 	if ([fetchedObjects count] == 1)
 	{
 		NSMutableArray* ca = [[NSMutableArray alloc] init];
@@ -1536,6 +1572,12 @@
 		NSLog(@"didn't save shit bc fetched count != 1");
 	}
 }
+
+-(IBAction)tagTableClicked:(id)sender
+{
+	[self filterCurrentCards];
+}
+
 
 @end
 
