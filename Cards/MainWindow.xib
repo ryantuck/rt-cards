@@ -1080,36 +1080,6 @@
                 <binding destination="-2" name="contentArray" keyPath="inbox" id="fXl-eT-4DO"/>
             </connections>
         </arrayController>
-        <arrayController id="wLh-Tb-dVn" userLabel="Next Array Controller">
-            <connections>
-                <binding destination="-2" name="contentArray" keyPath="next" id="sOP-mK-XUv"/>
-            </connections>
-        </arrayController>
-        <arrayController id="27P-tI-kdN" userLabel="Tracking Array Controller">
-            <connections>
-                <binding destination="-2" name="contentArray" keyPath="tracking" id="3KE-2q-cdv"/>
-            </connections>
-        </arrayController>
-        <arrayController id="ekd-FK-F6U" userLabel="Scheduled Array Controller">
-            <connections>
-                <binding destination="-2" name="contentArray" keyPath="scheduled" id="s7I-tY-b7A"/>
-            </connections>
-        </arrayController>
-        <arrayController id="VZg-oV-bQH" userLabel="Projects Array Controller">
-            <connections>
-                <binding destination="-2" name="contentArray" keyPath="projects" id="91W-rA-6a8"/>
-            </connections>
-        </arrayController>
-        <arrayController id="C6Y-VW-wzy" userLabel="Someday Array Controller">
-            <connections>
-                <binding destination="-2" name="contentArray" keyPath="someday" id="3Qc-E6-u32"/>
-            </connections>
-        </arrayController>
-        <arrayController id="cJ9-Y8-glO" userLabel="Done Array Controller">
-            <connections>
-                <binding destination="-2" name="contentArray" keyPath="done" id="PSX-hl-cVT"/>
-            </connections>
-        </arrayController>
         <arrayController id="CKE-HJ-zlh" userLabel="Project List Array Controller">
             <connections>
                 <binding destination="-2" name="contentArray" keyPath="projectsList" id="8ji-K0-EUf"/>

@@ -538,12 +538,6 @@
 // --------------------------------------------------------
 
 @synthesize inbox;
-@synthesize next;
-@synthesize tracking;
-@synthesize scheduled;
-@synthesize someday;
-@synthesize done;
-@synthesize projects;
 
 
 
@@ -568,45 +562,18 @@
 	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
 	
 	// set up filtering predicates
-	NSPredicate* inboxPredicate		= [NSPredicate predicateWithFormat:@"type == 'inbox'"];
-	NSPredicate* nextPredicate		= [NSPredicate predicateWithFormat:@"type == 'next'"];
-	NSPredicate* trackingPredicate	= [NSPredicate predicateWithFormat:@"type == 'tracking'"];
-	NSPredicate* somedayPredicate	= [NSPredicate predicateWithFormat:@"type == 'someday'"];
-	NSPredicate* scheduledPredicate = [NSPredicate predicateWithFormat:@"type == 'scheduled'"];
-	NSPredicate* projectsPredicate	= [NSPredicate predicateWithFormat:@"type == 'projects'"];
-	NSPredicate* donePredicate		= [NSPredicate predicateWithFormat:@"type == 'done'"];
+	NSPredicate* inboxPredicate	= [NSPredicate predicateWithFormat:@"type == 'inbox'"];
 	
 	// create filtered arrays
-	NSArray* inboxArray		= [fetchedObjects filteredArrayUsingPredicate:inboxPredicate];
-	NSArray* nextArray		= [fetchedObjects filteredArrayUsingPredicate:nextPredicate];
-	NSArray* trackingArray	= [fetchedObjects filteredArrayUsingPredicate:trackingPredicate];
-	NSArray* somedayArray	= [fetchedObjects filteredArrayUsingPredicate:somedayPredicate];
-	NSArray* scheduledArray = [fetchedObjects filteredArrayUsingPredicate:scheduledPredicate];
-	NSArray* projectsArray	= [fetchedObjects filteredArrayUsingPredicate:projectsPredicate];
-	NSArray* doneArray		= [fetchedObjects filteredArrayUsingPredicate:donePredicate];
+	NSArray* inboxArray	= [fetchedObjects filteredArrayUsingPredicate:inboxPredicate];
 	
-	NSMutableArray* mInboxArray		= [[NSMutableArray alloc] init];
-	NSMutableArray* mNextArray		= [[NSMutableArray alloc] init];
-	NSMutableArray* mTrackingArray	= [[NSMutableArray alloc] init];
-	NSMutableArray* mSomedayArray	= [[NSMutableArray alloc] init];
-	NSMutableArray* mScheduledArray = [[NSMutableArray alloc] init];
-	NSMutableArray* mProjectsArray	= [[NSMutableArray alloc] init];
-	NSMutableArray* mDoneArray		= [[NSMutableArray alloc] init];
-	
-	NSArray* sectionArrays = [[NSArray alloc] initWithObjects:inboxArray, nextArray, trackingArray, somedayArray, scheduledArray, projectsArray, doneArray, nil];
-	NSArray* mSectionArrays = [[NSArray alloc] initWithObjects:mInboxArray, mNextArray, mTrackingArray, mSomedayArray, mScheduledArray, mProjectsArray, mDoneArray, nil];
+	NSMutableArray* mInboxArray	= [[NSMutableArray alloc] init];
 	
 	// populate mutable arrays required for the 'setting' bullshit below
 	for (int n=0;n<7;n++)
 	{
-		if ([[sectionArrays objectAtIndex:n] count] != 0)
-		{
-			for (CardInfo* cInfo in [sectionArrays objectAtIndex:n])
-			{
-				CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
-				[[mSectionArrays objectAtIndex:n] addObject:aCard];
-			}
-		}
+		CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
+		[mInboxArray addObject:aCard];
 	}
 	
 	NSMutableArray* ca = [[NSMutableArray alloc] init];
@@ -619,12 +586,6 @@
 
 	// set member arrays
 	[self setInbox:mInboxArray];
-	[self setNext:mNextArray];
-	[self setTracking:mTrackingArray];
-	[self setScheduled:mScheduledArray];
-	[self setSomeday:mSomedayArray];
-	[self setProjects:mProjectsArray];
-	[self setDone:mDoneArray];
 	
 	// go ahead and re-populate the inbox bullshit
 	[self populateInboxProcessingFields];
@@ -948,70 +909,6 @@
 	[self populateCardsWithStoredData];
 	
 	NSLog(@"card's checkbox clicked - %@",cModel.title);
-}
-
-
-// --------------------------------------------------------
-// Bullshit setter getter functions
-// --------------------------------------------------------
--(void)setNext:(NSMutableArray *)a
-{
-	next = a;
-}
-
--(void)setTracking:(NSMutableArray *)a
-{
-	tracking = a;
-}
-
--(void)setScheduled:(NSMutableArray *)a
-{
-	scheduled = a;
-}
-
--(void)setProjects:(NSMutableArray *)a
-{
-	projects = a;
-}
-
--(void)setSomeday:(NSMutableArray *)a
-{
-	someday = a;
-}
-
--(void)setDone:(NSMutableArray *)a
-{
-	done = a;
-}
-
--(NSArray*)next
-{
-	return next;
-}
-
--(NSArray*)tracking
-{
-	return tracking;
-}
-
--(NSArray*)scheduled
-{
-	return scheduled;
-}
-
--(NSArray*)projects
-{
-	return projects;
-}
-
--(NSArray*)someday
-{
-	return someday;
-}
-
--(NSArray*)done
-{
-	return done;
 }
 
 

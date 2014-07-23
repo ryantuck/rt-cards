@@ -79,12 +79,6 @@
 
 // Filtered card arrays
 @property NSMutableArray* inbox;
-@property NSMutableArray* next;
-@property NSMutableArray* tracking;
-@property NSMutableArray* scheduled;
-@property NSMutableArray* someday;
-@property NSMutableArray* done;
-@property NSMutableArray* projects;
 
 -(void)populateCardsWithStoredData;
 
