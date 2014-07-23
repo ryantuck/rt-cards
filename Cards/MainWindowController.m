@@ -1103,6 +1103,17 @@
 	NSString* searchText = [self.currentSearchBox stringValue];
 	bool actionFiltersEnabled = self.actionRadioButtons.enabled;
 	
+	// if a tag is selected, filter by that tag
+	NSInteger r = [[self tagTable] selectedRow];
+	if (r < [currentTagsList count])
+	{
+		NSString* filterTag = [currentTagsList objectAtIndex:r];
+		NSLog(@"filter row = %lu",r);
+		NSLog(@"filter tag = %@",filterTag);
+		
+		[self filterCurrentCardsByTag:filterTag];
+	}
+	
 	NSLog(@"searchText = %@",searchText);
 	
 	if (![searchText isEqualToString:@""])
@@ -1561,6 +1572,12 @@
 		NSLog(@"didn't save shit bc fetched count != 1");
 	}
 }
+
+-(IBAction)tagTableClicked:(id)sender
+{
+	[self filterCurrentCards];
+}
+
 
 @end
 

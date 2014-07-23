@@ -418,6 +418,7 @@
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
+                                    <action selector="tagTableClicked:" target="-2" id="ivg-6a-XNr"/>
                                     <binding destination="6Ob-le-hQ2" name="content" keyPath="arrangedObjects" id="54A-bM-aod"/>
                                 </connections>
                             </tableView>
