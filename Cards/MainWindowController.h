@@ -66,12 +66,6 @@
 
 -(void)populateInboxProcessingFields;
 
-// --------------------------------------------------------
-// Next UI
-// --------------------------------------------------------
-@property IBOutlet NSSearchField* searchBox;
-@property IBOutlet NSButton* filterCheckBox;
-@property IBOutlet NSMatrix* nextActionRadioButtons;
 
 // --------------------------------------------------------
 // Card Handling

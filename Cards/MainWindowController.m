@@ -439,98 +439,6 @@
 
 
 
-// --------------------------------------------------------
-// Next Actions
-// --------------------------------------------------------
-@synthesize searchBox;
-@synthesize filterCheckBox;
-@synthesize nextActionRadioButtons;
-
--(IBAction)textEnteredInSearchField:(id)sender
-{
-	// filter the 'next' list dynamically
-	[self filterList:self.next];
-}
-
--(void)filterList:(NSMutableArray*)list
-{
-	NSLog(@"filterList");
-	// re-populate list from core data
-	NSManagedObjectContext* context = ((AppDelegate*)[NSApplication sharedApplication].delegate).managedObjectContext;
-	NSFetchRequest* fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription* entity = [NSEntityDescription
-								   entityForName:@"CardInfo"
-								   inManagedObjectContext:context];
-	[fetchRequest setEntity:entity];
-	
-	NSError* error;
-	if (![context save:&error])
-	{
-		NSLog(@"couldn't save in filterList");
-	}
-	
-	// fetch data from store
-	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-	
-	// filter predicates
-	NSString* currentSearch = [self.searchBox stringValue];
-	bool filtersEnabled = self.nextActionRadioButtons.enabled;
-
-	if (![currentSearch isEqualToString:@""])
-	{
-		// filter by title using currentSearch
-		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",currentSearch];
-		NSArray* tmp = [NSArray arrayWithArray:fetchedObjects];
-		fetchedObjects = [tmp filteredArrayUsingPredicate:titlePredicate];
-	}
-	
-	if (filtersEnabled)
-	{
-		// filter by action
-		NSString* action = [self actionFromNumber:(int)[self.nextActionRadioButtons selectedRow]];
-		
-		NSPredicate* actionPredicate = [NSPredicate predicateWithFormat:@"action == %@",action];
-		NSArray* tmp = [NSArray arrayWithArray:fetchedObjects];
-		fetchedObjects = [tmp filteredArrayUsingPredicate:actionPredicate];
-	}
-	
-	NSMutableArray* mNext = [[NSMutableArray alloc] initWithArray:fetchedObjects];
-	[self setNext:mNext];
-	
-	
-	
-	
-	if ([currentSearch  isEqual: @""])
-	{
-		// show all next
-		NSMutableArray* mNext = [[NSMutableArray alloc] initWithArray:fetchedObjects];
-		[self setNext:mNext];
-	}
-	else
-	{
-		// show filtered results
-		NSPredicate* nextPredicate = [NSPredicate predicateWithFormat:@"type == 'next'"];
-		NSArray* nextArray = [fetchedObjects filteredArrayUsingPredicate:nextPredicate];
-		NSPredicate* titlePredicate = [NSPredicate predicateWithFormat:@"title contains[c] %@",currentSearch];
-		NSArray* tArray = [nextArray filteredArrayUsingPredicate:titlePredicate];
-		NSMutableArray* mNext = [[NSMutableArray alloc] initWithArray:tArray];
-		[self setNext:mNext];
-	}
-}
-
--(IBAction)filterCheckBoxClicked:(id)sender
-{
-	bool isActive = false;
-	if ([self.filterCheckBox state] == NSOnState) isActive = true;
-	self.nextActionRadioButtons.enabled = isActive;
-	
-	[self filterList:self.next];
-}
-
--(IBAction)nextRadioButtonSelected:(id)sender
-{
-	[self filterList:self.next];
-}
 
 
 // --------------------------------------------------------
@@ -570,7 +478,7 @@
 	NSMutableArray* mInboxArray	= [[NSMutableArray alloc] init];
 	
 	// populate mutable arrays required for the 'setting' bullshit below
-	for (int n=0;n<7;n++)
+	for (CardInfo* cInfo in inboxArray)
 	{
 		CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
 		[mInboxArray addObject:aCard];
