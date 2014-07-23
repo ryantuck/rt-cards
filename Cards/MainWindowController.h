@@ -18,12 +18,7 @@
 // --------------------------------------------------------
 @property IBOutlet NSView* entryView;
 @property IBOutlet NSView* inboxView;
-@property IBOutlet NSView* nextView;
-@property IBOutlet NSView* projectsView;
-@property IBOutlet NSView* trackingView;
-@property IBOutlet NSView* scheduledView;
-@property IBOutlet NSView* somedayView;
-@property IBOutlet NSView* doneView;
+
 
 @property int currentViewTag;
 

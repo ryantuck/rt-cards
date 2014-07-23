@@ -74,12 +74,7 @@
 // --------------------------------------------------------
 @synthesize entryView;
 @synthesize inboxView;
-@synthesize nextView;
-@synthesize projectsView;
-@synthesize trackingView;
-@synthesize scheduledView;
-@synthesize somedayView;
-@synthesize doneView;
+
 
 @synthesize currentViewTag;
 
