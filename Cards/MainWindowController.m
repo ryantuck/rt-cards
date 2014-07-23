@@ -821,34 +821,6 @@
 }
 
 
-// --------------------------------------------------------
-// Projects UI
-// --------------------------------------------------------
-
-@synthesize pTableView;
-
--(void)setProjectsList:(NSMutableArray *)a
-{
-	projectsList = a;
-}
-
--(NSArray*)projectsList
-{
-	return projectsList;
-}
-
--(IBAction)projectsListSelected:(id)sender
-{
-	// get selected row
-//	long x = [self.pTableView selectedRow];
-	
-	
-	// filter projects cards by selected project
-	
-	
-	
-}
-
 //	=====================================================================
 
 #pragma mark - bullshit

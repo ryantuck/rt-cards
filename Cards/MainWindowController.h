@@ -88,8 +88,6 @@
 
 @property IBOutlet NSCollectionView* currentCollectionView;
 
-@property IBOutlet NSTableView* pTableView;
-
 @property IBOutlet NSView* monoView;	// overall view
 
 @property NSMutableArray* current;		// current cards after filtering
