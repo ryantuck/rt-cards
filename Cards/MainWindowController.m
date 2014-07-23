@@ -84,7 +84,7 @@
 	switch (tag)
 	{
 		case 0: view = entryView;		break;
-		case 1: view = inboxView;		break;
+		case 1: view = monoView;		break;
 		case 2: view = monoView;		break;
 		case 3: view = monoView;		break;
 		case 4: view = monoView;		break;
@@ -163,6 +163,7 @@
 	cardInfo.identifier		= [self getRandomAlphanumericString];
 	cardInfo.createdDate	= [NSDate date];
 	cardInfo.type			= @"inbox";
+	cardInfo.notes			= @""; // set to blank so not 'null'
 	
 	// save!
 	NSError* error;
@@ -1077,6 +1078,9 @@
 	
 	switch (self.currentType)
 	{
+		case 1:
+			self.sectionTitle.stringValue = @"Inbox";
+			break;
 		case 2:
 			self.sectionTitle.stringValue = @"Next";
 			break;
@@ -1163,11 +1167,12 @@
 -(void)populateCardDetailsFromCard:(CardModel*)cModel
 {
 	NSLog(@"populateCardDetailsFromCard:c");
+
 	// text fields
 	self.cardTitleBox.stringValue		= cModel.title;
 	self.cardIdentifier.stringValue		= cModel.identifier;
 	self.cardNotes.stringValue			= cModel.notes;
-	
+
 	// tags field
 	NSMutableArray* x = [[NSMutableArray alloc] init];
 	for (NSString* t in cModel.tags)
