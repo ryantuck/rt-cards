@@ -159,7 +159,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="dueCheckBoxClicked:" target="-2" id="IsA-pz-2Df"/>
+                        <action selector="dueCheckBoxClicked:" target="-2" id="joe-Fa-q9L"/>
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Ztd-ww-j6T">
@@ -169,7 +169,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="reminderCheckBoxClicked:" target="-2" id="MZe-Nn-j3M"/>
+                        <action selector="reminderCheckBoxClicked:" target="-2" id="WNk-Od-5iW"/>
                     </connections>
                 </button>
                 <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bvc-Po-MJv">
@@ -205,9 +205,6 @@
                             </buttonCell>
                         </column>
                     </cells>
-                    <connections>
-                        <action selector="changeType:" target="-2" id="7Rl-nD-Igb"/>
-                    </connections>
                 </matrix>
                 <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6yz-MF-Aop">
                     <rect key="frame" x="20" y="361" width="91" height="118"/>
@@ -249,9 +246,6 @@
                             </buttonCell>
                         </column>
                     </cells>
-                    <connections>
-                        <action selector="changeAction:" target="-2" id="4oP-dz-GNj"/>
-                    </connections>
                 </matrix>
                 <tokenField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nNA-pr-HEm">
                     <rect key="frame" x="20" y="291" width="300" height="50"/>

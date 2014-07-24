@@ -1142,6 +1142,21 @@
 	[self populateCardsWithStoredData];
 }
 
+-(IBAction)dueCheckBoxClicked:(id)sender
+{
+	bool isActive = false;
+	if (self.cardDueCheckBox.state == NSOnState) isActive = true;
+	self.cardDuePicker.enabled = isActive;
+}
+
+-(IBAction)reminderCheckBoxClicked:(id)sender
+{
+	bool isActive = false;
+	if (self.cardReminderCheckBox.state == NSOnState) isActive = true;
+	self.cardReminderPicker.enabled = isActive;
+}
+
+
 @end
 
 
