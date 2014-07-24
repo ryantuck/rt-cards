@@ -73,7 +73,6 @@
 // Toolbar
 // --------------------------------------------------------
 @synthesize entryView;
-@synthesize inboxView;
 
 
 @synthesize currentViewTag;
@@ -183,7 +182,6 @@
 // Card Handling
 // --------------------------------------------------------
 
-@synthesize inbox;
 
 
 
@@ -207,21 +205,6 @@
 	// fetch data from store
 	NSArray* fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
 	
-	// set up filtering predicates
-	NSPredicate* inboxPredicate	= [NSPredicate predicateWithFormat:@"type == 'inbox'"];
-	
-	// create filtered arrays
-	NSArray* inboxArray	= [fetchedObjects filteredArrayUsingPredicate:inboxPredicate];
-	
-	NSMutableArray* mInboxArray	= [[NSMutableArray alloc] init];
-	
-	// populate mutable arrays required for the 'setting' bullshit below
-	for (CardInfo* cInfo in inboxArray)
-	{
-		CardModel* aCard = [[CardModel alloc] initWithInfo:cInfo];
-		[mInboxArray addObject:aCard];
-	}
-	
 	NSMutableArray* ca = [[NSMutableArray alloc] init];
 	for (CardInfo* cInfo in fetchedObjects)
 	{
@@ -229,28 +212,13 @@
 		[ca addObject:aCard];
 	}
 	[self setCurrent:ca];
-
-	// set member arrays
-	[self setInbox:mInboxArray];
 	
 	NSMutableArray* plArray = [[NSMutableArray alloc] initWithObjects:@"hey",@"a",@"butt", nil];
 	[self setProjectsList:plArray];
-	
 	[self populateCurrentTagsList];
 	[self populateTagsList];
 }
 
--(CardModel*)firstInboxCard
-{
-	CardModel* cardPtr;
-	
-	if ([[self inbox] count] != 0)
-	{
-		cardPtr = [[self inbox] objectAtIndex:0];
-	}
-	
-	return cardPtr;
-}
 
 -(void)editCard:(CardModel*)cModel
 {

@@ -17,7 +17,6 @@
 // Toolbar
 // --------------------------------------------------------
 @property IBOutlet NSView* entryView;
-@property IBOutlet NSView* inboxView;
 
 
 @property int currentViewTag;
@@ -37,9 +36,6 @@
 // --------------------------------------------------------
 // Card Handling
 // --------------------------------------------------------
-
-// Filtered card arrays
-@property NSMutableArray* inbox;
 
 -(void)populateCardsWithStoredData;
 
