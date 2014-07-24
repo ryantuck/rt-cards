@@ -84,7 +84,7 @@
 	switch (tag)
 	{
 		case 0: view = entryView;		break;
-		case 1: view = inboxView;		break;
+		case 1: view = monoView;		break;
 		case 2: view = monoView;		break;
 		case 3: view = monoView;		break;
 		case 4: view = monoView;		break;
@@ -163,6 +163,7 @@
 	cardInfo.identifier		= [self getRandomAlphanumericString];
 	cardInfo.createdDate	= [NSDate date];
 	cardInfo.type			= @"inbox";
+	cardInfo.notes			= @""; // set to blank so not 'null'
 	
 	// save!
 	NSError* error;
@@ -173,269 +174,6 @@
 }
 
 
-// --------------------------------------------------------
-// Inbox
-// --------------------------------------------------------
--(void)updateCardCount
-{
-	[[self cardCount] setStringValue:[NSString stringWithFormat:@"%lu",(unsigned long)[[self inbox] count]]];
-}
-
--(IBAction)deleteButtonPressed:(id)sender
-{
-	[self deleteCard:[self firstInboxCard]];
-	[self populateCardsWithStoredData];
-}
-
--(IBAction)processButtonPressed:(id)sender
-{
-	// set processing stuff to card model
-	[self firstInboxCard].title		= [[self titleBox] stringValue];
-	[self firstInboxCard].type		= [self typeFromNumber:(int)[[self types] selectedRow] + 1];
-	[self firstInboxCard].action	= [self actionFromNumber:(int)[[self actions] selectedRow]];
-	[self firstInboxCard].notes		= [[self notesBox] stringValue];
-	
-	// set dates if dates are specified
-	if (self.dueCheckBox.state == NSOnState){
-		[self firstInboxCard].dueDate = [[self duePicker] dateValue];
-	}
-	if (self.reminderCheckBox.state == NSOnState){
-		[self firstInboxCard].reminderDate = [[self reminderPicker] dateValue];
-	}
-	
-	// add tags from tagsBox to the card
-	NSSet* tmpTags = [self.tagsBox objectValue];
-	for (NSString* string in tmpTags)
-	{
-		[self.firstInboxCard.tags addObject:string];
-	}
-	
-	// save to core data
-	[self editCard:[self firstInboxCard]];
-	
-	// repopulate view
-	[self populateCardsWithStoredData];
-	[self populateInboxProcessingFields];
-}
-
--(IBAction)doneButtonPressed:(id)sender
-{
-	
-}
-
--(IBAction)changeType:(id)sender
-{
-	int x = (int)[[self types] selectedRow];
-
-	switch (x)
-	{
-		case 0:
-			// next
-			
-			// hide 'remind me'
-			[self showActions:YES];
-			[self showDueStuff:YES];
-			[self showReminderStuff:NO];
-			
-			
-			break;
-		case 1:
-			// scheduled
-			
-			// show 'remind me'
-			[self showActions:YES];
-			[self showDueStuff:YES];
-			[self showReminderStuff:YES];
-
-			
-			break;
-		case 2:
-			// tracking
-			
-			// hide all
-			[self showActions:NO];
-			[self showDueStuff:NO];
-			[self showReminderStuff:NO];
-			
-			break;
-		case 3:
-			// someday
-			
-			// hide all
-			[self showActions:NO];
-			[self showDueStuff:NO];
-			[self showReminderStuff:NO];
-			
-			break;
-		case 4:
-			// projects
-			
-			// hide all (for now)
-			[self showActions:NO];
-			[self showDueStuff:NO];
-			[self showReminderStuff:NO];
-			
-			break;
-		default:
-			NSLog(@"no case chosen");
-			break;
-	}
-}
-
--(IBAction)changeAction:(id)sender
-{
-	// ***
-	// currently doesn't do anything - can probably delete
-	
-	int x = (int)[[self types] selectedRow];
-	
-	switch (x)
-	{
-		case 0:
-			// do
-			break;
-		case 1:
-			// brainstorm
-			break;
-		case 2:
-			// research
-			break;
-		case 3:
-			// buy
-			break;
-		case 4:
-			// review
-			break;
-		case 5:
-			// contact
-			break;
-		default:
-			NSLog(@"no case chosen");
-			break;
-	}
-}
-
--(void)populateInboxProcessingFields
-{
-	CardModel* currentCard = [self firstInboxCard];
-	
-	if (currentCard != nil)
-	{
-		[self.titleBox setStringValue:currentCard.title];
-		[self.identifierLabel setStringValue:currentCard.identifier];
-		[self updateCardCount];
-	}
-	else
-	{
-		NSLog(@"inbox is empty!");
-	}
-	
-	[self showActions:YES];
-	[self showDueStuff:YES];
-	[self showReminderStuff:NO];
-	self.tagsBox.stringValue = @"";
-	
-	[[self types] selectCellAtRow:0 column:0];
-}
-
--(void)showReminderStuff:(BOOL)show
-{
-	[self reminderCheckBox].hidden	= !show;
-	[self reminderPicker].hidden	= !show;
-	
-	[self resetReminderStuff];
-}
-
--(void)showDueStuff:(BOOL)show
-{
-	[self dueCheckBox].hidden	= !show;
-	[self duePicker].hidden		= !show;
-	
-	[self resetDueStuff];
-}
-
--(void)enableDatePicker:(NSDatePicker*)picker active:(BOOL)active
-{
-	//[picker setEnabled:active];
-	picker.enabled = active;
-}
-
--(void)enableCheckBox:(NSButton*)checkbox active:(BOOL)active
-{
-	checkbox.enabled = active;
-}
-
--(IBAction)dueCheckBoxClicked:(id)sender
-{
-	BOOL isActive = NO;
-	if ([[self dueCheckBox] state] == NSOnState) isActive = YES;
-	
-	[self enableDatePicker:[self duePicker] active:isActive];
-}
-
--(IBAction)reminderCheckBoxClicked:(id)sender
-{
-	BOOL isActive = NO;
-	if ([[self reminderCheckBox] state] == NSOnState) isActive = YES;
-	[self enableDatePicker:[self reminderPicker] active:isActive];
-}
-
--(void)showActions:(BOOL)show
-{
-	[self actions].hidden = !show;
-}
-
--(void)resetDueStuff
-{
-	[self dueCheckBox].state	= NSOffState;
-	[self duePicker].enabled	= NO;
-}
-
--(void)resetReminderStuff
-{
-	[self reminderCheckBox].state	= NSOffState;
-	[self reminderPicker].enabled	= NO;
-}
-
--(NSString*)typeFromNumber:(int)n
-{
-	NSString* type;
-	
-	switch (n)
-	{
-		case 0: type = @"inbox";		break;
-		case 1: type = @"next";			break;
-		case 2: type = @"projects";		break;
-		case 3: type = @"tracking";		break;
-		case 4: type = @"scheduled";	break;
-		case 5: type = @"someday";		break;
-		case 6: type = @"done";			break;
-			
-		default: type = @"inbox";		break;
-	}
-	
-	return type;
-}
-
--(NSString*)actionFromNumber:(int)n
-{
-	NSString* action;
-	
-	switch (n)
-	{
-		case 0: action = @"do";				break;
-		case 1: action = @"brainstorm";		break;
-		case 2: action = @"research";		break;
-		case 3: action = @"buy";			break;
-		case 4: action = @"review";			break;
-		case 5: action = @"contact";		break;
-			
-		default: action = @"do";			break;
-			
-	}
-	
-	return action;
-}
 
 
 
@@ -495,9 +233,6 @@
 	// set member arrays
 	[self setInbox:mInboxArray];
 	
-	// go ahead and re-populate the inbox bullshit
-	[self populateInboxProcessingFields];
-
 	NSMutableArray* plArray = [[NSMutableArray alloc] initWithObjects:@"hey",@"a",@"butt", nil];
 	[self setProjectsList:plArray];
 	
@@ -819,33 +554,44 @@
 	NSLog(@"card's checkbox clicked - %@",cModel.title);
 }
 
-
-// --------------------------------------------------------
-// Projects UI
-// --------------------------------------------------------
-
-@synthesize pTableView;
-
--(void)setProjectsList:(NSMutableArray *)a
+-(NSString*)typeFromNumber:(int)n
 {
-	projectsList = a;
+	NSString* type;
+	
+	switch (n)
+	{
+		case 0: type = @"inbox";		break;
+		case 1: type = @"next";			break;
+		case 2: type = @"projects";		break;
+		case 3: type = @"tracking";		break;
+		case 4: type = @"scheduled";	break;
+		case 5: type = @"someday";		break;
+		case 6: type = @"done";			break;
+			
+		default: type = @"inbox";		break;
+	}
+	
+	return type;
 }
 
--(NSArray*)projectsList
+-(NSString*)actionFromNumber:(int)n
 {
-	return projectsList;
-}
-
--(IBAction)projectsListSelected:(id)sender
-{
-	// get selected row
-//	long x = [self.pTableView selectedRow];
+	NSString* action;
 	
+	switch (n)
+	{
+		case 0: action = @"do";				break;
+		case 1: action = @"brainstorm";		break;
+		case 2: action = @"research";		break;
+		case 3: action = @"buy";			break;
+		case 4: action = @"review";			break;
+		case 5: action = @"contact";		break;
+			
+		default: action = @"do";			break;
+			
+	}
 	
-	// filter projects cards by selected project
-	
-	
-	
+	return action;
 }
 
 //	=====================================================================
@@ -1077,6 +823,9 @@
 	
 	switch (self.currentType)
 	{
+		case 1:
+			self.sectionTitle.stringValue = @"Inbox";
+			break;
 		case 2:
 			self.sectionTitle.stringValue = @"Next";
 			break;
@@ -1163,11 +912,12 @@
 -(void)populateCardDetailsFromCard:(CardModel*)cModel
 {
 	NSLog(@"populateCardDetailsFromCard:c");
+
 	// text fields
 	self.cardTitleBox.stringValue		= cModel.title;
 	self.cardIdentifier.stringValue		= cModel.identifier;
 	self.cardNotes.stringValue			= cModel.notes;
-	
+
 	// tags field
 	NSMutableArray* x = [[NSMutableArray alloc] init];
 	for (NSString* t in cModel.tags)
@@ -1376,6 +1126,34 @@
 -(IBAction)tagTableClicked:(id)sender
 {
 	[self filterCurrentCards];
+}
+
+-(IBAction)deleteButtonPressed:(id)sender
+{
+	// *** delete the currently selected card
+	
+	[self populateCardsWithStoredData];
+}
+
+-(IBAction)doneButtonPressed:(id)sender
+{
+	// *** mark currently selected card as done
+	
+	[self populateCardsWithStoredData];
+}
+
+-(IBAction)dueCheckBoxClicked:(id)sender
+{
+	bool isActive = false;
+	if (self.cardDueCheckBox.state == NSOnState) isActive = true;
+	self.cardDuePicker.enabled = isActive;
+}
+
+-(IBAction)reminderCheckBoxClicked:(id)sender
+{
+	bool isActive = false;
+	if (self.cardReminderCheckBox.state == NSOnState) isActive = true;
+	self.cardReminderPicker.enabled = isActive;
 }
 
 

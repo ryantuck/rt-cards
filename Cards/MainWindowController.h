@@ -35,39 +35,6 @@
 
 
 // --------------------------------------------------------
-// Inbox UI
-// --------------------------------------------------------
-@property IBOutlet NSTextField* titleBox;
-@property IBOutlet NSTokenField* tagsBox;
-@property IBOutlet NSTextField* notesBox;
-
-@property IBOutlet NSTextField* identifierLabel;
-
-@property IBOutlet NSMatrix* types;
-
-@property IBOutlet NSMatrix* actions;
-@property IBOutlet NSButton* dueCheckBox;
-@property IBOutlet NSButton* reminderCheckBox;
-@property IBOutlet NSDatePicker* duePicker;
-@property IBOutlet NSDatePicker* reminderPicker;
-
-@property IBOutlet NSTextField* cardCount;
-
-
-// radio button handling
--(IBAction)changeType:(id)sender;
--(IBAction)changeAction:(id)sender;
-
-// button press handling
--(IBAction)deleteButtonPressed:(id)sender;
--(IBAction)processButtonPressed:(id)sender;
--(IBAction)doneButtonPressed:(id)sender;
-
-
--(void)populateInboxProcessingFields;
-
-
-// --------------------------------------------------------
 // Card Handling
 // --------------------------------------------------------
 
@@ -87,8 +54,6 @@
 // =========================================================================================
 
 @property IBOutlet NSCollectionView* currentCollectionView;
-
-@property IBOutlet NSTableView* pTableView;
 
 @property IBOutlet NSView* monoView;	// overall view
 
